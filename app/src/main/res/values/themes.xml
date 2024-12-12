@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Ekthacares" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_app_image</item>
+        <item name="android:windowSplashScreenBackground">@color/white</item>
+    </style>
+
+    <style name="Theme.Ekthacares" parent="Base.Theme.Ekthacares" />
+</resources>
