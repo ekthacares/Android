@@ -4,9 +4,13 @@ package com.example.ekthacares;
 import com.example.ekthacares.model.User;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -31,4 +35,12 @@ public interface ApiService {
 
     @GET("/api/user")
     Call<User> getUserDetails(@Header("Authorization") String token, @Query("id") Long id);
+
+    // Update user profile
+    @POST("/api/updateProfile")
+    Call<String> updateProfile(
+            @Header("Authorization") String authorization,
+            @Body User user
+    );
+
 }
