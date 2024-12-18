@@ -235,4 +235,23 @@ public class User {
     public void setDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    // Default constructor
+    public User() {
+    }
+
+    // Copy constructor
+    public User(User user) {
+        this.id = user.id;
+        this.donorName = user.donorName;
+        this.emailId = user.emailId;
+        this.address = user.address;
+        this.city = user.city;
+        this.state = user.state;
+        this.mobile = user.mobile;
+        this.dateOfBirth = user.dateOfBirth;
+        this.bloodGroup = user.bloodGroup;
+        this.age = user.age;
+        this.gender = user.gender;
+    }
 }

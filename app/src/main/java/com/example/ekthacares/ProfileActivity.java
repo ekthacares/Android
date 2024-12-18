@@ -10,10 +10,14 @@ import android.widget.EditText;
 import android.content.Intent;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ekthacares.model.ApiResponse;
 import com.example.ekthacares.model.User;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import java.io.IOException;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -51,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
         Long userId = sharedPreferences.getLong(Constants.USER_ID_KEY, -1);
 
-        if (jwtToken != null && userId != -1) {
+        if (isSessionValid(jwtToken, userId)) {
             fetchUserDetails(jwtToken, userId);
         } else {
             Toast.makeText(this, "Invalid session. Please log in again.", Toast.LENGTH_SHORT).show();
@@ -65,42 +69,58 @@ public class ProfileActivity extends AppCompatActivity {
         imgEditState.setOnClickListener(v -> showEditDialog("State"));
     }
 
+    private boolean isSessionValid(String jwtToken, Long userId) {
+        return jwtToken != null && userId != -1;
+    }
+
     private void fetchUserDetails(String jwtToken, Long userId) {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<User> call = apiService.getUserDetails("Bearer " + jwtToken, userId);
 
-        // Print URL and Headers for Debugging
-        String url = Constants.BASE_URL + "user/" + userId;
-        Log.d("API Request", "URL: " + url);
-        Log.d("API Request", "Authorization: Bearer " + jwtToken);
+        Call<User> call = apiService.getUserDetails("Bearer " + jwtToken, userId);
 
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful()) {
                     currentUser = response.body();
-                    // Set data to views
-                    tvUserId.setText(String.valueOf(currentUser.getId()));
-                    tvDonorName.setText(currentUser.getDonorName());
-                    tvEmail.setText(currentUser.getEmailId());
-                    tvMobile.setText(currentUser.getMobile());
-                    tvDateOfBirth.setText(currentUser.getDateOfBirth());
-                    tvBloodGroup.setText(currentUser.getBloodGroup());
-                    tvAge.setText(String.valueOf(currentUser.getAge()));
-                    tvGender.setText(currentUser.getGender());
-                    tvAddress.setText(currentUser.getAddress());
-                    tvCity.setText(currentUser.getCity());
-                    tvState.setText(currentUser.getState());
+                    updateUI();
                 } else {
-                    Toast.makeText(ProfileActivity.this, "Failed to fetch user details.", Toast.LENGTH_SHORT).show();
+                    handleErrorResponse(response);
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(ProfileActivity.this, "An error occurred.", Toast.LENGTH_SHORT).show();
+                Log.e("FetchError", t.getMessage(), t);
             }
         });
+    }
+
+    private void handleErrorResponse(Response<?> response) {
+        try {
+            if (response.errorBody() != null) {
+                String errorBody = response.errorBody().string();
+                Log.e("Response Error", "Error Body: " + errorBody);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(this, "Failed to fetch user details.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateUI() {
+        tvUserId.setText(String.valueOf(currentUser.getId()));
+        tvDonorName.setText(currentUser.getDonorName());
+        tvEmail.setText(currentUser.getEmailId());
+        tvMobile.setText(currentUser.getMobile());
+        tvDateOfBirth.setText(currentUser.getDateOfBirth());
+        tvBloodGroup.setText(currentUser.getBloodGroup());
+        tvAge.setText(String.valueOf(currentUser.getAge()));
+        tvGender.setText(currentUser.getGender());
+        tvAddress.setText(currentUser.getAddress());
+        tvCity.setText(currentUser.getCity());
+        tvState.setText(currentUser.getState());
     }
 
     private void showEditDialog(String fieldName) {
@@ -127,146 +147,46 @@ public class ProfileActivity extends AppCompatActivity {
         String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
         Long userId = sharedPreferences.getLong(Constants.USER_ID_KEY, -1);
 
-        // Debugging log to check the token
-        Log.d("JWT Token", "JWT Token: " + jwtToken);
-
-        if (jwtToken != null && userId != -1) {
+        if (isSessionValid(jwtToken, userId)) {
             ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
-            // Create a copy of the current user
-            User updatedUser = new User();
-            updatedUser.setId(currentUser.getId());
+            // Create a copy of the current user to modify it
+            User updatedUser = new User(currentUser);
 
-            // Update only the field that the user modified, preserve others
+            // Update the relevant field based on the field name
             switch (fieldName) {
-                case "Donor Name":
-                    updatedUser.setDonorName(updatedValue);
-                    updatedUser.setEmailId(currentUser.getEmailId());
-                    updatedUser.setAddress(currentUser.getAddress());
-                    updatedUser.setCity(currentUser.getCity());
-                    updatedUser.setState(currentUser.getState());
-                    updatedUser.setMobile(currentUser.getMobile());
-                    updatedUser.setDateOfBirth(currentUser.getDateOfBirth());
-                    updatedUser.setBloodGroup(currentUser.getBloodGroup());
-                    updatedUser.setAge(Integer.valueOf(String.valueOf(currentUser.getAge())));
-                    updatedUser.setGender(currentUser.getGender());
-                    updatedUser.setCreatedAt(currentUser.getCreatedAt());
-                    updatedUser.setCreatedBy(currentUser.getCreatedBy()); // Preserve createdBy
-                    updatedUser.setCreatedByType(currentUser.getCreatedByType()); // Preserve createdByType
-                    break;
-                case "Email":
-                    updatedUser.setEmailId(updatedValue);
-                    updatedUser.setDonorName(currentUser.getDonorName());
-                    updatedUser.setAddress(currentUser.getAddress());
-                    updatedUser.setCity(currentUser.getCity());
-                    updatedUser.setState(currentUser.getState());
-                    updatedUser.setMobile(currentUser.getMobile());
-                    updatedUser.setDateOfBirth(currentUser.getDateOfBirth());
-                    updatedUser.setBloodGroup(currentUser.getBloodGroup());
-                    updatedUser.setAge(Integer.valueOf(String.valueOf(currentUser.getAge())));
-                    updatedUser.setGender(currentUser.getGender());
-                    updatedUser.setCreatedAt(currentUser.getCreatedAt());
-                    updatedUser.setCreatedBy(currentUser.getCreatedBy()); // Preserve createdBy
-                    updatedUser.setCreatedByType(currentUser.getCreatedByType()); // Preserve createdByType
-                    break;
-                case "Address":
-                    updatedUser.setAddress(updatedValue);
-                    updatedUser.setDonorName(currentUser.getDonorName());
-                    updatedUser.setEmailId(currentUser.getEmailId());
-                    updatedUser.setCity(currentUser.getCity());
-                    updatedUser.setState(currentUser.getState());
-                    updatedUser.setMobile(currentUser.getMobile());
-                    updatedUser.setDateOfBirth(currentUser.getDateOfBirth());
-                    updatedUser.setBloodGroup(currentUser.getBloodGroup());
-                    updatedUser.setAge(Integer.valueOf(String.valueOf(currentUser.getAge())));
-                    updatedUser.setGender(currentUser.getGender());
-                    updatedUser.setCreatedAt(currentUser.getCreatedAt());
-                    updatedUser.setCreatedBy(currentUser.getCreatedBy()); // Preserve createdBy
-                    updatedUser.setCreatedByType(currentUser.getCreatedByType()); // Preserve createdByType
-                    break;
-                case "City":
-                    updatedUser.setCity(updatedValue);
-                    updatedUser.setDonorName(currentUser.getDonorName());
-                    updatedUser.setEmailId(currentUser.getEmailId());
-                    updatedUser.setAddress(currentUser.getAddress());
-                    updatedUser.setState(currentUser.getState());
-                    updatedUser.setMobile(currentUser.getMobile());
-                    updatedUser.setDateOfBirth(currentUser.getDateOfBirth());
-                    updatedUser.setBloodGroup(currentUser.getBloodGroup());
-                    updatedUser.setAge(Integer.valueOf(String.valueOf(currentUser.getAge())));
-                    updatedUser.setGender(currentUser.getGender());
-                    updatedUser.setCreatedAt(currentUser.getCreatedAt());
-                    updatedUser.setCreatedBy(currentUser.getCreatedBy()); // Preserve createdBy
-                    updatedUser.setCreatedByType(currentUser.getCreatedByType()); // Preserve createdByType
-                    break;
-                case "State":
-                    updatedUser.setState(updatedValue);
-                    updatedUser.setDonorName(currentUser.getDonorName());
-                    updatedUser.setEmailId(currentUser.getEmailId());
-                    updatedUser.setAddress(currentUser.getAddress());
-                    updatedUser.setCity(currentUser.getCity());
-                    updatedUser.setMobile(currentUser.getMobile());
-                    updatedUser.setDateOfBirth(currentUser.getDateOfBirth());
-                    updatedUser.setBloodGroup(currentUser.getBloodGroup());
-                    updatedUser.setAge(Integer.valueOf(String.valueOf(currentUser.getAge())));
-                    updatedUser.setGender(currentUser.getGender());
-                    updatedUser.setCreatedAt(currentUser.getCreatedAt());
-                    updatedUser.setCreatedBy(currentUser.getCreatedBy()); // Preserve createdBy
-                    updatedUser.setCreatedByType(currentUser.getCreatedByType()); // Preserve createdByType
-                    break;
+                case "Donor Name": updatedUser.setDonorName(updatedValue); break;
+                case "Email": updatedUser.setEmailId(updatedValue); break;
+                case "Address": updatedUser.setAddress(updatedValue); break;
+                case "City": updatedUser.setCity(updatedValue); break;
+                case "State": updatedUser.setState(updatedValue); break;
             }
 
-            // Ensure that the JWT token is sent in the header, not inside the body
-            Call<String> call = apiService.updateProfile("Bearer " + jwtToken, updatedUser);
-            // Debugging log to print the API call request headers and body
-            Log.d("UpdatedAPI Request", "Authorization: Bearer " + jwtToken);
-            Log.d("API Request", "User ID: " + updatedUser.getId());
-            Log.d("API Request", "Updated " + fieldName + ": " + updatedValue);
-            call.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if (response.isSuccessful()) {
-                        // Successfully updated, update the currentUser object and the UI
-                        Toast.makeText(ProfileActivity.this, fieldName + " updated successfully.", Toast.LENGTH_SHORT).show();
-                        updateUI(fieldName, updatedValue); // Update only the selected field on the UI
+            // Make API call to update profile with the updatedUser object
+            Call<ApiResponse> call = apiService.appupdateProfile("Bearer " + jwtToken, updatedUser);
 
-                        // Call fetchUserDetails to refresh the data
-                        fetchUserDetails(jwtToken, userId);  // Refresh the entire profile with updated data
+            call.enqueue(new Callback<ApiResponse>() {
+                @Override
+                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        String message = response.body().getMessage();
+                        fetchUserDetails(jwtToken, userId);  // Fetch updated user details
+                        Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ProfileActivity.this, "Failed to update " + fieldName, Toast.LENGTH_SHORT).show();
+                        handleErrorResponse(response);
                     }
                 }
 
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    Toast.makeText(ProfileActivity.this, "An error occurred.", Toast.LENGTH_SHORT).show();
+                public void onFailure(Call<ApiResponse> call, Throwable t) {
+                    Toast.makeText(ProfileActivity.this, "Update failed.", Toast.LENGTH_SHORT).show();
+                    Log.e("UpdateError", t.getMessage(), t);
                 }
             });
         } else {
-            Toast.makeText(ProfileActivity.this, "JWT Token is missing or invalid.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileActivity.this, "Session invalid. Please log in again.", Toast.LENGTH_SHORT).show();
+            redirectToLogin();
         }
-    }
-
-    private void updateUI(String fieldName, String updatedValue) {
-        // Update the UI with the updated value for the selected field
-        switch (fieldName) {
-            case "Donor Name":
-                tvDonorName.setText(updatedValue);
-                break;
-            case "Email":
-                tvEmail.setText(updatedValue);
-                break;
-            case "Address":
-                tvAddress.setText(updatedValue);
-                break;
-            case "City":
-                tvCity.setText(updatedValue);
-                break;
-            case "State":
-                tvState.setText(updatedValue);
-                break;
-        }
-
     }
 
     private void redirectToLogin() {
@@ -276,6 +196,3 @@ public class ProfileActivity extends AppCompatActivity {
         finish();
     }
 }
-
-
-

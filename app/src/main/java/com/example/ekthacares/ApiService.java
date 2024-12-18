@@ -1,15 +1,18 @@
 package com.example.ekthacares;
 
 
+import com.example.ekthacares.model.ApiResponse;
+import com.example.ekthacares.model.BloodDonation;
+import com.example.ekthacares.model.DonationResponse;
 import com.example.ekthacares.model.User;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -33,14 +36,24 @@ public interface ApiService {
     @GET("api/app/donorhome")
     Call<User> getDonorHome(@Header("Authorization") String authorization);
 
-    @GET("/api/user")
+    @GET("/api/appuser")
     Call<User> getUserDetails(@Header("Authorization") String token, @Query("id") Long id);
 
+
+
     // Update user profile
-    @POST("/api/updateProfile")
-    Call<String> updateProfile(
+    @POST("/api/app/updateProfile")
+    Call<ApiResponse> appupdateProfile(
             @Header("Authorization") String authorization,
             @Body User user
+    );
+
+
+
+    @GET("api/app/mydonations")  // Ensure this endpoint matches your backend controller's endpoint
+    Call<DonationResponse> getDonations(
+            @Header("Authorization") String authHeader,
+            @Query("userId") Long userId
     );
 
 }

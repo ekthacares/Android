@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/donationCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    tools:context=".DonationAdapter">
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Label for Last Donation Date -->
+        <TextView
+            android:id="@+id/tvLastDonationDateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Donation Date:"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- TextView for Last Donation Date -->
+        <TextView
+            android:id="@+id/tvLastDonationDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date Not Available"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Label for Hospital Name -->
+        <TextView
+            android:id="@+id/tvHospitalNameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hospital Name:"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- TextView for Hospital Name -->
+        <TextView
+            android:id="@+id/tvHospitalName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hospital Not Available"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Label for RecipientId -->
+        <TextView
+            android:id="@+id/tvRecipientIdLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Donated To:"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- TextView for Hospital Name -->
+        <TextView
+            android:id="@+id/tvRecipientId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID Not Available"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

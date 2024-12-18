@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class DonorHomeActivity extends AppCompatActivity {
 
-    private Button btnLogout, btnProfile;
+    private Button btnLogout, btnProfile, btnMyDonations; // Added btnMyDonations
     private TextView tvWelcomeMessage; // TextView for welcome message
 
     @Override
@@ -31,6 +31,7 @@ public class DonorHomeActivity extends AppCompatActivity {
         // Initialize views
         ImageView ivLogout = findViewById(R.id.ivLogout);
         btnProfile = findViewById(R.id.btnProfile);
+        btnMyDonations = findViewById(R.id.btnMyDonations);  // Initialize btnMyDonations
         tvWelcomeMessage = findViewById(R.id.tvWelcomeMessage);  // Initialize TextView
 
         // Retrieve JWT token and user ID from SharedPreferences
@@ -63,11 +64,36 @@ public class DonorHomeActivity extends AppCompatActivity {
                     .show();
         });
 
-        // Profile button functionality (if needed in the future)
+        // Profile button functionality
         btnProfile.setOnClickListener(v -> {
             Intent intent = new Intent(DonorHomeActivity.this, ProfileActivity.class);
             startActivity(intent);
         });
+
+        // My Donations button functionality
+        btnMyDonations.setOnClickListener(v -> {
+            Intent intent = new Intent(DonorHomeActivity.this, MyDonationsActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Retrieve JWT token and user ID from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
+        String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
+        Long userId = sharedPreferences.getLong(Constants.USER_ID_KEY, -1);
+
+        // Log and check if JWT Token and User ID are valid
+        if (jwtToken != null && userId != -1) {
+            // You can fetch user details if necessary (without displaying them)
+            fetchUserDetails(jwtToken, userId);
+        } else {
+            Toast.makeText(this, "Invalid session. Please log in again.", Toast.LENGTH_SHORT).show();
+            redirectToLogin();
+        }
     }
 
     private void fetchUserDetails(String jwtToken, Long userId) {

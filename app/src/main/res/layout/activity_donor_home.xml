@@ -3,11 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".DonorHomeActivity">
 
+    <!-- Logout ImageView -->
     <ImageView
         android:id="@+id/ivLogout"
         android:layout_width="wrap_content"
@@ -15,13 +17,10 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_logout"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-    <!-- Welcome Message TextView: Centered in the screen -->
-    <!-- Profile Button -->
-
+    <!-- Welcome Message TextView -->
     <TextView
         android:id="@+id/tvWelcomeMessage"
         android:layout_width="wrap_content"
@@ -35,16 +34,50 @@
         app:layout_constraintTop_toBottomOf="@+id/ivLogout"
         app:layout_constraintVertical_bias="0.076" />
 
+    <!-- CardView for Profile Button -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewProfile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    app:layout_constraintTop_toBottomOf="@+id/tvWelcomeMessage"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5">
+
     <Button
         android:id="@+id/btnProfile"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
-        android:layout_marginEnd="8dp"
         android:text="Profile"
-        app:layout_constraintEnd_toStartOf="@+id/ivLogout"
-        app:layout_constraintHorizontal_bias="0.303"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeMessage" />
+        android:minWidth="150dp" />
+</androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- CardView for My Donations Button -->
+<androidx.cardview.widget.CardView
+android:id="@+id/cardViewDonations"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+app:cardCornerRadius="8dp"
+app:cardElevation="4dp"
+android:layout_marginTop="16dp"
+android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    app:layout_constraintTop_toBottomOf="@+id/cardViewProfile"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5">
+
+<Button
+android:id="@+id/btnMyDonations"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="My Donations"
+android:minWidth="150dp" />
+    </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
