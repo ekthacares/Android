@@ -23,6 +23,9 @@ public class BloodDonation {
         this.hospitalName = hospitalName;
     }
 
+    public BloodDonation(Long id, Long userId, Long recipientId, java.time.LocalDateTime localDateTime, String hospitalName) {
+    }
+
     // Getters and setters
     public Long getId() {
         return id;
@@ -67,7 +70,7 @@ public class BloodDonation {
     // Method to get formatted donation date using ThreeTenABP
     public String getFormattedTimestamp() {
         if (lastDonationDate != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy ");
             return lastDonationDate.format(formatter);
         }
         return null;

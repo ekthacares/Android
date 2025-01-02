@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Last Donation Date -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Donation Date"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtLastDonationDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_border"
+        android:padding="8dp"
+        android:text="Select Date"
+        android:gravity="center_vertical" />
+
+    <!-- Hospital Name -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Hospital Name"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/edtHospitalName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_border"
+        android:padding="8dp" />
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Submit"
+        android:backgroundTint="@color/primary"
+        android:textColor="@android:color/white" />
+</LinearLayout>

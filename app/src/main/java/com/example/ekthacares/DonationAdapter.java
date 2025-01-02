@@ -1,4 +1,5 @@
 package com.example.ekthacares;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +29,18 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         BloodDonation donation = donationsList.get(position);
-        holder.donatedtoTextView.setText(String.valueOf(donation.getRecipientId()));
+
         // Get formatted last donation date using the method in BloodDonation class
         String lastDonationDate = donation.getFormattedTimestamp();
         holder.lastDonationDateTextView.setText(lastDonationDate != null ? lastDonationDate : "Date Not Available");
         holder.hospitalNameTextView.setText(donation.getHospitalName());
+
+        // Check if recipientId is null, and set default text if it is
+        if (donation.getRecipientId() != null) {
+            holder.donatedtoTextView.setText(String.valueOf(donation.getRecipientId()));
+        } else {
+            holder.donatedtoTextView.setText("Login User Added His Own data");
+        }
     }
 
     @Override
@@ -40,9 +48,9 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.ViewHo
         return donationsList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView lastDonationDateTextView, hospitalNameTextView,donatedtoTextView;
+        public TextView lastDonationDateTextView, hospitalNameTextView, donatedtoTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);

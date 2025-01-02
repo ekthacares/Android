@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -131,6 +132,12 @@ public class OtpActivity extends AppCompatActivity {
                 return params;
             }
         };
+
+        // Set retry policy for the request to avoid automatic retries
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,  // Timeout in milliseconds
+                0,  // No retries
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         // Add the request to the Volley queue
         Volley.newRequestQueue(this).add(stringRequest);

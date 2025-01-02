@@ -7,11 +7,16 @@ import com.example.ekthacares.model.DonationResponse;
 import com.example.ekthacares.model.User;
 
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -20,7 +25,7 @@ public interface ApiService {
 
     // Send OTP to mobile number
     @POST("/api/app login")
-    Call<String> login(@Query("mobile") String mobile);
+    Call<ResponseBody> login(@Query("mobile") String mobile);
 
     // Validate OTP
     @POST("/api/app/validateOtp")
@@ -39,7 +44,10 @@ public interface ApiService {
     @GET("/api/appuser")
     Call<User> getUserDetails(@Header("Authorization") String token, @Query("id") Long id);
 
-
+    @POST("/api/app/register")
+    Call<ApiResponse> registerUser(
+            @Body User user
+    );
 
     // Update user profile
     @POST("/api/app/updateProfile")
@@ -48,12 +56,18 @@ public interface ApiService {
             @Body User user
     );
 
-
-
     @GET("api/app/mydonations")  // Ensure this endpoint matches your backend controller's endpoint
     Call<DonationResponse> getDonations(
             @Header("Authorization") String authHeader,
             @Query("userId") Long userId
     );
 
+    @FormUrlEncoded
+    @POST("/api/app/addDonation")
+    Call<Map<String, Object>> addDonation(
+            @Field("userId") Long userId,
+            @Field("lastDonationDate") String lastDonationDate, // Format: "yyyy-MM-dd'T'HH:mm:ss"
+            @Field("hospitalName") String hospitalName
+    );
 }
+

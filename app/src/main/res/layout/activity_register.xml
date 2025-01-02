@@ -1,0 +1,99 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/etDonorName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Donor Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etMobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mobile Number"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/etEmailId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email ID"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/etDateOfBirth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date of Birth (YYYY-MM-DD)"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/etBloodGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Blood Group" />
+
+    <EditText
+        android:id="@+id/etAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Age"
+        android:inputType="number" />
+
+    <RadioGroup
+        android:id="@+id/rgGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/rbFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+        <RadioButton
+            android:id="@+id/rbOther"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/etAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Address"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/etCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="City"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/etState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="State"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+</LinearLayout>

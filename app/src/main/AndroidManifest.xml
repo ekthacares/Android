@@ -44,6 +44,10 @@
         <!-- Declare the MyDonationsActivity here -->
         <activity android:name=".MyDonationsActivity" android:exported="true"></activity>
 
+        <!-- Declare the ProfileActivity here -->
+        <activity android:name=".RegisterActivity" android:exported="true"></activity>
+
+
     </application>
 
 </manifest>
