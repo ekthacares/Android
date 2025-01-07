@@ -4,6 +4,7 @@ package com.example.ekthacares;
 import com.example.ekthacares.model.ApiResponse;
 import com.example.ekthacares.model.BloodDonation;
 import com.example.ekthacares.model.DonationResponse;
+import com.example.ekthacares.model.SentEmail;
 import com.example.ekthacares.model.User;
 
 import java.util.List;
@@ -69,5 +70,9 @@ public interface ApiService {
             @Field("lastDonationDate") String lastDonationDate, // Format: "yyyy-MM-dd'T'HH:mm:ss"
             @Field("hospitalName") String hospitalName
     );
+
+    @GET("/api/app/sentEmails")
+    Call<List<SentEmail>> getSentEmails(@Header("Authorization") String token, @Header("userId") Long userId);
 }
+
 

@@ -20,8 +20,9 @@ import retrofit2.Response;
 
 public class DonorHomeActivity extends AppCompatActivity {
 
-    private Button btnLogout, btnProfile, btnMyDonations; // Added btnMyDonations
+    private Button btnLogout, btnProfile, btnMyDonations, btnReceivedRequests;
     private TextView tvWelcomeMessage; // TextView for welcome message
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class DonorHomeActivity extends AppCompatActivity {
         ImageView ivLogout = findViewById(R.id.ivLogout);
         btnProfile = findViewById(R.id.btnProfile);
         btnMyDonations = findViewById(R.id.btnMyDonations);  // Initialize btnMyDonations
+        btnReceivedRequests = findViewById(R.id.btnReceivedRequests); // Initialize btnReceivedRequests
         tvWelcomeMessage = findViewById(R.id.tvWelcomeMessage);  // Initialize TextView
 
         // Retrieve JWT token and user ID from SharedPreferences
@@ -73,6 +75,12 @@ public class DonorHomeActivity extends AppCompatActivity {
         // My Donations button functionality
         btnMyDonations.setOnClickListener(v -> {
             Intent intent = new Intent(DonorHomeActivity.this, MyDonationsActivity.class);
+            startActivity(intent);
+        });
+
+        // Received Requests button functionality
+        btnReceivedRequests.setOnClickListener(v -> {
+            Intent intent = new Intent(DonorHomeActivity.this, ReceivedRequestsActivity.class);
             startActivity(intent);
         });
     }

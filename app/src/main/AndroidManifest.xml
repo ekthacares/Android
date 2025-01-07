@@ -32,6 +32,9 @@
         <!-- MainActivity declaration -->
         <activity android:name=".MainActivity" android:exported="true"></activity>
 
+        <!-- Declare the RegisterActivity here -->
+        <activity android:name=".RegisterActivity" android:exported="true"></activity>
+
         <!-- OTP Activity declaration -->
         <activity android:name=".OtpActivity" android:exported="true"></activity>
 
@@ -44,8 +47,8 @@
         <!-- Declare the MyDonationsActivity here -->
         <activity android:name=".MyDonationsActivity" android:exported="true"></activity>
 
-        <!-- Declare the ProfileActivity here -->
-        <activity android:name=".RegisterActivity" android:exported="true"></activity>
+        <!-- Declare the ReceivedRequestsActivity here -->
+        <activity android:name=".ReceivedRequestsActivity" android:exported="true"></activity>
 
 
     </application>
