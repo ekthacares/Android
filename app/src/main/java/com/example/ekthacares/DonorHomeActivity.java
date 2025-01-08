@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class DonorHomeActivity extends AppCompatActivity {
 
-    private Button btnLogout, btnProfile, btnMyDonations, btnReceivedRequests;
+    private Button btnLogout, btnProfile, btnMyDonations, btnReceivedRequests, btnQuickSearch;
     private TextView tvWelcomeMessage; // TextView for welcome message
 
 
@@ -33,6 +33,7 @@ public class DonorHomeActivity extends AppCompatActivity {
         ImageView ivLogout = findViewById(R.id.ivLogout);
         btnProfile = findViewById(R.id.btnProfile);
         btnMyDonations = findViewById(R.id.btnMyDonations);  // Initialize btnMyDonations
+        btnQuickSearch = findViewById(R.id.btnQuickSearch);
         btnReceivedRequests = findViewById(R.id.btnReceivedRequests); // Initialize btnReceivedRequests
         tvWelcomeMessage = findViewById(R.id.tvWelcomeMessage);  // Initialize TextView
 
@@ -81,6 +82,12 @@ public class DonorHomeActivity extends AppCompatActivity {
         // Received Requests button functionality
         btnReceivedRequests.setOnClickListener(v -> {
             Intent intent = new Intent(DonorHomeActivity.this, ReceivedRequestsActivity.class);
+            startActivity(intent);
+        });
+
+        // Set click listener for Quick Search button
+        btnQuickSearch.setOnClickListener(v -> {
+            Intent intent = new Intent(DonorHomeActivity.this, QuickSearchActivity.class);
             startActivity(intent);
         });
     }

@@ -8,6 +8,7 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
+    android:background="@color/white"
     tools:context=".DonationAdapter">
 
 

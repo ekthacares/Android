@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder;
 
 import org.threeten.bp.LocalDateTime;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -24,7 +26,11 @@ public class RetrofitClient {
             // OkHttpClient with logging
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor)
+                    .connectTimeout(30, TimeUnit.SECONDS)  // Connection timeout
+                    .writeTimeout(30, TimeUnit.SECONDS)    // Write timeout
+                    .readTimeout(30, TimeUnit.SECONDS)     // Read timeout
                     .build();
+
 
             // Create Gson with custom deserializer for LocalDateTime
             Gson gson = new GsonBuilder()

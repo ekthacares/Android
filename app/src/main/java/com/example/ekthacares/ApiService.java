@@ -2,7 +2,7 @@ package com.example.ekthacares;
 
 
 import com.example.ekthacares.model.ApiResponse;
-import com.example.ekthacares.model.BloodDonation;
+import com.example.ekthacares.model.BloodSearchResponse;
 import com.example.ekthacares.model.DonationResponse;
 import com.example.ekthacares.model.SentEmail;
 import com.example.ekthacares.model.User;
@@ -17,9 +17,8 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -73,6 +72,17 @@ public interface ApiService {
 
     @GET("/api/app/sentEmails")
     Call<List<SentEmail>> getSentEmails(@Header("Authorization") String token, @Header("userId") Long userId);
-}
+
+    @GET("/api/app/searchforblood")
+    Call<BloodSearchResponse> searchForBlood(
+            @HeaderMap Map<String, String> headers,
+            @Query("bloodgroup") String bloodgroup,
+            @Query("city") String city,
+            @Query("state") String state,
+            @Query("hospital") String hospitalName
+    );
+    }
+
+
 
 

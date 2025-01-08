@@ -50,6 +50,10 @@
         <!-- Declare the ReceivedRequestsActivity here -->
         <activity android:name=".ReceivedRequestsActivity" android:exported="true"></activity>
 
+        <!-- Declare the QuickSearchActivity here -->
+        <activity android:name=".QuickSearchActivity" android:exported="true"></activity>
+
+
 
     </application>
 
