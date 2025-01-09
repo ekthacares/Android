@@ -3,6 +3,7 @@ package com.example.ekthacares;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,6 +91,9 @@ public class RegisterActivity extends AppCompatActivity {
             } else {
                 registerUser(donorname, mobileNum, emailid, dateofbirth, bloodgroup, Integer.parseInt(age), gender, address, city, state);
             }
+
+            // Reset flag with a small delay (optional, for UI responsiveness)
+            new Handler().postDelayed(() -> isSubmitting = false, 500); // Adjust the delay if necessary
         });
     }
 

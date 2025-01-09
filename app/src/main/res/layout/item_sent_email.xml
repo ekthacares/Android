@@ -16,44 +16,44 @@
 
 
 
-    <!-- Email Text View with Border -->
-    <TextView
-        android:id="@+id/tvLoggedInUserId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="sans-serif-medium"
-        android:lineSpacingExtra="4dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
+        <!-- Email Text View with Border -->
+        <TextView
+            android:id="@+id/tvLoggedInUserId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:lineSpacingExtra="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
 
-    <!-- Sent At Text View with Border -->
-    <TextView
-        android:id="@+id/tvSentAt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="sans-serif"
-        android:lineSpacingExtra="4dp"
-        android:textStyle="bold"/>
+        <!-- Sent At Text View with Border -->
+        <TextView
+            android:id="@+id/tvSentAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif"
+            android:lineSpacingExtra="4dp"
+            android:textStyle="bold"/>
 
 
         <!-- Confirmation URL Text View with Border -->
-    <TextView
-        android:id="@+id/tvConfirmationUrl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        android:linksClickable="true"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="sans-serif-light"
-        android:lineSpacingExtra="4dp"
-        android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tvConfirmationUrl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="14sp"
+            android:linksClickable="true"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif-light"
+            android:lineSpacingExtra="4dp"
+            android:textStyle="bold"/>
 
-</LinearLayout>
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

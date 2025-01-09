@@ -3,6 +3,7 @@ package com.example.ekthacares;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,20 +60,42 @@ public class ReceivedRequestsActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<SentEmail>>() {
             @Override
             public void onResponse(Call<List<SentEmail>> call, Response<List<SentEmail>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    sentEmailList.clear();
-                    sentEmailList.addAll(response.body());
-                    adapter.notifyDataSetChanged();
+                if (response.isSuccessful()) {
+                    if (response.body() != null && !response.body().isEmpty()) {
+                        // There are emails, update the adapter
+                        List<SentEmail> sentEmails = response.body();
+                        Log.d("ReceivedRequests", "Fetched emails: " + sentEmails.size());
+                        adapter.updateData(sentEmails);
+                        // Hide the "No Emails" message
+                        findViewById(R.id.noEmailsMessage).setVisibility(View.GONE);
+                    } else {
+                        // No emails, show the message from the response
+                        Toast.makeText(ReceivedRequestsActivity.this, "No Emails received for this user.", Toast.LENGTH_SHORT).show();
+                        adapter.updateData(new ArrayList<>()); // Update with an empty list
+                        // Show the "No Emails" message on the screen
+                        // Log the visibility change for debugging
+                        Log.d("ReceivedRequests", "Setting visibility: " + (response.body().isEmpty() ? "VISIBLE" : "GONE"));
+
+                        findViewById(R.id.noEmailsMessage).setVisibility(View.VISIBLE); // Show the message
+                        View noEmailsMessage = findViewById(R.id.noEmailsMessage);
+                        Log.d("ReceivedRequests", "Visibility of noEmailsMessage: " + noEmailsMessage.getVisibility());
+                        Log.d("ReceivedRequests", "Layout width: " + noEmailsMessage.getLayoutParams().width);
+                        Log.d("ReceivedRequests", "Layout height: " + noEmailsMessage.getLayoutParams().height);
+                    }
                 } else {
-                    Toast.makeText(ReceivedRequestsActivity.this, "Failed to fetch sent emails.", Toast.LENGTH_SHORT).show();
+                    // Handle error or non-successful response
+                    Toast.makeText(ReceivedRequestsActivity.this, "Failed to fetch sent emails. No data available.", Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onFailure(Call<List<SentEmail>> call, Throwable t) {
                 Log.e("ReceivedRequests", "Error fetching data", t);
-                Toast.makeText(ReceivedRequestsActivity.this, "An error occurred.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReceivedRequestsActivity.this, "An error occurred while fetching the emails.", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }
+

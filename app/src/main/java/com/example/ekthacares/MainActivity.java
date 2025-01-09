@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                             finish();  // Optional: Finish the MainActivity to prevent returning to it
                             isOtpSent = false;  // Reset the flag after activity transition
                             btnSendOtp.setEnabled(true);  // Re-enable the button
-                        }, 2000); // 2 seconds delay before starting next activity
+                        }, 1000); // 2 seconds delay before starting next activity
                     }
                 },
                 error -> {
