@@ -9,6 +9,7 @@
     android:background="@color/white"
     tools:context=".DonorHomeActivity">
 
+
     <!-- Logout ImageView -->
     <ImageView
         android:id="@+id/ivLogout"
@@ -32,7 +33,8 @@
         app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivLogout"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintVertical_bias="0.076"
+        android:textStyle="bold"/>
 
     <!-- CardView for Profile Button -->
     <androidx.cardview.widget.CardView
@@ -43,41 +45,41 @@
         app:cardElevation="4dp"
         android:layout_marginTop="32dp"
         android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    app:layout_constraintTop_toBottomOf="@+id/tvWelcomeMessage"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.5">
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeMessage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5">
 
-    <Button
-        android:id="@+id/btnProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:minWidth="150dp" />
-</androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/btnProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:minWidth="150dp" />
+    </androidx.cardview.widget.CardView>
 
     <!-- CardView for My Donations Button -->
-<androidx.cardview.widget.CardView
-android:id="@+id/cardViewDonations"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-app:cardCornerRadius="8dp"
-app:cardElevation="4dp"
-android:layout_marginTop="16dp"
-android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    app:layout_constraintTop_toBottomOf="@+id/cardViewProfile"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.5">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewDonations"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewProfile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5">
 
-<Button
-android:id="@+id/btnMyDonations"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:text="My Donations"
-android:minWidth="150dp" />
+        <Button
+            android:id="@+id/btnMyDonations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Donations"
+            android:minWidth="150dp" />
     </androidx.cardview.widget.CardView>
 
     <!-- CardView for My Received Requests -->
@@ -126,4 +128,27 @@ android:minWidth="150dp" />
             android:minWidth="150dp" />
     </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- CardView for Donor Tracking -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardbtnDonorTracking"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/cardQuickSearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <Button
+            android:id="@+id/btnDonorTracking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Donor Tracking"
+            android:minWidth="150dp" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

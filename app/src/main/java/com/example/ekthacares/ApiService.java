@@ -3,6 +3,7 @@ package com.example.ekthacares;
 
 import com.example.ekthacares.model.ApiResponse;
 import com.example.ekthacares.model.BloodSearchResponse;
+import com.example.ekthacares.model.ConfirmationResponse;
 import com.example.ekthacares.model.DonationResponse;
 import com.example.ekthacares.model.SentEmail;
 import com.example.ekthacares.model.User;
@@ -80,6 +81,12 @@ public interface ApiService {
             @Query("city") String city,
             @Query("state") String state,
             @Query("hospital") String hospitalName
+    );
+
+    @GET("/api/app/donortracking")
+    Call<ConfirmationResponse> getDonationTracking(
+            @Header("Authorization") String authHeader,
+            @Header("userId") Long userId
     );
     }
 

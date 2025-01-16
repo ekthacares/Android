@@ -41,6 +41,7 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.ViewHo
         } else {
             holder.donatedtoTextView.setText("Login User Added His Own data");
         }
+
     }
 
     @Override

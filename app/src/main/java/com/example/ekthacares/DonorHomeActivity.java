@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class DonorHomeActivity extends AppCompatActivity {
 
-    private Button btnLogout, btnProfile, btnMyDonations, btnReceivedRequests, btnQuickSearch;
+    private Button btnLogout, btnProfile, btnMyDonations, btnReceivedRequests, btnQuickSearch, btnDonorTracking ;
     private TextView tvWelcomeMessage; // TextView for welcome message
 
 
@@ -36,6 +36,7 @@ public class DonorHomeActivity extends AppCompatActivity {
         btnQuickSearch = findViewById(R.id.btnQuickSearch);
         btnReceivedRequests = findViewById(R.id.btnReceivedRequests); // Initialize btnReceivedRequests
         tvWelcomeMessage = findViewById(R.id.tvWelcomeMessage);  // Initialize TextView
+        btnDonorTracking = findViewById(R.id.btnDonorTracking);
 
         // Retrieve JWT token and user ID from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
@@ -88,6 +89,13 @@ public class DonorHomeActivity extends AppCompatActivity {
         // Set click listener for Quick Search button
         btnQuickSearch.setOnClickListener(v -> {
             Intent intent = new Intent(DonorHomeActivity.this, QuickSearchActivity.class);
+            startActivity(intent);
+        });
+
+        // Donor Tracking button functionality
+        btnDonorTracking.setOnClickListener(v -> {
+            // Open DonorTrackingActivity
+            Intent intent = new Intent(DonorHomeActivity.this, DonorTrackingActivity.class);
             startActivity(intent);
         });
     }

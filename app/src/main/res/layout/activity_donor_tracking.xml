@@ -1,0 +1,26 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Confirmations RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/confirmationsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- No Tracking Info Message -->
+    <TextView
+        android:id="@+id/noTrackingInfoMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No donation tracking information available."
+        android:textColor="@color/error"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:layout_centerInParent="true" /> <!-- Center the message in the parent -->
+
+</RelativeLayout>

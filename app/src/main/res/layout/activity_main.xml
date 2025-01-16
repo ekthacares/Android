@@ -9,6 +9,22 @@
     android:background="@color/white"
     tools:context=".MainActivity">
 
+
+    <!-- App Icon centered in the middle of the screen -->
+
+
+    <ImageView
+        android:id="@+id/appIcon"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="388dp"
+
+        android:src="@drawable/ec_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Mobile Number Input -->
     <EditText
         android:id="@+id/etMobile"

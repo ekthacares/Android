@@ -70,7 +70,7 @@ public class ReceivedRequestsActivity extends AppCompatActivity {
                         findViewById(R.id.noEmailsMessage).setVisibility(View.GONE);
                     } else {
                         // No emails, show the message from the response
-                        Toast.makeText(ReceivedRequestsActivity.this, "No Emails received for this user.", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ReceivedRequestsActivity.this, "No Emails received for this user.", Toast.LENGTH_SHORT).show();
                         adapter.updateData(new ArrayList<>()); // Update with an empty list
                         // Show the "No Emails" message on the screen
                         // Log the visibility change for debugging

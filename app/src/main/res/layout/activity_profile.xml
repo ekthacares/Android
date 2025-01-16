@@ -6,12 +6,25 @@
     android:padding="16dp"
     android:background="@color/white">
 
+
+    <!-- Profile Heading -->
+    <TextView
+        android:id="@+id/tvProfileHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/black" />
+
     <ImageView
         android:id="@+id/imgProfile"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_profile_picture" /> <!-- Replace with your image resource -->
+        android:src="@drawable/ic_profile_picture1" /> <!-- Replace with your image resource -->
 
     <!-- User ID -->
     <LinearLayout
