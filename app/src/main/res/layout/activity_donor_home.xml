@@ -101,7 +101,7 @@
             android:id="@+id/btnReceivedRequests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Requests Received"
+            android:text="Received Requests"
             android:minWidth="150dp" />
     </androidx.cardview.widget.CardView>
 
@@ -130,7 +130,7 @@
 
     <!-- CardView for Donor Tracking -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardDonorTracking"
+        android:id="@+id/cardbtnDonorTracking"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
@@ -150,30 +150,5 @@
             android:text="Donor Tracking"
             android:minWidth="150dp" />
     </androidx.cardview.widget.CardView>
-
-
-    <!-- CardView for Request Blood -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardRequestBlood"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/cardDonorTracking"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5">
-
-        <Button
-            android:id="@+id/btnRequestBlood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Request blood for others"
-            android:minWidth="150dp" />
-    </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
