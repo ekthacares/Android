@@ -2,8 +2,6 @@ package com.example.ekthacares;
 
 
 import com.example.ekthacares.model.ApiResponse;
-import com.example.ekthacares.model.BloodRequest;
-import com.example.ekthacares.model.BloodRequestResponse;
 import com.example.ekthacares.model.BloodSearchResponse;
 import com.example.ekthacares.model.ConfirmationResponse;
 import com.example.ekthacares.model.DonationResponse;
@@ -22,7 +20,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -91,20 +88,7 @@ public interface ApiService {
             @Header("Authorization") String authHeader,
             @Header("userId") Long userId
     );
-
-    // Update FCM token
-    @POST("/api/users/{id}/fcm-token")
-    Call<Void> updateFcmToken(
-            @Header("Authorization") String jwtToken,
-            @Path("id") Long userId,
-            @Body Map<String, String> requestBody);  // Use Map<String, String>
-
-
-    @POST("/api/app/request")
-    Call<BloodRequestResponse> requestBlood(@Header("Authorization") String token, @Body BloodRequest request);
-
-
-}
+    }
 
 
 
