@@ -8,6 +8,7 @@
         android:id="@+id/rvReceivedRequests"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:padding="16dp" />
 
     <!-- TextView to show message when no emails are found -->

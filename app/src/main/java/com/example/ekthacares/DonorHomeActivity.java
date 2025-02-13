@@ -1,9 +1,13 @@
 package com.example.ekthacares;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +33,8 @@ public class DonorHomeActivity extends AppCompatActivity {
     private TextView tvWelcomeMessage;
     private String jwtToken;
     private Long userId;
+    private ImageView ivNotifications, ivCampaigns;
+    private View notificationDot, notificationDot1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,10 @@ public class DonorHomeActivity extends AppCompatActivity {
         tvWelcomeMessage = findViewById(R.id.tvWelcomeMessage);
         btnDonorTracking = findViewById(R.id.btnDonorTracking);
         btnRequestBlood = findViewById(R.id.btnRequestBlood);
+        ivNotifications = findViewById(R.id.ivNotifications);
+        notificationDot = findViewById(R.id.notification_dot);
+        ivCampaigns = findViewById(R.id.ivCampaigns);
+        notificationDot1 = findViewById(R.id.notification_dot1);
 
         // Retrieve JWT token and user ID from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
@@ -80,11 +90,87 @@ public class DonorHomeActivity extends AppCompatActivity {
 
         // Request Blood button functionality
         btnRequestBlood.setOnClickListener(v -> startActivity(new Intent(DonorHomeActivity.this, RequestBloodActivity.class)));
+
+        // Notification icon click
+        ivNotifications.setOnClickListener(v -> {
+            String fcmToken = sharedPreferences.getString("FCM_TOKEN", null);
+
+            if (fcmToken != null) {
+                Intent intent = new Intent(DonorHomeActivity.this, NotificationsActivity.class);
+                intent.putExtra("FCM_TOKEN", fcmToken);
+                startActivity(intent);
+
+                // Clear unread notification state when the user opens notifications
+                clearNotificationDot();
+            } else {
+                Toast.makeText(DonorHomeActivity.this, "FCM Token not available", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        updateNotificationIcon();
+
+        // Campaign icon click
+        ivCampaigns.setOnClickListener(v -> {
+            Intent intent = new Intent(DonorHomeActivity.this, CampaignActivity.class);
+            startActivity(intent);
+
+            // Clear unread campaign state when the user opens campaigns
+            clearCampaignDot();
+        });
+
+        updateCampaignIcon();
     }
+
+    private void updateCampaignIcon() {
+        SharedPreferences sharedPreferences = getSharedPreferences("CampaignPrefs", MODE_PRIVATE);
+        boolean hasUnreadCampaigns = sharedPreferences.getBoolean("hasUnreadCampaigns", false);
+        notificationDot1.setVisibility(hasUnreadCampaigns ? View.VISIBLE : View.GONE);
+    }
+
+    private void clearCampaignDot() {
+        SharedPreferences sharedPreferences = getSharedPreferences("CampaignPrefs", MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean("hasUnreadCampaigns", false).apply();
+        notificationDot1.setVisibility(View.GONE);
+    }
+
+    private void updateNotificationIcon() {
+        SharedPreferences prefs = getSharedPreferences("NotificationPrefs", MODE_PRIVATE);
+        boolean hasUnread = prefs.getBoolean("hasUnreadNotifications", false);
+        notificationDot.setVisibility(hasUnread ? View.VISIBLE : View.GONE);
+    }
+
+    private void clearNotificationDot() {
+        SharedPreferences prefs = getSharedPreferences("NotificationPrefs", MODE_PRIVATE);
+        prefs.edit().putBoolean("hasUnreadNotifications", false).apply();
+        notificationDot.setVisibility(View.GONE);
+    }
+
+    // Notification receiver
+    private final BroadcastReceiver notificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateNotificationIcon();
+        }
+    };
+
+    // Campaign receiver
+    private final BroadcastReceiver campaignReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateCampaignIcon();
+        }
+    };
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        updateNotificationIcon();
+        updateCampaignIcon();
+
+        registerReceiver(notificationReceiver, new IntentFilter("com.example.ekthacares.NOTIFICATION_RECEIVED"), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(campaignReceiver, new IntentFilter("com.example.ekthacares.CAMPAIGN_RECEIVED"), Context.RECEIVER_NOT_EXPORTED);
+
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
         jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
         userId = sharedPreferences.getLong(Constants.USER_ID_KEY, -1);
@@ -95,6 +181,13 @@ public class DonorHomeActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid session. Please log in again.", Toast.LENGTH_SHORT).show();
             redirectToLogin();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(notificationReceiver);
+        unregisterReceiver(campaignReceiver);
     }
 
     private void fetchUserDetails(String jwtToken, Long userId) {
@@ -121,7 +214,7 @@ public class DonorHomeActivity extends AppCompatActivity {
             }
         });
     }
-
+    // Handle incoming FCM messages and broadcast campaign updates
     private void fetchFcmToken() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
@@ -129,20 +222,15 @@ public class DonorHomeActivity extends AppCompatActivity {
                 return;
             }
 
-            // Get the FCM token
             String fcmToken = task.getResult();
             Log.d("FCM", "FCM Token: " + fcmToken);
 
-
-            // Store FCM Token in SharedPreferences
             SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("FCM_TOKEN", fcmToken);
             editor.apply();
 
-            // Send FCM Token to Backend
             sendFcmTokenToServer(fcmToken);
-
         });
     }
 
@@ -192,7 +280,7 @@ public class DonorHomeActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("No", null)
                 .show();
-          }
+    }
 
     private void redirectToLogin() {
         Intent intent = new Intent(DonorHomeActivity.this, MainActivity.class);
@@ -200,5 +288,4 @@ public class DonorHomeActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 }

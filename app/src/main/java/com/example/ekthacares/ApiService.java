@@ -5,8 +5,10 @@ import com.example.ekthacares.model.ApiResponse;
 import com.example.ekthacares.model.BloodRequest;
 import com.example.ekthacares.model.BloodRequestResponse;
 import com.example.ekthacares.model.BloodSearchResponse;
+import com.example.ekthacares.model.Campaign;
 import com.example.ekthacares.model.ConfirmationResponse;
 import com.example.ekthacares.model.DonationResponse;
+import com.example.ekthacares.model.Notification;
 import com.example.ekthacares.model.SentEmail;
 import com.example.ekthacares.model.User;
 
@@ -104,7 +106,20 @@ public interface ApiService {
     Call<BloodRequestResponse> requestBlood(@Header("Authorization") String token, @Body BloodRequest request);
 
 
+        @GET("api/notifications/all")
+        Call<List<Notification>> getAllNotifications();
+
+
+    @GET("api/notifications/user")
+    Call<List<Notification>> getUserNotifications(@Query("fcmToken") String fcmToken);
+
+    @GET("/api/campaigns")
+    Call<List<Campaign>> getCampaigns();
 }
+
+
+
+
 
 
 

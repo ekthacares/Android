@@ -21,6 +21,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Notification Icons  -->
+    <ImageView
+        android:id="@+id/ivNotifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_notifications"
+        app:layout_constraintEnd_toStartOf="@+id/ivLogout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/notification_dot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/red_dot"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/ivNotifications"
+        app:layout_constraintTop_toTopOf="@id/ivNotifications"
+        android:translationX="5dp"
+        android:translationY="-5dp"/>
+
+    <!-- Campaign Icons  -->
+    <ImageView
+        android:id="@+id/ivCampaigns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_campaign"
+        app:layout_constraintEnd_toStartOf="@+id/ivNotifications"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/notification_dot1"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/red_dot"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/ivCampaigns"
+        app:layout_constraintTop_toTopOf="@id/ivCampaigns"
+        android:translationX="5dp"
+        android:translationY="-5dp"/>
+
+
     <!-- Welcome Message TextView -->
     <TextView
         android:id="@+id/tvWelcomeMessage"

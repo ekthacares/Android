@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // Check if JWT token is already available
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null); // Check for saved token
