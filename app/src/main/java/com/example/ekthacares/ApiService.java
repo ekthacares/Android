@@ -110,7 +110,7 @@ public interface ApiService {
         Call<List<Notification>> getAllNotifications();
 
 
-    @GET("api/notifications/user")
+    @GET("/api/notifications/user")
     Call<List<Notification>> getUserNotifications(@Query("fcmToken") String fcmToken);
 
     @GET("/api/campaigns")
