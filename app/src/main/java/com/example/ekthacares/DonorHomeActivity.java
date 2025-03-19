@@ -68,7 +68,8 @@ public class DonorHomeActivity extends AppCompatActivity {
         }
 
         // Retrieve and store FCM Token
-        fetchFcmToken();
+        fetchFcmToken(userId, jwtToken);
+        //fetchFcmTokenFromApi();
 
         // Logout functionality
         ivLogout.setOnClickListener(v -> showLogoutDialog());
@@ -215,24 +216,91 @@ public class DonorHomeActivity extends AppCompatActivity {
         });
     }
     // Handle incoming FCM messages and broadcast campaign updates
-    private void fetchFcmToken() {
+    private void fetchFcmToken(Long userId, String jwtToken) {
+        if (jwtToken == null || userId == -1) {
+            Log.e("FCM", "User not logged in, skipping FCM token check.");
+            return;
+        }
+
+        // Step 1: Fetch the FCM token from the server
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<Map<String, String>> call = apiService.getFcmToken("Bearer " + jwtToken, userId);
+
+        call.enqueue(new Callback<Map<String, String>>() {
+            @Override
+            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String existingFcmToken = response.body().get("fcmToken");
+
+                    if (existingFcmToken != null && !existingFcmToken.isEmpty()) {
+                        // ✅ Existing token found, save to SharedPreferences and do NOT generate a new one
+                        saveFcmTokenLocally(existingFcmToken);
+                        Log.d("FCM", "Using existing FCM token from API: " + existingFcmToken);
+                    } else {
+                        // ❌ No token found in API, generate a new one
+                        Log.d("FCM", "No existing FCM token found. Generating a new one...");
+                        generateAndSendNewFcmToken(userId, jwtToken);
+                    }
+                } else {
+                    // ❌ API call failed or token missing, generate a new one
+                    Log.e("FCM", "Failed to fetch existing FCM token. Generating a new one...");
+                    generateAndSendNewFcmToken(userId, jwtToken);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                Log.e("FCM", "Error fetching FCM token from API", t);
+                generateAndSendNewFcmToken(userId, jwtToken);
+            }
+        });
+    }
+    private void generateAndSendNewFcmToken(Long userId, String jwtToken) {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
-                Log.e("FCM", "Fetching FCM token failed", task.getException());
+                Log.e("FCM", "Fetching new FCM token failed", task.getException());
                 return;
             }
 
-            String fcmToken = task.getResult();
-            Log.d("FCM", "FCM Token: " + fcmToken);
+            String newFcmToken = task.getResult();
+            Log.d("FCM", "Generated new FCM Token: " + newFcmToken);
 
-            SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("FCM_TOKEN", fcmToken);
-            editor.apply();
+            // ✅ Save locally
+            saveFcmTokenLocally(newFcmToken);
 
-            sendFcmTokenToServer(fcmToken);
+            // ✅ Send to server
+            sendFcmTokenToServer(userId, newFcmToken, jwtToken);
         });
     }
+    private void saveFcmTokenLocally(String fcmToken) {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("FCM_TOKEN", fcmToken);
+        editor.apply();
+    }
+    private void sendFcmTokenToServer(Long userId, String fcmToken, String jwtToken) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("fcmToken", fcmToken);
+
+        Call<Void> call = apiService.updateFcmToken("Bearer " + jwtToken, userId, requestBody);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("FCM", "FCM token successfully updated on the server.");
+                } else {
+                    Log.e("FCM", "Failed to update FCM token on the server. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("FCM", "Error updating FCM token on the server", t);
+            }
+        });
+    }
+
 
     private void sendFcmTokenToServer(String fcmToken) {
         if (jwtToken == null || userId == -1) {
@@ -266,6 +334,43 @@ public class DonorHomeActivity extends AppCompatActivity {
             }
         });
     }
+
+//    private void fetchFcmTokenFromApi() {
+//        if (jwtToken == null || userId == -1) {
+//            Log.e("FCM", "User not logged in, skipping FCM token fetch.");
+//            return;
+//        }
+//
+//        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+//        Call<Map<String, String>> call = apiService.getFcmToken("Bearer " + jwtToken, userId);
+//
+//        call.enqueue(new Callback<Map<String, String>>() {
+//            @Override
+//            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    String fcmToken = response.body().get("fcmToken");
+//                    if (fcmToken != null && !fcmToken.isEmpty()) {
+//                        Log.d("FCM", "Fetched FCM Token from API: " + fcmToken);
+//
+//                        // Save token to SharedPreferences
+//                        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.putString("FCM_TOKEN", fcmToken);
+//                        editor.apply();
+//                    } else {
+//                        Log.e("FCM", "No FCM token found in API response.");
+//                    }
+//                } else {
+//                    Log.e("FCM", "Failed to fetch FCM token: " + response.code());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Map<String, String>> call, Throwable t) {
+//                Log.e("FCM", "Error fetching FCM token from API", t);
+//            }
+//        });
+//    }
 
     private void showLogoutDialog() {
         new AlertDialog.Builder(DonorHomeActivity.this)

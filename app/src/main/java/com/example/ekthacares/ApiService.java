@@ -94,6 +94,10 @@ public interface ApiService {
             @Header("userId") Long userId
     );
 
+    // Get FCM Token
+    @GET("/api/users/{id}/fcm-token")
+    Call<Map<String, String>> getFcmToken(@Header("Authorization") String jwtToken, @Path("id") Long userId);
+
     // Update FCM token
     @POST("/api/users/{id}/fcm-token")
     Call<Void> updateFcmToken(
