@@ -98,7 +98,7 @@ public class OtpActivity extends AppCompatActivity {
 
                                 // Navigate to DonorHomeActivity after successful validation
                                 new Handler().postDelayed(() -> {
-                                    Intent intent = new Intent(OtpActivity.this, DonorHomeActivity.class);
+                                    Intent intent = new Intent(OtpActivity.this, DonorHomeActivity1.class);
                                     startActivity(intent);
                                     finish();
                                 }, 2000);

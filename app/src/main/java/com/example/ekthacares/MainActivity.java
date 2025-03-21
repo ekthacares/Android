@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
         if (jwtToken != null) {
-            startActivity(new Intent(MainActivity.this, DonorHomeActivity.class));
+            startActivity(new Intent(MainActivity.this, DonorHomeActivity1.class));
             finish();
             return; // Exit onCreate if the user is already logged in
         }
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 // Check if user is logged in
                 String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
                 if (jwtToken != null) {
-                    startActivity(new Intent(MainActivity.this, DonorHomeActivity.class));
+                    startActivity(new Intent(MainActivity.this, DonorHomeActivity1.class));
                     finish();
                 } else {
                     // Refresh UI if user is not logged in

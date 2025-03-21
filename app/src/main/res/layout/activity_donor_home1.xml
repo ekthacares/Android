@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DonorHomeActivity1">
+
+    <!-- Main Content Area -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Toolbar Section -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title=""/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
+
+                <!-- Navigation Icon (Left) -->
+                <ImageView
+                    android:id="@+id/toolbar_nav_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_menu"
+                    android:background="@drawable/rounded_bg"/>
+
+                <!-- Welcome Text (Center) -->
+                <TextView
+                    android:id="@+id/tvWelcome"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome, User"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:paddingStart="8dp"
+                    android:layout_weight="1"/>
+
+                <!-- First Icon (Campaign) -->
+                <FrameLayout
+                    android:layout_width="32dp"
+                    android:layout_height="32dp">
+
+                    <ImageView
+                        android:id="@+id/ivCampaigns"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_campaign"
+                        android:padding="4dp"
+                        android:layout_gravity="center" />
+
+                    <!-- Notification Dot -->
+                    <View
+                        android:id="@+id/notification_dot1"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:background="@drawable/red_dot"
+                        android:visibility="gone"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="-3dp"
+                        android:layout_marginEnd="-3dp" />
+                </FrameLayout>
+
+                <!-- Second Icon (Notifications) -->
+                <FrameLayout
+                    android:layout_width="32dp"
+                    android:layout_height="32dp">
+
+                <ImageView
+                    android:id="@+id/ivNotifications"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_notifications"
+                    android:layout_gravity="center" />
+                    <!-- Notification Dot -->
+                    <View
+                        android:id="@+id/notification_dot"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:background="@drawable/red_dot"
+                        android:visibility="gone"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="-3dp"
+                        android:layout_marginEnd="-3dp" />
+                </FrameLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- New Horizontal Scroll Section -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp">
+
+                        <!-- Card 1 -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardNews"
+                            style="@style/DashboardCard"
+                            android:layout_width="200dp"
+                            android:layout_height="120dp"
+                            android:layout_marginEnd="8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:src="@drawable/ic_first"
+                                    style="@style/DashboardIcon"/>
+
+                                <TextView
+                                    android:text="Latest News"
+                                    style="@style/DashboardText"/>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Card 2 -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardEvents"
+                            style="@style/DashboardCard"
+                            android:layout_width="200dp"
+                            android:layout_height="120dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:src="@drawable/ic_second"
+                                    style="@style/DashboardIcon"/>
+
+                                <TextView
+                                    android:text="Upcoming Events"
+                                    style="@style/DashboardText"/>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- Quick Actions Grid -->
+                <androidx.gridlayout.widget.GridLayout
+                    android:id="@+id/gridQuickActions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:padding="8dp"
+                    app:columnCount="2"
+                    app:rowCount="3"
+                    app:columnOrderPreserved="false"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <!-- Profile -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardProfile"
+                        style="@style/DashboardCard"
+                        android:onClick="openProfile"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_columnWeight="1">
+
+                        <ImageView
+                            android:src="@drawable/ic_profile"
+                            style="@style/DashboardIcon"/>
+
+                        <TextView
+                            android:text="Profile"
+                            style="@style/DashboardText"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- My Donations -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardDonations"
+                        style="@style/DashboardCard"
+                        android:onClick="openDonations"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_columnWeight="1">
+
+                        <ImageView
+                            android:src="@drawable/ic_donations"
+                            style="@style/DashboardIcon"/>
+
+                        <TextView
+                            android:text="My Donations"
+                            style="@style/DashboardText"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Requests Received -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardRequests"
+                        style="@style/DashboardCard"
+                        android:onClick="openRequests"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_columnWeight="1">
+
+                        <ImageView
+                            android:src="@drawable/ic_requests"
+                            style="@style/DashboardIcon"/>
+
+                        <TextView
+                            android:text="Requests Received"
+                            style="@style/DashboardText"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Quick Search -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardQuickSearch"
+                        style="@style/DashboardCard"
+                        android:onClick="openQuickSearch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_columnWeight="1">
+
+                        <ImageView
+                            android:src="@drawable/ic_search"
+                            style="@style/DashboardIcon"/>
+
+                        <TextView
+                            android:text="Quick Search"
+                            style="@style/DashboardText"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Donor Tracking -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardDonorTracking"
+                        style="@style/DashboardCard"
+                        android:onClick="openDonorTracking"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_columnWeight="1">
+
+                        <ImageView
+                            android:src="@drawable/ic_tracking"
+                            style="@style/DashboardIcon"/>
+
+                        <TextView
+                            android:text="Donor Tracking"
+                            style="@style/DashboardText"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Request Blood -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardRequestBlood"
+                        style="@style/DashboardCard"
+                        android:onClick="openRequestBlood"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_columnWeight="1">
+
+                        <ImageView
+                            android:src="@drawable/ic_blood_request"
+                            style="@style/DashboardIcon"/>
+
+                        <TextView
+                            android:text="Request Blood"
+                            style="@style/DashboardText"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.gridlayout.widget.GridLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!-- Navigation View -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/nav_menu"
+        app:headerLayout="@layout/nav_header"
+        android:background="@color/white"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

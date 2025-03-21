@@ -42,6 +42,7 @@ dependencies {
     implementation libs.firebase.messaging
     implementation libs.ui.graphics.android
     implementation libs.activity
+    implementation libs.androidx.gridlayout
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -67,4 +68,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10'
     implementation platform('com.google.firebase:firebase-bom:33.8.0')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation libs.androidx.constraintlayout.v214
 }

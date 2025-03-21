@@ -45,6 +45,9 @@
         <!-- Declare the DonorHomeActivity here -->
         <activity android:name=".DonorHomeActivity" android:exported="true"></activity>
 
+        <!-- Declare the DonorHomeActivity here -->
+        <activity android:name=".DonorHomeActivity1" android:exported="true"></activity>
+
         <!-- Declare the ProfileActivity here -->
         <activity android:name=".ProfileActivity" android:exported="true"></activity>
 

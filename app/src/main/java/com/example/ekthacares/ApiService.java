@@ -117,6 +117,11 @@ public interface ApiService {
     @GET("/api/notifications/user")
     Call<List<Notification>> getUserNotifications(@Query("fcmToken") String fcmToken);
 
+    @GET("/api/notifications/user/{userId}")
+    Call<List<Notification>> getUserNotificationsByUserId(
+            @Path("userId") Long userId,
+            @Header("Authorization") String authorizationHeader);
+
     @GET("/api/campaigns")
     Call<List<Campaign>> getCampaigns();
 }

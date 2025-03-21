@@ -1,5 +1,7 @@
 package com.example.ekthacares;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,7 +25,6 @@ public class NotificationsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private NotificationAdapter adapter;
     private List<Notification> notificationList = new ArrayList<>();
-    private String fcmToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,27 +37,30 @@ public class NotificationsActivity extends AppCompatActivity {
         adapter = new NotificationAdapter(notificationList);
         recyclerView.setAdapter(adapter);
 
-        // Retrieve FCM token from Intent or SharedPreferences
-        fcmToken = getIntent().getStringExtra("FCM_TOKEN");
-
-        if (fcmToken == null) {
-            SharedPreferences sharedPreferences = getSharedPreferences("FCM_PREF", MODE_PRIVATE);
-            fcmToken = sharedPreferences.getString("fcmToken", null);
-        }
-
-        // Print FCM Token in Logcat
-        if (fcmToken != null) {
-            Log.d("FCM_TOKEN", "Retrieved FCM Token: " + fcmToken);
-            fetchNotifications(fcmToken);
-        } else {
-            Log.e("FCM_TOKEN", "FCM Token not available");
-            Toast.makeText(this, "FCM Token not available", Toast.LENGTH_SHORT).show();
-        }
+        fetchNotifications();
     }
 
-    private void fetchNotifications(String fcmToken) {
+    private void fetchNotifications() {
+        // Retrieve JWT token and userId from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
+        String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
+        Long userId = sharedPreferences.getLong(Constants.USER_ID_KEY, -1);
+
+        Log.d(TAG, "fetchNotifications: Retrieved JWT Token = " + jwtToken);
+        Log.d(TAG, "fetchNotifications: Retrieved User ID = " + userId);
+
+        if (jwtToken == null || userId == -1) {
+            Toast.makeText(NotificationsActivity.this, "User is not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String authorizationHeader = "Bearer " + jwtToken;
+        Log.d(TAG, "fetchNotifications: Authorization Header = " + authorizationHeader);
+
+        // Make API call to get notifications by userId
         ApiService apiService = RetrofitClient.getApiService();
-        Call<List<Notification>> call = apiService.getUserNotifications(fcmToken);
+        Call<List<Notification>> call = apiService.getUserNotificationsByUserId(userId, authorizationHeader);
+
 
         call.enqueue(new Callback<List<Notification>>() {
             @Override
@@ -66,14 +70,14 @@ public class NotificationsActivity extends AppCompatActivity {
                     notificationList.addAll(response.body());
                     adapter.notifyDataSetChanged();
                 } else {
-                    Log.w("FCM_TOKEN", "No notifications found for FCM Token: " + fcmToken);
+                    Log.w("USER_ID", "No notifications found for User ID: " + userId);
                     Toast.makeText(NotificationsActivity.this, "No notifications found", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Notification>> call, Throwable t) {
-                Log.e("FCM_TOKEN", "Failed to fetch notifications for FCM Token: " + fcmToken, t);
+                Log.e("USER_ID", "Failed to fetch notifications for User ID: " + userId, t);
                 Toast.makeText(NotificationsActivity.this, "Failed to fetch notifications", Toast.LENGTH_SHORT).show();
             }
         });

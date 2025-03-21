@@ -6,19 +6,25 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.gridlayout.widget.GridLayout;
 
 import com.example.ekthacares.model.User;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,35 +33,62 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DonorHomeActivity extends AppCompatActivity {
+public class DonorHomeActivity1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Button btnLogout, btnProfile, btnMyDonations, btnReceivedRequests, btnQuickSearch, btnDonorTracking, btnRequestBlood;
-    private TextView tvWelcomeMessage;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+
     private String jwtToken;
-    private Long userId;
+    private long userId;
+
+    private TextView tvWelcome , tvUserName ,tvUserEmail;
+
     private ImageView ivNotifications, ivCampaigns;
     private View notificationDot, notificationDot1;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_donor_home);
+        setContentView(R.layout.activity_donor_home1);
 
-        // Initialize views
-        ImageView ivLogout = findViewById(R.id.ivLogout);
-        btnProfile = findViewById(R.id.btnProfile);
-        btnMyDonations = findViewById(R.id.btnMyDonations);
-        btnQuickSearch = findViewById(R.id.btnQuickSearch);
-        btnReceivedRequests = findViewById(R.id.btnReceivedRequests);
-        tvWelcomeMessage = findViewById(R.id.tvWelcomeMessage);
-        btnDonorTracking = findViewById(R.id.btnDonorTracking);
-        btnRequestBlood = findViewById(R.id.btnRequestBlood);
+        // Initialize Views
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigationView);
+        toolbar = findViewById(R.id.toolbar);
+        // Set Toolbar
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // Hide title
+
+        tvWelcome = findViewById(R.id.tvWelcome);
+        View headerView = navigationView.getHeaderView(0);
+        tvUserName = headerView.findViewById(R.id.tvUserName);
+        tvUserEmail = headerView.findViewById(R.id.tvUserEmail);
         ivNotifications = findViewById(R.id.ivNotifications);
         notificationDot = findViewById(R.id.notification_dot);
         ivCampaigns = findViewById(R.id.ivCampaigns);
         notificationDot1 = findViewById(R.id.notification_dot1);
+
+        GridLayout gridLayout = findViewById(R.id.gridQuickActions);
+        gridLayout.setVisibility(View.GONE);
+        new Handler().postDelayed(() -> gridLayout.setVisibility(View.VISIBLE), 500);
+
+
+        // Set Navigation Drawer Toggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        // Set Navigation Item Click Listener
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // Handle Logout Menu Click Properly
+        navigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
+            showLogoutDialog();
+            return true;
+        });
 
         // Retrieve JWT token and user ID from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
@@ -69,43 +102,26 @@ public class DonorHomeActivity extends AppCompatActivity {
             redirectToLogin();
         }
 
+
+        // Setup Card Click Listeners
+        setupCardListeners();
+
         // Retrieve and store FCM Token
         fetchFcmToken();
-
-        // Logout functionality
-        ivLogout.setOnClickListener(v -> showLogoutDialog());
-
-        // Profile button functionality
-        btnProfile.setOnClickListener(v -> startActivity(new Intent(DonorHomeActivity.this, ProfileActivity.class)));
-
-        // My Donations button functionality
-        btnMyDonations.setOnClickListener(v -> startActivity(new Intent(DonorHomeActivity.this, MyDonationsActivity.class)));
-
-        // Received Requests button functionality
-        btnReceivedRequests.setOnClickListener(v -> startActivity(new Intent(DonorHomeActivity.this, ReceivedRequestsActivity.class)));
-
-        // Quick Search button functionality
-        btnQuickSearch.setOnClickListener(v -> startActivity(new Intent(DonorHomeActivity.this, QuickSearchActivity.class)));
-
-        // Donor Tracking button functionality
-        btnDonorTracking.setOnClickListener(v -> startActivity(new Intent(DonorHomeActivity.this, DonorTrackingActivity.class)));
-
-        // Request Blood button functionality
-        btnRequestBlood.setOnClickListener(v -> startActivity(new Intent(DonorHomeActivity.this, RequestBloodActivity.class)));
 
         // Notification icon click
         ivNotifications.setOnClickListener(v -> {
             String fcmToken = sharedPreferences.getString("FCM_TOKEN", null);
 
             if (fcmToken != null) {
-                Intent intent = new Intent(DonorHomeActivity.this, NotificationsActivity.class);
+                Intent intent = new Intent(DonorHomeActivity1.this, NotificationsActivity.class);
                 intent.putExtra("FCM_TOKEN", fcmToken);
                 startActivity(intent);
 
                 // Clear unread notification state when the user opens notifications
                 clearNotificationDot();
             } else {
-                Toast.makeText(DonorHomeActivity.this, "FCM Token not available", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DonorHomeActivity1.this, "FCM Token not available", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -113,7 +129,7 @@ public class DonorHomeActivity extends AppCompatActivity {
 
         // Campaign icon click
         ivCampaigns.setOnClickListener(v -> {
-            Intent intent = new Intent(DonorHomeActivity.this, CampaignActivity.class);
+            Intent intent = new Intent(DonorHomeActivity1.this, CampaignActivity.class);
             startActivity(intent);
 
             // Clear unread campaign state when the user opens campaigns
@@ -121,6 +137,40 @@ public class DonorHomeActivity extends AppCompatActivity {
         });
 
         updateCampaignIcon();
+    }
+
+
+    private void setupCardListeners() {
+        findViewById(R.id.cardProfile).setOnClickListener(v -> openProfile());
+        findViewById(R.id.cardDonations).setOnClickListener(v -> openDonations());
+        findViewById(R.id.cardRequests).setOnClickListener(v -> openRequests());
+        findViewById(R.id.cardQuickSearch).setOnClickListener(v -> openQuickSearch());
+        findViewById(R.id.cardDonorTracking).setOnClickListener(v -> openDonorTracking());
+        findViewById(R.id.cardRequestBlood).setOnClickListener(v -> openRequestBlood());
+    }
+
+    private void openProfile() {
+        startActivity(new Intent(this, ProfileActivity.class));
+    }
+
+    private void openDonations() {
+        startActivity(new Intent(this, MyDonationsActivity.class));
+    }
+
+    private void openRequests() {
+        startActivity(new Intent(this, ReceivedRequestsActivity.class));
+    }
+
+    private void openQuickSearch() {
+        startActivity(new Intent(this, QuickSearchActivity.class));
+    }
+
+    private void openDonorTracking() {
+        startActivity(new Intent(this, DonorTrackingActivity.class));
+    }
+
+    private void openRequestBlood() {
+        startActivity(new Intent(this, RequestBloodActivity.class));
     }
 
     private void updateCampaignIcon() {
@@ -192,6 +242,7 @@ public class DonorHomeActivity extends AppCompatActivity {
         unregisterReceiver(campaignReceiver);
     }
 
+
     private void fetchUserDetails(String jwtToken, Long userId) {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
@@ -199,23 +250,44 @@ public class DonorHomeActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                Log.d("DonorHomeActivity", "Response Code: " + response.code());
+                Log.d("DonorHomeActivity1", "Response Code: " + response.code());
                 if (response.isSuccessful() && response.body() != null) {
                     User userDetails = response.body();
                     Log.d("DonorHomeActivity", "User Details: " + userDetails);
-                    tvWelcomeMessage.setText("Welcome, " + userDetails.getDonorName());
+
+                    // Check if tvWelcome is not null before setting text
+                    if (tvWelcome != null) {
+                        tvWelcome.setText("Welcome, " + userDetails.getDonorName());
+                        tvUserName.setText(userDetails.getDonorName());
+                        tvUserEmail.setText(userDetails.getEmailId());
+                    }
                 } else {
-                    Toast.makeText(DonorHomeActivity.this, "Failed to fetch user details.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DonorHomeActivity1.this, "Failed to fetch user details.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("DonorHomeActivity", "Error fetching user details", t);
-                Toast.makeText(DonorHomeActivity.this, "An error occurred.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DonorHomeActivity1.this, "An error occurred.", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.nav_update_profile) {
+            openProfile();
+        } else if (id == R.id.nav_logout) {
+            showLogoutDialog();
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
     private void fetchFcmToken() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
@@ -267,8 +339,9 @@ public class DonorHomeActivity extends AppCompatActivity {
             }
         });
     }
+
     private void showLogoutDialog() {
-        new AlertDialog.Builder(DonorHomeActivity.this)
+        new AlertDialog.Builder(DonorHomeActivity1.this)
                 .setMessage("Are you sure you want to log out?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
@@ -283,9 +356,18 @@ public class DonorHomeActivity extends AppCompatActivity {
     }
 
     private void redirectToLogin() {
-        Intent intent = new Intent(DonorHomeActivity.this, MainActivity.class);
+        Intent intent = new Intent(DonorHomeActivity1.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
