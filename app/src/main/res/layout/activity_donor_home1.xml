@@ -6,6 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".DonorHomeActivity1">
 
     <!-- Main Content Area -->
@@ -143,16 +144,47 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
+                                android:orientation="horizontal"
+                                android:gravity="center"
+                                android:padding="8dp">
 
+                                <!-- Image -->
                                 <ImageView
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
                                     android:src="@drawable/ic_first"
-                                    style="@style/DashboardIcon"/>
+                                    android:layout_marginEnd="8dp"
+                                    android:contentDescription="Campaign Icon" />
 
-                                <TextView
-                                    android:text="Latest News"
-                                    style="@style/DashboardText"/>
+                                <!-- Text Layout -->
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tvCampaignTitle"
+                                        style="@style/DashboardText"
+                                        android:text="Latest Campaign"
+                                        android:textStyle="bold"
+                                        android:layout_marginBottom="4dp" />
+
+                                    <TextView
+                                        android:id="@+id/tvCampaignDate"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textStyle="bold"
+                                         />
+
+                                    <TextView
+                                        android:id="@+id/tvCampaignTime"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textStyle="bold"
+                                        />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
 
@@ -166,23 +198,53 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
+                                android:orientation="horizontal"
+                                android:gravity="center"
+                                android:padding="8dp">
 
+                                <!-- Image -->
                                 <ImageView
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
                                     android:src="@drawable/ic_second"
-                                    style="@style/DashboardIcon"/>
+                                    android:layout_marginEnd="8dp"
+                                    android:contentDescription="Upcoming Campaign Icon" />
 
-                                <TextView
-                                    android:text="Upcoming Events"
-                                    style="@style/DashboardText"/>
+                                <!-- Text Layout -->
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tvCampaignTitle1"
+                                        style="@style/DashboardText"
+                                        android:text="Upcoming Campaign"
+                                        android:textStyle="bold"
+                                        android:layout_marginBottom="4dp" />
+
+                                    <TextView
+                                        android:id="@+id/tvCampaignDate1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Date:" />
+
+                                    <TextView
+                                        android:id="@+id/tvCampaignTime1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Time:" />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
                 </HorizontalScrollView>
 
-                <!-- Quick Actions Grid -->
+
+        <!-- Quick Actions Grid -->
                 <androidx.gridlayout.widget.GridLayout
                     android:id="@+id/gridQuickActions"
                     android:layout_width="match_parent"

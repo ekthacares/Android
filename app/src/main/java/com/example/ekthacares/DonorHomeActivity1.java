@@ -22,11 +22,14 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.gridlayout.widget.GridLayout;
 
+import com.example.ekthacares.model.Campaign;
 import com.example.ekthacares.model.User;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -46,6 +49,12 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
 
     private ImageView ivNotifications, ivCampaigns;
     private View notificationDot, notificationDot1;
+
+    private TextView tvCampaignTitle, tvCampaignTitle1, tvCampaignMessage, tvCampaignMessage1;
+
+    private TextView tvCampaignDate, tvCampaignTime, tvCampaignDate1, tvCampaignTime1;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +77,14 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         notificationDot = findViewById(R.id.notification_dot);
         ivCampaigns = findViewById(R.id.ivCampaigns);
         notificationDot1 = findViewById(R.id.notification_dot1);
+
+        tvCampaignTitle = findViewById(R.id.tvCampaignTitle);
+        tvCampaignDate = findViewById(R.id.tvCampaignDate);
+        tvCampaignTime = findViewById(R.id.tvCampaignTime);
+
+        tvCampaignTitle1 = findViewById(R.id.tvCampaignTitle1);
+        tvCampaignDate1 = findViewById(R.id.tvCampaignDate1);
+        tvCampaignTime1 = findViewById(R.id.tvCampaignTime1);
 
         GridLayout gridLayout = findViewById(R.id.gridQuickActions);
         gridLayout.setVisibility(View.GONE);
@@ -103,11 +120,14 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         }
 
 
-        // Setup Card Click Listeners
+        fetchLatestCampaigns();
+
+    // Setup Card Click Listeners
         setupCardListeners();
 
         // Retrieve and store FCM Token
         fetchFcmToken();
+
 
         // Notification icon click
         ivNotifications.setOnClickListener(v -> {
@@ -137,6 +157,8 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         });
 
         updateCampaignIcon();
+
+
     }
 
 
@@ -148,6 +170,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         findViewById(R.id.cardDonorTracking).setOnClickListener(v -> openDonorTracking());
         findViewById(R.id.cardRequestBlood).setOnClickListener(v -> openRequestBlood());
     }
+
 
     private void openProfile() {
         startActivity(new Intent(this, ProfileActivity.class));
@@ -210,6 +233,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         @Override
         public void onReceive(Context context, Intent intent) {
             updateCampaignIcon();
+            fetchLatestCampaigns();
         }
     };
 
@@ -339,6 +363,59 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
             }
         });
     }
+
+    private void fetchLatestCampaigns() {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<List<Campaign>> call = apiService.getLatestCampaigns("Bearer " + jwtToken);
+
+        call.enqueue(new Callback<List<Campaign>>() {
+            @Override
+            public void onResponse(Call<List<Campaign>> call, Response<List<Campaign>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("API Response for cards", response.body().toString());  // Add this
+                    List<Campaign> campaigns = response.body();
+
+                    if (!campaigns.isEmpty()) {
+                        // Set first campaign details
+                        tvCampaignTitle.setText(campaigns.get(0).getTitle());
+                        tvCampaignDate.setText(campaigns.get(0).getDate());
+                        tvCampaignTime.setText(campaigns.get(0).getTime());
+
+                        // Set second campaign details if available
+                        if (campaigns.size() > 1) {
+                            tvCampaignTitle1.setText(campaigns.get(1).getTitle());
+                            tvCampaignDate1.setText(campaigns.get(1).getDate());
+                            tvCampaignTime1.setText(campaigns.get(1).getTime());
+                        } else {
+                            tvCampaignTitle1.setText("No second campaign available");
+                            tvCampaignMessage1.setText("");
+                            tvCampaignDate1.setText("");
+                            tvCampaignTime1.setText("");
+                        }
+                    } else {
+                        Log.e("Campaign", "No campaigns found");
+                        tvCampaignTitle.setText("No campaigns available");
+                        tvCampaignMessage.setText("");
+                        tvCampaignDate.setText("");
+                        tvCampaignTime.setText("");
+
+                        tvCampaignTitle1.setText("No campaigns available");
+                        tvCampaignMessage1.setText("");
+                        tvCampaignDate1.setText("");
+                        tvCampaignTime1.setText("");
+                    }
+                } else {
+                    Log.e("Campaign", "Failed to fetch campaigns: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Campaign>> call, Throwable t) {
+                Log.e("Campaign", "Error fetching campaigns", t);
+            }
+        });
+    }
+
 
     private void showLogoutDialog() {
         new AlertDialog.Builder(DonorHomeActivity1.this)

@@ -124,6 +124,9 @@ public interface ApiService {
 
     @GET("/api/campaigns")
     Call<List<Campaign>> getCampaigns();
+
+    @GET("/api/campaigns/latest")
+    Call<List<Campaign>> getLatestCampaigns(@Header("Authorization") String token);
 }
 
 
