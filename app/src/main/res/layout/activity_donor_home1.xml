@@ -119,7 +119,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- New Horizontal Scroll Section -->
+                <!-- Latest Campaign results -->
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -135,11 +135,15 @@
 
                         <!-- Card 1 -->
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cardNews"
-                            style="@style/DashboardCard"
-                            android:layout_width="200dp"
-                            android:layout_height="120dp"
-                            android:layout_marginEnd="8dp">
+                            android:id="@+id/campaign_card"
+                            android:src="@drawable/component_1"
+                            android:layout_width="325dp"
+                            android:layout_height="200dp"
+                            android:layout_marginEnd="8dp"
+                            app:cardBackgroundColor="@color/gray"
+                            app:cardElevation="4dp"
+                            app:cardCornerRadius="8dp"
+                            >
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -148,40 +152,61 @@
                                 android:gravity="center"
                                 android:padding="8dp">
 
+                                <!-- Add an empty View for spacing before the image -->
+                                <View
+                                    android:layout_width="18dp"
+                                    android:layout_height="match_parent" />
+
                                 <!-- Image -->
                                 <ImageView
-                                    android:layout_width="48dp"
-                                    android:layout_height="48dp"
-                                    android:src="@drawable/ic_first"
+                                    android:layout_width="72dp"
+                                    android:layout_height="103dp"
+                                    android:src="@drawable/blood_pouch"
                                     android:layout_marginEnd="8dp"
                                     android:contentDescription="Campaign Icon" />
 
                                 <!-- Text Layout -->
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical">
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_weight="1">  <!-- Allows text to take remaining space -->
+
 
                                     <TextView
                                         android:id="@+id/tvCampaignTitle"
-                                        style="@style/DashboardText"
+                                        style="@style/DashboardText1"
                                         android:text="Latest Campaign"
                                         android:textStyle="bold"
-                                        android:layout_marginBottom="4dp" />
+                                        android:textSize="30sp"
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:layout_marginBottom="2dp"/>
+
 
                                     <TextView
                                         android:id="@+id/tvCampaignDate"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textStyle="bold"
-                                         />
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:textSize="16sp"
+                                        android:background="@color/black"
+                                        android:textColor="@color/white"
+                                        android:paddingHorizontal="6dp"
+                                        android:paddingVertical="2dp"
+                                        android:layout_marginTop="4dp"/>  <!-- Reduce top margin -->
+
 
                                     <TextView
                                         android:id="@+id/tvCampaignTime"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textStyle="bold"
-                                        />
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:textSize="12sp"
+                                        android:layout_marginTop="2dp"/>  <!-- Reduce top margin -->
+
 
                                 </LinearLayout>
 
@@ -190,10 +215,15 @@
 
                         <!-- Card 2 -->
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cardEvents"
-                            style="@style/DashboardCard"
-                            android:layout_width="200dp"
-                            android:layout_height="120dp">
+                            android:id="@+id/campaign_card1"
+                            android:src="@drawable/component_1"
+                            android:layout_width="325dp"
+                            android:layout_height="200dp"
+                            android:layout_marginEnd="8dp"
+                            app:cardBackgroundColor="@color/gray"
+                            app:cardElevation="4dp"
+                            app:cardCornerRadius="8dp"
+                            >
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -202,49 +232,181 @@
                                 android:gravity="center"
                                 android:padding="8dp">
 
+                                <!-- Add an empty View for spacing before the image -->
+                                <View
+                                    android:layout_width="18dp"
+                                    android:layout_height="match_parent" />
+
+
                                 <!-- Image -->
                                 <ImageView
-                                    android:layout_width="48dp"
-                                    android:layout_height="48dp"
-                                    android:src="@drawable/ic_second"
+                                    android:layout_width="72dp"
+                                    android:layout_height="103dp"
+                                    android:src="@drawable/blood_pouch"
                                     android:layout_marginEnd="8dp"
-                                    android:contentDescription="Upcoming Campaign Icon" />
+                                    android:contentDescription=" Upcoming Campaign Icon" />
 
                                 <!-- Text Layout -->
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical">
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_weight="1">  <!-- Allows text to take remaining space -->
 
                                     <TextView
                                         android:id="@+id/tvCampaignTitle1"
-                                        style="@style/DashboardText"
+                                        style="@style/DashboardText1"
                                         android:text="Upcoming Campaign"
                                         android:textStyle="bold"
-                                        android:layout_marginBottom="4dp" />
+                                        android:textSize="30sp"
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:layout_marginBottom="2dp" />
+
 
                                     <TextView
                                         android:id="@+id/tvCampaignDate1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Date:" />
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:textSize="16sp"
+                                        android:background="@color/black"
+                                        android:textColor="@color/white"
+                                        android:paddingHorizontal="6dp"
+                                        android:paddingVertical="2dp"
+                                        android:layout_marginTop="4dp"/>  <!-- Reduce top margin -->
 
                                     <TextView
                                         android:id="@+id/tvCampaignTime1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Time:" />
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:textSize="12sp"
+                                        android:layout_marginTop="2dp"/>  <!-- Reduce top margin -->
 
                                 </LinearLayout>
 
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
 
+
                     </LinearLayout>
                 </HorizontalScrollView>
 
+                <!-- Quick cards-->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:scrollbars="none">
 
-        <!-- Quick Actions Grid -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp">
+
+                        <!-- Card 1 -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/campaign_card2"
+                            android:layout_width="111dp"
+                            android:layout_height="111dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardElevation="4dp"
+                            app:cardCornerRadius="8dp">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <!-- Centered Image -->
+                            <ImageView
+                                android:id="@+id/ivTipsImage"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:src="@drawable/ic_campaign_n"
+                                android:layout_gravity="center"/>
+
+                        </FrameLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Empty Space -->
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="match_parent"/>
+
+                        <!-- Card 2 -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardTips1"
+                        android:layout_width="111dp"
+                        android:layout_height="111dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="12dp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardElevation="4dp"
+                        app:cardCornerRadius="8dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <!-- Centered Image -->
+                        <ImageView
+                            android:id="@+id/ivTipsImage1"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:src="@drawable/ic_campaign"
+                            android:layout_gravity="center"/>
+
+                    </FrameLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Empty Space -->
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="match_parent"/>
+
+
+                        <!-- Card 3 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/quick_search_card"
+                    android:layout_width="111dp"
+                    android:layout_height="111dp"
+                    android:layout_marginEnd="8dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardElevation="4dp"
+                    app:cardCornerRadius="8dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <!-- Centered Image -->
+                        <ImageView
+                            android:id="@+id/ivTipsImage2"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:src="@drawable/ic_find_donor"
+                            android:layout_gravity="center"/>
+
+                    </FrameLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+            </LinearLayout>
+                </HorizontalScrollView>
+
+
+
+                <!-- Quick Actions Grid -->
                 <androidx.gridlayout.widget.GridLayout
                     android:id="@+id/gridQuickActions"
                     android:layout_width="match_parent"

@@ -38,8 +38,8 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
         Campaign campaign = campaignList.get(reversePosition);
         holder.titleTextView.setText(campaign.getTitle());
         holder.messageTextView.setText(campaign.getMessage());
-        holder.dateTextView.setText("Date: " + (campaign.getDate() != null ? campaign.getDate() : "N/A"));
-        holder.timeTextView.setText("Time: " + (campaign.getTime() != null ? campaign.getTime() : "N/A"));
+        holder.dateTextView.setText("Date: " + (campaign.getFormattedDate() != null ? campaign.getFormattedDate() : "N/A"));
+        holder.timeTextView.setText("Time: " + (campaign.getFormattedTime() != null ? campaign.getFormattedTime() : "N/A"));
     }
 
 

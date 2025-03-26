@@ -18,6 +18,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.gridlayout.widget.GridLayout;
@@ -54,6 +55,10 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
 
     private TextView tvCampaignDate, tvCampaignTime, tvCampaignDate1, tvCampaignTime1;
 
+    private CardView cardCampaign, cardCampaign1;
+
+    private MaterialCardView campaignCard2, quickSearchCard ;
+
 
 
     @Override
@@ -85,6 +90,10 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         tvCampaignTitle1 = findViewById(R.id.tvCampaignTitle1);
         tvCampaignDate1 = findViewById(R.id.tvCampaignDate1);
         tvCampaignTime1 = findViewById(R.id.tvCampaignTime1);
+        cardCampaign = findViewById(R.id.campaign_card);
+        cardCampaign1 = findViewById(R.id.campaign_card1);
+        campaignCard2 = findViewById(R.id.campaign_card2);
+        quickSearchCard  = findViewById(R.id.quick_search_card);
 
         GridLayout gridLayout = findViewById(R.id.gridQuickActions);
         gridLayout.setVisibility(View.GONE);
@@ -128,6 +137,13 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         // Retrieve and store FCM Token
         fetchFcmToken();
 
+        // Set click listeners to open CampaignActivity
+        cardCampaign.setOnClickListener(v -> openCampaignActivity());
+        cardCampaign1.setOnClickListener(v -> openCampaignActivity());
+        campaignCard2.setOnClickListener(v -> openCampaignActivity());
+        quickSearchCard.setOnClickListener(v -> openQuickSearchActivity());
+
+
 
         // Notification icon click
         ivNotifications.setOnClickListener(v -> {
@@ -165,13 +181,22 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
     private void setupCardListeners() {
         findViewById(R.id.cardProfile).setOnClickListener(v -> openProfile());
         findViewById(R.id.cardDonations).setOnClickListener(v -> openDonations());
-        findViewById(R.id.cardRequests).setOnClickListener(v -> openRequests());
+       findViewById(R.id.cardRequests).setOnClickListener(v -> openRequests());
         findViewById(R.id.cardQuickSearch).setOnClickListener(v -> openQuickSearch());
         findViewById(R.id.cardDonorTracking).setOnClickListener(v -> openDonorTracking());
         findViewById(R.id.cardRequestBlood).setOnClickListener(v -> openRequestBlood());
     }
 
 
+    private void openCampaignActivity() {
+        Intent intent = new Intent(DonorHomeActivity1.this, CampaignActivity.class);
+        startActivity(intent);
+    }
+
+    private void openQuickSearchActivity() {
+        Intent intent = new Intent(DonorHomeActivity1.this, QuickSearchActivity.class);
+        startActivity(intent);
+    }
     private void openProfile() {
         startActivity(new Intent(this, ProfileActivity.class));
     }
@@ -234,6 +259,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         public void onReceive(Context context, Intent intent) {
             updateCampaignIcon();
             fetchLatestCampaigns();
+            openCampaignActivity();
         }
     };
 
@@ -304,6 +330,14 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
 
         if (id == R.id.nav_update_profile) {
             openProfile();
+        }else if (id == R.id.nav_donations) {
+            openDonations();
+        }else if (id == R.id.nav_received_requests) {
+            openRequests();
+        }else if (id == R.id.nav_donor_tracking) {
+            openDonorTracking();
+        }else if (id == R.id.nav_request_blood) {
+            openRequestBlood();
         } else if (id == R.id.nav_logout) {
             showLogoutDialog();
         }
@@ -377,15 +411,15 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
 
                     if (!campaigns.isEmpty()) {
                         // Set first campaign details
-                        tvCampaignTitle.setText(campaigns.get(0).getTitle());
-                        tvCampaignDate.setText(campaigns.get(0).getDate());
-                        tvCampaignTime.setText(campaigns.get(0).getTime());
+                        tvCampaignTitle.setText(campaigns.get(0).getTitle().toUpperCase().replace(" ", "\n"));
+                        tvCampaignDate.setText(campaigns.get(0).getFormattedDate());
+                        tvCampaignTime.setText(campaigns.get(0).getFormattedTime());
 
                         // Set second campaign details if available
                         if (campaigns.size() > 1) {
-                            tvCampaignTitle1.setText(campaigns.get(1).getTitle());
-                            tvCampaignDate1.setText(campaigns.get(1).getDate());
-                            tvCampaignTime1.setText(campaigns.get(1).getTime());
+                            tvCampaignTitle1.setText(campaigns.get(1).getTitle().toUpperCase().replace(" ", "\n"));
+                            tvCampaignDate1.setText(campaigns.get(1).getFormattedDate());
+                            tvCampaignTime1.setText(campaigns.get(1).getFormattedTime());
                         } else {
                             tvCampaignTitle1.setText("No second campaign available");
                             tvCampaignMessage1.setText("");

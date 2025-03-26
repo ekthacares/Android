@@ -12,6 +12,27 @@
         android:icon="@drawable/ic_profile" />
 
     <item
+        android:id="@+id/nav_donations"
+        android:title="Donations"
+        android:icon="@drawable/blood_pouch" />
+
+    <item
+        android:id="@+id/nav_received_requests"
+        android:title="Request Recieved"
+        android:icon="@drawable/ic_requests" />
+
+    <item
+        android:id="@+id/nav_donor_tracking"
+        android:title="Donation Tracking"
+        android:icon="@drawable/ic_requests" />
+
+    <item
+        android:id="@+id/nav_request_blood"
+        android:title="Request For Others"
+        android:icon="@drawable/ic_requests" />
+
+
+    <item
         android:id="@+id/nav_logout"
         android:title="Logout"
         android:icon="@drawable/ic_logout" />

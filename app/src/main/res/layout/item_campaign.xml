@@ -19,21 +19,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:fontFamily="@font/ubuntu_bold"
             android:textSize="18sp"
-            android:textColor="@android:color/black"/>
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/textMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
+            android:fontFamily="@font/ubuntu_bold"
+            android:textColor="@color/black"
             android:layout_marginTop="5dp"/>
 
         <TextView
             android:id="@+id/textDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_bold"
             android:text="Date: "
             android:textSize="14sp" />
 
@@ -41,6 +44,7 @@
             android:id="@+id/textTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_bold"
             android:text="Time: "
             android:textSize="14sp" />
     </LinearLayout>
