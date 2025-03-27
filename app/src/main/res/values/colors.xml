@@ -12,5 +12,6 @@
 <color name="gray">#F6F6F6</color> <!-- Hint text color or neutral shades -->
     <color name="user_id_color">#FF5722</color>
     <color name="maroon_red">#B22222</color> <!-- Firebrick (Lighter Maroon) -->
+    <color name="red">#ED2224</color> <!-- Firebrick (Lighter Maroon) -->
 
 </resources>

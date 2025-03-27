@@ -29,6 +29,16 @@
             android:focusable="true"
             android:focusableInTouchMode="true" />
 
+        <TextView
+            android:id="@+id/tvHospitalName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:lineSpacingExtra="4dp"
+            android:textStyle="bold" />
+
         <!-- Sent At Text View with Border -->
         <TextView
             android:id="@+id/tvSentAt"

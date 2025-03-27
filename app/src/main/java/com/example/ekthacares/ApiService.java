@@ -50,6 +50,10 @@ public interface ApiService {
     @GET("/api/appuser")
     Call<User> getUserDetails(@Header("Authorization") String token, @Query("id") Long id);
 
+    @GET("/api/appuser")
+    Call<User> getUserDetails1(@Query("id") Long id);
+
+
     @POST("/api/app/register")
     Call<ApiResponse> registerUser(
             @Body User user
@@ -78,6 +82,12 @@ public interface ApiService {
 
     @GET("/api/app/sentEmails")
     Call<List<SentEmail>> getSentEmails(@Header("Authorization") String token, @Header("userId") Long userId);
+
+    @GET("/api/latesttwo")
+    Call<List<SentEmail>> getLatestTwoSentEmails(
+            @Header("Authorization") String token,
+            @Header("userId") Long userId
+    );
 
     @GET("/api/app/searchforblood")
     Call<BloodSearchResponse> searchForBlood(

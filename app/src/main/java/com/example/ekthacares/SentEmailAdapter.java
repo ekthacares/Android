@@ -27,6 +27,7 @@ import com.example.ekthacares.model.SentEmail;
 import com.example.ekthacares.model.User;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class SentEmailAdapter extends RecyclerView.Adapter<SentEmailAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SentEmail sentEmail = sentEmailList.get(position);
 
+        String hospitalName = sentEmail.getHospitalName();
         String sentAt = sentEmail.getSentAt();
         String formattedDate = formatDate(sentAt);
 
@@ -74,7 +76,10 @@ public class SentEmailAdapter extends RecyclerView.Adapter<SentEmailAdapter.View
         spannableText.setSpan(new android.text.style.ForegroundColorSpan(context.getResources().getColor(R.color.user_id_color)),
                 startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+
+
         holder.tvLoggedInUserId.setText(spannableText);
+        holder.tvHospitalName.setText("Hospital Name: " + hospitalName); // ✅ Fixed the issue
         holder.tvSentAt.setText("Sent At: " + formattedDate);
 
         String url = sentEmail.getConfirmationUrl();
@@ -107,6 +112,7 @@ public class SentEmailAdapter extends RecyclerView.Adapter<SentEmailAdapter.View
             Long userId = sentEmail.getLoggedInUserId();
             fetchUserDetails(userId);
         });
+
     }
 
     @Override
@@ -122,6 +128,7 @@ public class SentEmailAdapter extends RecyclerView.Adapter<SentEmailAdapter.View
             // If the data is null or empty, show the "No Emails received" message
             Toast.makeText(context, "No Emails received for this user.", Toast.LENGTH_SHORT).show();
         } else {
+            Collections.reverse(newData); // ✅ Reverse the list to show the latest first
             sentEmailList.clear();
             sentEmailList.addAll(newData);
             notifyDataSetChanged();
@@ -130,12 +137,13 @@ public class SentEmailAdapter extends RecyclerView.Adapter<SentEmailAdapter.View
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvLoggedInUserId, tvSentAt, tvConfirmationUrl;
+        TextView tvLoggedInUserId, tvSentAt, tvConfirmationUrl, tvHospitalName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvLoggedInUserId = itemView.findViewById(R.id.tvLoggedInUserId);
+            tvHospitalName = itemView.findViewById(R.id.tvHospitalName);
             tvSentAt = itemView.findViewById(R.id.tvSentAt);
             tvConfirmationUrl = itemView.findViewById(R.id.tvConfirmationUrl);
         }

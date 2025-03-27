@@ -24,13 +24,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.gridlayout.widget.GridLayout;
 
 import com.example.ekthacares.model.Campaign;
+import com.example.ekthacares.model.SentEmail;
 import com.example.ekthacares.model.User;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -42,6 +47,9 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+
+
+    private ActionBarDrawerToggle toggle;
 
     private String jwtToken;
     private long userId;
@@ -59,6 +67,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
 
     private MaterialCardView campaignCard2, quickSearchCard ;
 
+    private TextView tvHospitalName, tvHospitalName1, tvTime, tvTime1, tvName, tvName1;
 
 
     @Override
@@ -73,6 +82,11 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         // Set Toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); // Hide title
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvWelcome = findViewById(R.id.tvWelcome);
         View headerView = navigationView.getHeaderView(0);
@@ -95,26 +109,28 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         campaignCard2 = findViewById(R.id.campaign_card2);
         quickSearchCard  = findViewById(R.id.quick_search_card);
 
-        GridLayout gridLayout = findViewById(R.id.gridQuickActions);
-        gridLayout.setVisibility(View.GONE);
-        new Handler().postDelayed(() -> gridLayout.setVisibility(View.VISIBLE), 500);
+        // Bind views
+        tvHospitalName = findViewById(R.id.tvHospitalName);
+        tvTime = findViewById(R.id.tvTime);
+        tvHospitalName1 = findViewById(R.id.tvHospitalName1);
+        tvTime1 = findViewById(R.id.tvTime1);
+        tvName = findViewById(R.id.tvName);
+        tvName1 = findViewById(R.id.tvName1);
 
+        // Initialize Views
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigationView);
+        toolbar = findViewById(R.id.toolbar);
 
-        // Set Navigation Drawer Toggle
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-        // Set Navigation Item Click Listener
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Handle Logout Menu Click Properly
-        navigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
-            showLogoutDialog();
-            return true;
-        });
 
         // Retrieve JWT token and user ID from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
@@ -128,11 +144,8 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
             redirectToLogin();
         }
 
-
+        fetchLatestSentEmails();
         fetchLatestCampaigns();
-
-    // Setup Card Click Listeners
-        setupCardListeners();
 
         // Retrieve and store FCM Token
         fetchFcmToken();
@@ -142,8 +155,12 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         cardCampaign1.setOnClickListener(v -> openCampaignActivity());
         campaignCard2.setOnClickListener(v -> openCampaignActivity());
         quickSearchCard.setOnClickListener(v -> openQuickSearchActivity());
-
-
+        tvHospitalName.setOnClickListener(v -> openReceivedRequestsActivity());
+        tvTime.setOnClickListener(v -> openReceivedRequestsActivity());
+        tvHospitalName1.setOnClickListener(v -> openReceivedRequestsActivity());
+        tvTime1.setOnClickListener(v -> openReceivedRequestsActivity());
+        tvName.setOnClickListener(v -> openReceivedRequestsActivity());
+        tvName1.setOnClickListener(v -> openReceivedRequestsActivity());
 
         // Notification icon click
         ivNotifications.setOnClickListener(v -> {
@@ -178,16 +195,6 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
     }
 
 
-    private void setupCardListeners() {
-        findViewById(R.id.cardProfile).setOnClickListener(v -> openProfile());
-        findViewById(R.id.cardDonations).setOnClickListener(v -> openDonations());
-       findViewById(R.id.cardRequests).setOnClickListener(v -> openRequests());
-        findViewById(R.id.cardQuickSearch).setOnClickListener(v -> openQuickSearch());
-        findViewById(R.id.cardDonorTracking).setOnClickListener(v -> openDonorTracking());
-        findViewById(R.id.cardRequestBlood).setOnClickListener(v -> openRequestBlood());
-    }
-
-
     private void openCampaignActivity() {
         Intent intent = new Intent(DonorHomeActivity1.this, CampaignActivity.class);
         startActivity(intent);
@@ -197,30 +204,11 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         Intent intent = new Intent(DonorHomeActivity1.this, QuickSearchActivity.class);
         startActivity(intent);
     }
-    private void openProfile() {
-        startActivity(new Intent(this, ProfileActivity.class));
-    }
 
-    private void openDonations() {
-        startActivity(new Intent(this, MyDonationsActivity.class));
+    private void openReceivedRequestsActivity() {
+        Intent intent = new Intent(DonorHomeActivity1.this, ReceivedRequestsActivity.class);
+        startActivity(intent);
     }
-
-    private void openRequests() {
-        startActivity(new Intent(this, ReceivedRequestsActivity.class));
-    }
-
-    private void openQuickSearch() {
-        startActivity(new Intent(this, QuickSearchActivity.class));
-    }
-
-    private void openDonorTracking() {
-        startActivity(new Intent(this, DonorTrackingActivity.class));
-    }
-
-    private void openRequestBlood() {
-        startActivity(new Intent(this, RequestBloodActivity.class));
-    }
-
     private void updateCampaignIcon() {
         SharedPreferences sharedPreferences = getSharedPreferences("CampaignPrefs", MODE_PRIVATE);
         boolean hasUnreadCampaigns = sharedPreferences.getBoolean("hasUnreadCampaigns", false);
@@ -250,6 +238,12 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         @Override
         public void onReceive(Context context, Intent intent) {
             updateNotificationIcon();
+            // Restart DonorHomeActivity1
+            Intent reloadIntent = new Intent(DonorHomeActivity1.this, DonorHomeActivity1.class);
+            reloadIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(reloadIntent);
+            finish(); // Finish current activity to reload it
+
         }
     };
 
@@ -324,20 +318,44 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         });
     }
 
+    private void fetchUserName(Long userId, TextView textView) {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<User> call = apiService.getUserDetails1(userId);
+
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User user = response.body();
+                    textView.setText(user.getDonorName()); // Update TextView with the fetched name
+                } else {
+                    textView.setText("Unknown User"); // Default if not found
+                    Log.e("User Fetch", "Failed to fetch user: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                textView.setText("Error fetching user");
+                Log.e("User Fetch", "Error fetching user details", t);
+            }
+        });
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_update_profile) {
-            openProfile();
-        }else if (id == R.id.nav_donations) {
-            openDonations();
-        }else if (id == R.id.nav_received_requests) {
-            openRequests();
-        }else if (id == R.id.nav_donor_tracking) {
-            openDonorTracking();
-        }else if (id == R.id.nav_request_blood) {
-            openRequestBlood();
+            startActivity(new Intent(this, ProfileActivity.class));
+        } else if (id == R.id.nav_donations) {
+            startActivity(new Intent(this, MyDonationsActivity.class));
+        } else if (id == R.id.nav_received_requests) {
+            startActivity(new Intent(this, ReceivedRequestsActivity.class));
+        } else if (id == R.id.nav_donor_tracking) {
+            startActivity(new Intent(this, DonorTrackingActivity.class));
+        } else if (id == R.id.nav_request_blood) {
+            startActivity(new Intent(this, RequestBloodActivity.class));
         } else if (id == R.id.nav_logout) {
             showLogoutDialog();
         }
@@ -345,7 +363,6 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
     private void fetchFcmToken() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
@@ -394,6 +411,59 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("FCM", "Error sending FCM Token", t);
+            }
+        });
+    }
+
+    private void fetchLatestSentEmails() {
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<List<SentEmail>> call = apiService.getSentEmails("Bearer " + jwtToken, userId);
+
+        call.enqueue(new Callback<List<SentEmail>>() {
+            @Override
+            public void onResponse(Call<List<SentEmail>> call, Response<List<SentEmail>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("API Response for emails", response.body().toString());  // Debugging log
+                    List<SentEmail> sentEmails = response.body();
+
+                    if (!sentEmails.isEmpty()) {
+                        int size = sentEmails.size();
+
+                        // Latest email (last in the list)
+                        SentEmail latestEmail = sentEmails.get(size - 1);
+                        // Set first email details
+                        //tvName.setText(String.valueOf(latestEmail.getLoggedInUserId()));
+                        fetchUserName(Long.valueOf(String.valueOf(latestEmail.getLoggedInUserId())), tvName);
+                        tvHospitalName.setText(latestEmail.getHospitalName());
+                        tvTime.setText(latestEmail.getTimeDifference());
+
+                        // Set second email details if available
+                        if (sentEmails.size() > 1) {
+                            SentEmail secondLatestEmail = sentEmails.get(size - 2);
+                            tvHospitalName1.setText(secondLatestEmail.getHospitalName());
+                            tvTime1.setText(secondLatestEmail.getTimeDifference());
+                            fetchUserName(Long.valueOf(String.valueOf(latestEmail.getLoggedInUserId())), tvName1);
+
+                        } else {
+                            tvHospitalName1.setText("No second email available");
+                            tvTime1.setText("");
+                        }
+                    } else {
+                        Log.e("SentEmails", "No sent emails found");
+                        tvHospitalName.setText("No emails available");
+                        tvTime.setText("");
+
+                        tvHospitalName1.setText("No emails available");
+                        tvTime1.setText("");
+                    }
+                } else {
+                    Log.e("SentEmails", "Failed to fetch emails: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SentEmail>> call, Throwable t) {
+                Log.e("SentEmails", "Error fetching emails", t);
             }
         });
     }
@@ -449,6 +519,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
             }
         });
     }
+
 
 
     private void showLogoutDialog() {

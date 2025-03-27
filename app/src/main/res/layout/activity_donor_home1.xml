@@ -295,7 +295,7 @@
                     </LinearLayout>
                 </HorizontalScrollView>
 
-                <!-- Quick cards-->
+                <!-- Quick Actions Cards-->
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -404,130 +404,190 @@
             </LinearLayout>
                 </HorizontalScrollView>
 
+                <!--- Notication Request-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
 
+                <!-- Heading Above the ScrollView -->
+                <TextView
+                    android:id="@+id/tvNotificationsHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notifications Request"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:textColor="@color/black"
+                    android:gravity="center"/>
 
-                <!-- Quick Actions Grid -->
-                <androidx.gridlayout.widget.GridLayout
-                    android:id="@+id/gridQuickActions"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:padding="8dp"
-                    app:columnCount="2"
-                    app:rowCount="3"
-                    app:columnOrderPreserved="false"
-                    android:clipChildren="false"
-                    android:clipToPadding="false">
+                    android:paddingVertical="8dp"
+                    android:scrollbars="none">
 
-                    <!-- Profile -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardProfile"
-                        style="@style/DashboardCard"
-                        android:onClick="openProfile"
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_columnWeight="1">
+                        android:orientation="horizontal"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp">
 
-                        <ImageView
-                            android:src="@drawable/ic_profile"
-                            style="@style/DashboardIcon"/>
+                        <!-- Card 1 -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/nofication_card"
+                            android:layout_width="320dp"
+                            android:layout_height="111dp"
+                            android:layout_marginEnd="8dp"
+                            app:cardBackgroundColor="@color/red"
+                            app:cardElevation="4dp"
+                            app:cardCornerRadius="8dp">
 
-                        <TextView
-                            android:text="Profile"
-                            style="@style/DashboardText"/>
-                    </com.google.android.material.card.MaterialCardView>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:gravity="center_vertical"> <!-- Ensures alignment -->
 
-                    <!-- My Donations -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardDonations"
-                        style="@style/DashboardCard"
-                        android:onClick="openDonations"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_columnWeight="1">
+                                <!-- Text Layout (Hospital Name) -->
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="1">
 
-                        <ImageView
-                            android:src="@drawable/ic_donations"
-                            style="@style/DashboardIcon"/>
+                                    <TextView
+                                        android:id="@+id/tvName"
+                                        style="@style/DashboardText1"
+                                        android:text="Upcoming Request"
+                                        android:textStyle="bold"
+                                        android:textSize="16sp"
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:layout_marginBottom="4dp" />
 
-                        <TextView
-                            android:text="My Donations"
-                            style="@style/DashboardText"/>
-                    </com.google.android.material.card.MaterialCardView>
+                                    <TextView
+                                        android:id="@+id/tvHospitalName"
+                                        style="@style/DashboardText1"
+                                        android:text="Upcoming Request"
+                                        android:textStyle="bold"
+                                        android:textSize="16sp"
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:layout_marginBottom="4dp" />
 
-                    <!-- Requests Received -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardRequests"
-                        style="@style/DashboardCard"
-                        android:onClick="openRequests"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_columnWeight="1">
+                                </LinearLayout>
 
-                        <ImageView
-                            android:src="@drawable/ic_requests"
-                            style="@style/DashboardIcon"/>
+                                <!-- Image and Time Layout -->
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    android:gravity="center">
 
-                        <TextView
-                            android:text="Requests Received"
-                            style="@style/DashboardText"/>
-                    </com.google.android.material.card.MaterialCardView>
+                                    <!-- Time TextView Above Image -->
+                                    <TextView
+                                        android:id="@+id/tvTime"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:textSize="12sp"
+                                        android:layout_marginBottom="4dp" />
 
-                    <!-- Quick Search -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardQuickSearch"
-                        style="@style/DashboardCard"
-                        android:onClick="openQuickSearch"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_columnWeight="1">
+                                    <!-- ImageView Below Time -->
+                                    <ImageView
+                                        android:layout_width="37dp"
+                                        android:layout_height="50dp"
+                                        android:src="@drawable/blood_type_image"
+                                        android:contentDescription="Upcoming Campaign Icon" />
+                                </LinearLayout>
 
-                        <ImageView
-                            android:src="@drawable/ic_search"
-                            style="@style/DashboardIcon"/>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
 
-                        <TextView
-                            android:text="Quick Search"
-                            style="@style/DashboardText"/>
-                    </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Donor Tracking -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardDonorTracking"
-                        style="@style/DashboardCard"
-                        android:onClick="openDonorTracking"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_columnWeight="1">
+                        <!-- Card 2 -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/nofication_card1"
+                            android:layout_width="320dp"
+                            android:layout_height="111dp"
+                            android:layout_marginEnd="8dp"
+                            app:cardBackgroundColor="@color/red"
+                            app:cardElevation="4dp"
+                            app:cardCornerRadius="8dp">
 
-                        <ImageView
-                            android:src="@drawable/ic_tracking"
-                            style="@style/DashboardIcon"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:gravity="center_vertical"> <!-- Ensures alignment -->
 
-                        <TextView
-                            android:text="Donor Tracking"
-                            style="@style/DashboardText"/>
-                    </com.google.android.material.card.MaterialCardView>
+                                <!-- Text Layout (Hospital Name) -->
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:layout_weight="1">
 
-                    <!-- Request Blood -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardRequestBlood"
-                        style="@style/DashboardCard"
-                        android:onClick="openRequestBlood"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_columnWeight="1">
 
-                        <ImageView
-                            android:src="@drawable/ic_blood_request"
-                            style="@style/DashboardIcon"/>
+                                    <TextView
+                                        android:id="@+id/tvName1"
+                                        style="@style/DashboardText1"
+                                        android:text="Upcoming Request"
+                                        android:textStyle="bold"
+                                        android:textSize="16sp"
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:layout_marginBottom="4dp" />
 
-                        <TextView
-                            android:text="Request Blood"
-                            style="@style/DashboardText"/>
-                    </com.google.android.material.card.MaterialCardView>
+                                    <TextView
+                                        android:id="@+id/tvHospitalName1"
+                                        style="@style/DashboardText1"
+                                        android:text="Upcoming Request"
+                                        android:textStyle="bold"
+                                        android:textSize="16sp"
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:layout_marginBottom="4dp" />
 
-                </androidx.gridlayout.widget.GridLayout>
+                                </LinearLayout>
+
+                                <!-- Image and Time Layout -->
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    android:gravity="center">
+
+                                    <!-- Time TextView Above Image -->
+                                    <TextView
+                                        android:id="@+id/tvTime1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/ubuntu_bold"
+                                        android:textSize="12sp"
+                                        android:layout_marginBottom="4dp" />
+
+                                    <!-- ImageView Below Time -->
+                                    <ImageView
+                                        android:layout_width="37dp"
+                                        android:layout_height="50dp"
+                                        android:src="@drawable/blood_type_image"
+                                        android:contentDescription="Upcoming Campaign Icon" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+
+
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
