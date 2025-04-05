@@ -18,6 +18,8 @@ public class SentEmail {
 
     private String hospitalName; // ✅ New field added
 
+    private String bloodGroup; // ✅ New field added
+
     // Default constructor
     public SentEmail() {}
 
@@ -78,6 +80,13 @@ public class SentEmail {
         this.hospitalName = hospitalName;
     }
 
+    public String getBloodGroup() { // ✅ Getter for bloodGroup
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(String bloodGroup) { // ✅ Setter for bloodGroup
+        this.bloodGroup = bloodGroup;
+    }
     public String getSentDate() {
         if (sentAt == null || sentAt.isEmpty()) return "Unknown";
         return sentAt.split(" ")[0]; // Extracts "yyyy-MM-dd"

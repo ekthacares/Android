@@ -460,23 +460,53 @@
                                     android:orientation="vertical"
                                     android:layout_weight="1">
 
-                                    <TextView
-                                        android:id="@+id/tvName"
-                                        style="@style/DashboardText1"
-                                        android:text="Upcoming Request"
-                                        android:textStyle="bold"
-                                        android:textSize="16sp"
-                                        android:fontFamily="@font/ubuntu_bold"
-                                        android:layout_marginBottom="4dp" />
+                                    <!-- Name with Icon (Side by Side) -->
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:gravity="center_vertical">
 
-                                    <TextView
-                                        android:id="@+id/tvHospitalName"
-                                        style="@style/DashboardText1"
-                                        android:text="Upcoming Request"
-                                        android:textStyle="bold"
-                                        android:textSize="16sp"
-                                        android:fontFamily="@font/ubuntu_bold"
-                                        android:layout_marginBottom="4dp" />
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:src="@drawable/ic_userss"
+                                            android:contentDescription="Name Icon"
+                                            android:layout_marginEnd="4dp" />
+
+                                        <TextView
+                                            android:id="@+id/tvName"
+                                            style="@style/DashboardText1"
+                                            android:text="Upcoming Request"
+                                            android:textStyle="bold"
+                                            android:textSize="16sp"
+                                            android:fontFamily="@font/ubuntu_bold"
+                                            android:layout_marginBottom="4dp" />
+                                    </LinearLayout>
+
+                                    <!-- Hospital Name with Icon (Side by Side) -->
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:gravity="center_vertical">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:src="@drawable/ic_location"
+                                            android:contentDescription="Hospital Icon"
+                                            android:layout_marginEnd="4dp" />
+
+                                        <TextView
+                                            android:id="@+id/tvHospitalName"
+                                            style="@style/DashboardText1"
+                                            android:text="Upcoming Request"
+                                            android:textStyle="bold"
+                                            android:textSize="16sp"
+                                            android:fontFamily="@font/ubuntu_bold"
+                                            android:layout_marginBottom="4dp" />
+                                    </LinearLayout>
 
                                 </LinearLayout>
 
@@ -498,11 +528,29 @@
                                         android:layout_marginBottom="4dp" />
 
                                     <!-- ImageView Below Time -->
-                                    <ImageView
+                                    <FrameLayout
                                         android:layout_width="37dp"
-                                        android:layout_height="50dp"
-                                        android:src="@drawable/blood_type_image"
-                                        android:contentDescription="Upcoming Campaign Icon" />
+                                        android:layout_height="50dp">
+
+                                        <!-- ImageView for the blood icon -->
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/ic_blood"
+                                            android:scaleType="fitCenter"
+                                            android:contentDescription="Blood Icon" />
+
+                                        <!-- TextView overlaying the image -->
+                                        <TextView
+                                            android:id="@+id/bloodIdText"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@android:color/white"
+                                            android:textSize="12sp"
+                                            android:layout_gravity="center"
+                                            android:padding="2dp" />
+                                    </FrameLayout>
+
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -533,24 +581,53 @@
                                     android:orientation="vertical"
                                     android:layout_weight="1">
 
+                                    <!-- Name with Icon (Side by Side) -->
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:gravity="center_vertical">
 
-                                    <TextView
-                                        android:id="@+id/tvName1"
-                                        style="@style/DashboardText1"
-                                        android:text="Upcoming Request"
-                                        android:textStyle="bold"
-                                        android:textSize="16sp"
-                                        android:fontFamily="@font/ubuntu_bold"
-                                        android:layout_marginBottom="4dp" />
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:src="@drawable/ic_userss"
+                                            android:contentDescription="Name Icon"
+                                            android:layout_marginEnd="4dp" />
 
-                                    <TextView
-                                        android:id="@+id/tvHospitalName1"
-                                        style="@style/DashboardText1"
-                                        android:text="Upcoming Request"
-                                        android:textStyle="bold"
-                                        android:textSize="16sp"
-                                        android:fontFamily="@font/ubuntu_bold"
-                                        android:layout_marginBottom="4dp" />
+                                        <TextView
+                                            android:id="@+id/tvName1"
+                                            style="@style/DashboardText1"
+                                            android:text="Upcoming Request"
+                                            android:textStyle="bold"
+                                            android:textSize="16sp"
+                                            android:fontFamily="@font/ubuntu_bold"
+                                            android:layout_marginBottom="4dp" />
+                                    </LinearLayout>
+
+                                    <!-- Hospital Name with Icon (Side by Side) -->
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:gravity="center_vertical">
+
+                                        <ImageView
+                                            android:layout_width="20dp"
+                                            android:layout_height="20dp"
+                                            android:src="@drawable/ic_location"
+                                            android:contentDescription="Hospital Icon"
+                                            android:layout_marginEnd="4dp" />
+
+                                        <TextView
+                                            android:id="@+id/tvHospitalName1"
+                                            style="@style/DashboardText1"
+                                            android:text="Upcoming Request"
+                                            android:textStyle="bold"
+                                            android:textSize="16sp"
+                                            android:fontFamily="@font/ubuntu_bold"
+                                            android:layout_marginBottom="4dp" />
+                                    </LinearLayout>
 
                                 </LinearLayout>
 
@@ -571,12 +648,29 @@
                                         android:textSize="12sp"
                                         android:layout_marginBottom="4dp" />
 
-                                    <!-- ImageView Below Time -->
-                                    <ImageView
+                                    <FrameLayout
                                         android:layout_width="37dp"
-                                        android:layout_height="50dp"
-                                        android:src="@drawable/blood_type_image"
-                                        android:contentDescription="Upcoming Campaign Icon" />
+                                        android:layout_height="50dp">
+
+                                        <!-- ImageView for the blood icon -->
+                                        <ImageView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/ic_blood"
+                                            android:scaleType="fitCenter"
+                                            android:contentDescription="Blood Icon" />
+
+                                        <!-- TextView overlaying the image -->
+                                        <TextView
+                                            android:id="@+id/bloodIdText1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@android:color/white"
+                                            android:textSize="12sp"
+                                            android:layout_gravity="center"
+                                            android:padding="2dp" />
+                                    </FrameLayout>
+
                                 </LinearLayout>
 
                             </LinearLayout>
