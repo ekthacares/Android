@@ -67,7 +67,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
 
     private MaterialCardView campaignCard2, quickSearchCard ;
 
-    private TextView tvHospitalName, tvHospitalName1, tvTime, tvTime1, tvName, tvName1;
+    private TextView tvHospitalName, tvHospitalName1, tvTime, tvTime1, tvName, tvName1, bloodIdText, bloodIdText1;
 
 
     @Override
@@ -116,6 +116,8 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         tvTime1 = findViewById(R.id.tvTime1);
         tvName = findViewById(R.id.tvName);
         tvName1 = findViewById(R.id.tvName1);
+        bloodIdText = findViewById(R.id.bloodIdText);
+        bloodIdText1 = findViewById(R.id.bloodIdText1);
 
         // Initialize Views
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -161,6 +163,8 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         tvTime1.setOnClickListener(v -> openReceivedRequestsActivity());
         tvName.setOnClickListener(v -> openReceivedRequestsActivity());
         tvName1.setOnClickListener(v -> openReceivedRequestsActivity());
+        bloodIdText.setOnClickListener(v -> openReceivedRequestsActivity());
+        bloodIdText.setOnClickListener(v -> openReceivedRequestsActivity());
 
         // Notification icon click
         ivNotifications.setOnClickListener(v -> {
@@ -436,25 +440,30 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
                         fetchUserName(Long.valueOf(String.valueOf(latestEmail.getLoggedInUserId())), tvName);
                         tvHospitalName.setText(latestEmail.getHospitalName());
                         tvTime.setText(latestEmail.getTimeDifference());
+                        bloodIdText.setText(latestEmail.getBloodGroup());
 
                         // Set second email details if available
                         if (sentEmails.size() > 1) {
                             SentEmail secondLatestEmail = sentEmails.get(size - 2);
                             tvHospitalName1.setText(secondLatestEmail.getHospitalName());
                             tvTime1.setText(secondLatestEmail.getTimeDifference());
+                            bloodIdText1.setText(latestEmail.getBloodGroup());
                             fetchUserName(Long.valueOf(String.valueOf(latestEmail.getLoggedInUserId())), tvName1);
 
                         } else {
                             tvHospitalName1.setText("No second email available");
                             tvTime1.setText("");
+                            bloodIdText.setText("");
                         }
                     } else {
                         Log.e("SentEmails", "No sent emails found");
                         tvHospitalName.setText("No emails available");
                         tvTime.setText("");
+                        bloodIdText.setText("");
 
                         tvHospitalName1.setText("No emails available");
                         tvTime1.setText("");
+                        bloodIdText1.setText("");
                     }
                 } else {
                     Log.e("SentEmails", "Failed to fetch emails: " + response.code());

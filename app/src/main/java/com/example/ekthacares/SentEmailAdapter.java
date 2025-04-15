@@ -61,7 +61,9 @@ public class SentEmailAdapter extends RecyclerView.Adapter<SentEmailAdapter.View
 
         String hospitalName = sentEmail.getHospitalName();
         String sentAt = sentEmail.getSentAt();
+        String bloodGroup = sentEmail.getBloodGroup();
         String formattedDate = formatDate(sentAt);
+
 
         String text = "RequestedBy: " + sentEmail.getLoggedInUserId();
         holder.tvLoggedInUserId.setText(text);
@@ -81,6 +83,7 @@ public class SentEmailAdapter extends RecyclerView.Adapter<SentEmailAdapter.View
         holder.tvLoggedInUserId.setText(spannableText);
         holder.tvHospitalName.setText("Hospital Name: " + hospitalName); // ✅ Fixed the issue
         holder.tvSentAt.setText("Sent At: " + formattedDate);
+        holder.tvBloodGroup.setText("Blood Group: " + bloodGroup);
 
         String url = sentEmail.getConfirmationUrl();
         if (url != null && !url.isEmpty()) {
@@ -137,7 +140,7 @@ public class SentEmailAdapter extends RecyclerView.Adapter<SentEmailAdapter.View
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvLoggedInUserId, tvSentAt, tvConfirmationUrl, tvHospitalName;
+        TextView tvLoggedInUserId, tvSentAt, tvConfirmationUrl, tvHospitalName, tvBloodGroup;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -145,6 +148,7 @@ public class SentEmailAdapter extends RecyclerView.Adapter<SentEmailAdapter.View
             tvLoggedInUserId = itemView.findViewById(R.id.tvLoggedInUserId);
             tvHospitalName = itemView.findViewById(R.id.tvHospitalName);
             tvSentAt = itemView.findViewById(R.id.tvSentAt);
+            tvBloodGroup = itemView.findViewById(R.id.tvBloodGroup);
             tvConfirmationUrl = itemView.findViewById(R.id.tvConfirmationUrl);
         }
     }

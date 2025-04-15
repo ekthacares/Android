@@ -18,10 +18,11 @@ public class SentEmail {
 
     private String hospitalName; // ✅ New field added
 
-    private String bloodGroup; // ✅ New field added
+    private String bloodgroup; // ✅ New field added
 
     // Default constructor
-    public SentEmail() {}
+    public SentEmail() {
+    }
 
     // Getters and Setters
     public Long getId() {
@@ -81,12 +82,13 @@ public class SentEmail {
     }
 
     public String getBloodGroup() { // ✅ Getter for bloodGroup
-        return bloodGroup;
+        return bloodgroup;
     }
 
     public void setBloodGroup(String bloodGroup) { // ✅ Setter for bloodGroup
-        this.bloodGroup = bloodGroup;
+        this.bloodgroup = bloodGroup;
     }
+
     public String getSentDate() {
         if (sentAt == null || sentAt.isEmpty()) return "Unknown";
         return sentAt.split(" ")[0]; // Extracts "yyyy-MM-dd"
@@ -137,6 +139,7 @@ public class SentEmail {
                 ", recipientId=" + recipientId +
                 ", loggedInUserId=" + loggedInUserId +
                 ", hospitalName='" + hospitalName + '\'' +
+                ", bloodGroup='" + bloodgroup + '\'' + // ✅ Add this line
                 '}';
     }
 }
