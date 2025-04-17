@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Step 1: Blood Group Selection -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Blood Group"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="16dp" />
+
+                <GridLayout
+                    android:id="@+id/bloodGroupGrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:text="A+"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/red" />
+
+                    <Button
+                        android:text="A-"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/red" />
+
+
+                    <Button
+                        android:text="B+"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/red" />
+
+                    <Button
+                        android:text="B-"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/red" />
+
+                    <Button
+                        android:text="O+"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/red" />
+
+                    <Button
+                        android:text="O-"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/red" />
+
+                    <Button
+                        android:text="AB+"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/red" />
+
+                    <Button
+                        android:text="AB-"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/red" />
+
+                </GridLayout>
+
+                <Button
+                    android:id="@+id/buttonToCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Next"
+                    android:layout_marginTop="16dp"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Step 2: City/State -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/editTextCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter City" />
+
+                <EditText
+                    android:id="@+id/editTextState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter State" />
+
+                <EditText
+                    android:id="@+id/editTextHospital"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Hospital (optional)" />
+
+                <Button
+                    android:id="@+id/buttonToState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Next"
+                    android:layout_marginTop="16dp"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Step 3: Results -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Search Results"
+                    android:visibility="gone"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/buttonSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Search"
+                    android:layout_marginTop="16dp"/>
+            </LinearLayout>
+        </ScrollView>
+    </ViewFlipper>
+</LinearLayout>

@@ -61,6 +61,9 @@
         <!-- Declare the QuickSearchActivity here -->
         <activity android:name=".QuickSearchActivity" android:exported="true"></activity>
 
+        <!-- Declare the QuickSearchActivity1 here -->
+        <activity android:name=".QuickSearchActivity1" android:exported="true"></activity>
+
         <!-- Declare the DonorTrackingActivity here -->
         <activity android:name=".DonorTrackingActivity" android:exported="true"></activity>
 
@@ -72,6 +75,9 @@
 
         <!-- Declare the NotificationsActivity here -->
         <activity android:name=".CampaignActivity" android:exported="true"></activity>
+
+        <!-- Declare the DonorProfileActivity here -->
+        <activity android:name=".DonorProfileActivity" android:exported="true"></activity>
 
         <!-- Firebase Messaging Service -->
         <service

@@ -56,7 +56,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
 
     private TextView tvWelcome , tvUserName ,tvUserEmail;
 
-    private ImageView ivNotifications, ivCampaigns;
+    private ImageView ivNotifications, ivCampaigns, UserIcon;
     private View notificationDot, notificationDot1;
 
     private TextView tvCampaignTitle, tvCampaignTitle1, tvCampaignMessage, tvCampaignMessage1;
@@ -65,7 +65,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
 
     private CardView cardCampaign, cardCampaign1;
 
-    private MaterialCardView campaignCard2, quickSearchCard ;
+    private MaterialCardView campaignCard2, quickSearchCard, mydonationscard ;
 
     private TextView tvHospitalName, tvHospitalName1, tvTime, tvTime1, tvName, tvName1, bloodIdText, bloodIdText1;
 
@@ -108,6 +108,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         cardCampaign1 = findViewById(R.id.campaign_card1);
         campaignCard2 = findViewById(R.id.campaign_card2);
         quickSearchCard  = findViewById(R.id.quick_search_card);
+        mydonationscard = findViewById(R.id.my_donation);
 
         // Bind views
         tvHospitalName = findViewById(R.id.tvHospitalName);
@@ -118,6 +119,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         tvName1 = findViewById(R.id.tvName1);
         bloodIdText = findViewById(R.id.bloodIdText);
         bloodIdText1 = findViewById(R.id.bloodIdText1);
+        UserIcon = findViewById(R.id.ivUserIcon);
 
         // Initialize Views
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -157,6 +159,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         cardCampaign1.setOnClickListener(v -> openCampaignActivity());
         campaignCard2.setOnClickListener(v -> openCampaignActivity());
         quickSearchCard.setOnClickListener(v -> openQuickSearchActivity());
+        mydonationscard.setOnClickListener(v -> openMyDonationsActivity());
         tvHospitalName.setOnClickListener(v -> openReceivedRequestsActivity());
         tvTime.setOnClickListener(v -> openReceivedRequestsActivity());
         tvHospitalName1.setOnClickListener(v -> openReceivedRequestsActivity());
@@ -165,6 +168,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         tvName1.setOnClickListener(v -> openReceivedRequestsActivity());
         bloodIdText.setOnClickListener(v -> openReceivedRequestsActivity());
         bloodIdText.setOnClickListener(v -> openReceivedRequestsActivity());
+        UserIcon.setOnClickListener(v -> openDonorProfileActivity());
 
         // Notification icon click
         ivNotifications.setOnClickListener(v -> {
@@ -204,8 +208,17 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         startActivity(intent);
     }
 
+    private void openDonorProfileActivity() {
+        Intent intent = new Intent(DonorHomeActivity1.this, DonorProfileActivity.class);
+        startActivity(intent);
+    }
+
+    private void openMyDonationsActivity() {
+        Intent intent = new Intent(DonorHomeActivity1.this, MyDonationsActivity.class);
+        startActivity(intent);
+    }
     private void openQuickSearchActivity() {
-        Intent intent = new Intent(DonorHomeActivity1.this, QuickSearchActivity.class);
+        Intent intent = new Intent(DonorHomeActivity1.this, QuickSearchActivity1.class);
         startActivity(intent);
     }
 
