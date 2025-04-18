@@ -61,8 +61,8 @@
         <!-- Declare the QuickSearchActivity here -->
         <activity android:name=".QuickSearchActivity" android:exported="true"></activity>
 
-        <!-- Declare the QuickSearchActivity1 here -->
-        <activity android:name=".QuickSearchActivity1" android:exported="true"></activity>
+        <!-- Declare the SearchResultsActivity here -->
+        <activity android:name=".SearchResultsActivity" android:exported="true"></activity>
 
         <!-- Declare the DonorTrackingActivity here -->
         <activity android:name=".DonorTrackingActivity" android:exported="true"></activity>

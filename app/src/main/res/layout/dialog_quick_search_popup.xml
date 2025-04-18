@@ -1,194 +1,263 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:padding="8dp"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-
-    <ViewFlipper
-        android:id="@+id/viewFlipper"
+    <!-- Outer CardView with shadow -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="4dp"
+        app:cardPreventCornerOverlap="true"
+        android:clipToOutline="true">
 
-        <!-- Step 1: Blood Group Selection -->
-        <ScrollView
+        <!-- Inner layout that will be clipped to rounded corners -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clipToOutline="true">
+
+            <ViewFlipper
+                android:id="@+id/viewFlipper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:clipToOutline="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Select Blood Group"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/ubuntu_bold"
-                    android:textColor="@color/black"
-                    android:layout_marginBottom="16dp" />
-
-                <GridLayout
-                    android:id="@+id/bloodGroupGrid"
+                <!-- Step 1: Blood Group Selection -->
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:columnCount="3"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:clipToOutline="true"
+                    android:fillViewport="true"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/border_scrollview"
+                    android:padding="16dp">
 
-                    <Button
-                        android:text="A+"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Select Blood Group"
                         android:textSize="20sp"
                         android:fontFamily="@font/ubuntu_bold"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/red" />
+                        android:textColor="@color/black"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="16dp" />
 
-                    <Button
-                        android:text="A-"
-                        android:layout_width="wrap_content"
+                    <GridLayout
+                        android:id="@+id/bloodGroupGrid"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/ubuntu_bold"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/red" />
+                        android:columnCount="3"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
 
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:text="A+"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/red" />
 
-                    <Button
-                        android:text="B+"
-                        android:layout_width="wrap_content"
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:text="A-"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/red" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:text="B+"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/red" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:text="B-"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/red" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:text="O+"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/red" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:text="O-"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/red" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:text="AB+"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/red" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:text="AB-"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:textSize="20sp"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/red" />
+                    </GridLayout>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonToCity"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/ubuntu_bold"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/red" />
+                        android:text="Next"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/red"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </ScrollView>
 
-                    <Button
-                        android:text="B-"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/ubuntu_bold"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/red" />
-
-                    <Button
-                        android:text="O+"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/ubuntu_bold"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/red" />
-
-                    <Button
-                        android:text="O-"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/ubuntu_bold"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/red" />
-
-                    <Button
-                        android:text="AB+"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/ubuntu_bold"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/red" />
-
-                    <Button
-                        android:text="AB-"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/ubuntu_bold"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/red" />
-
-                </GridLayout>
-
-                <Button
-                    android:id="@+id/buttonToCity"
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Next"
-                    android:layout_marginTop="16dp"/>
+                    android:padding="16dp"
+                    android:fillViewport="true">
 
-            </LinearLayout>
-        </ScrollView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/rounded_card"
+                        android:padding="24dp"
+                        android:elevation="4dp">
 
-        <!-- Step 2: City/State -->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                        <!-- Title -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Please Enter Details"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/red"
+                            android:layout_marginBottom="16dp"
+                            android:fontFamily="@font/ubuntu_bold" />
 
-                <EditText
-                    android:id="@+id/editTextCity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter City" />
+                        <!-- City -->
+                        <EditText
+                            android:id="@+id/editTextCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter City"
+                            android:background="@drawable/edit_text_bg"
+                            android:padding="12dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray"
+                            android:layout_marginBottom="12dp" />
 
-                <EditText
-                    android:id="@+id/editTextState"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter State" />
+                        <!-- State -->
+                        <EditText
+                            android:id="@+id/editTextState"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter State"
+                            android:background="@drawable/edit_text_bg"
+                            android:padding="12dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray"
+                            android:layout_marginBottom="12dp" />
 
-                <EditText
-                    android:id="@+id/editTextHospital"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter Hospital (optional)" />
+                        <!-- Hospital (Optional) -->
+                        <EditText
+                            android:id="@+id/editTextHospital"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter Hospital (optional)"
+                            android:background="@drawable/edit_text_bg"
+                            android:padding="12dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/gray"
+                            android:layout_marginBottom="20dp" />
 
-                <Button
-                    android:id="@+id/buttonToState"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Next"
-                    android:layout_marginTop="16dp"/>
-            </LinearLayout>
-        </ScrollView>
+                        <!-- Search Button -->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/buttonSearch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Search"
+                            android:backgroundTint="@color/red"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/ubuntu_bold"
+                            android:paddingVertical="12dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/rounded_button" />
 
-        <!-- Step 3: Results -->
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                        <!-- ProgressBar -->
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            android:layout_marginBottom="16dp" />
 
-                <TextView
-                    android:id="@+id/textViewResults"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Search Results"
-                    android:visibility="gone"/>
+                        <!-- Results Text -->
+                        <TextView
+                            android:id="@+id/textViewResults"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Search Results"
+                            android:textColor="@color/black"
+                            android:visibility="gone"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="4dp"
+                            android:fontFamily="@font/ubuntu_bold" />
+                    </LinearLayout>
 
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone"/>
 
-                <Button
-                    android:id="@+id/buttonSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Search"
-                    android:layout_marginTop="16dp"/>
-            </LinearLayout>
-        </ScrollView>
-    </ViewFlipper>
-</LinearLayout>
+                </ScrollView>
+
+
+            </ViewFlipper>
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

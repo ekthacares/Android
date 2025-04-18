@@ -218,8 +218,10 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         startActivity(intent);
     }
     private void openQuickSearchActivity() {
-        Intent intent = new Intent(DonorHomeActivity1.this, QuickSearchActivity1.class);
-        startActivity(intent);
+      //  Intent intent = new Intent(DonorHomeActivity1.this, QuickSearchActivity1.class);
+//startActivity(intent);
+        QuickSearchDialogFragment dialog = new QuickSearchDialogFragment();
+        dialog.show(getSupportFragmentManager(), "QuickSearchDialog");
     }
 
     private void openReceivedRequestsActivity() {
