@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:text="Search Results for : "
         android:textSize="20sp"
-        android:fontFamily="@font/ubuntu_bold"
+        android:fontFamily="@font/ubuntu"
         android:textColor="@color/black"
         android:layout_gravity="center"
         android:layout_marginTop="10dp" />

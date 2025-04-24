@@ -1,19 +1,15 @@
 package com.example.ekthacares;
 
-import static android.content.ContentValues.TAG;
-
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.EditText;
-import android.content.Intent;
-import androidx.appcompat.app.AlertDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ekthacares.model.ApiResponse;
@@ -22,122 +18,68 @@ import com.example.ekthacares.model.DonationResponse;
 import com.example.ekthacares.model.SentEmail;
 import com.example.ekthacares.model.User;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DonorProfileActivity extends AppCompatActivity {
+
+    private User user; // User passed from SearchResultsActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_profile);
 
+        // Receive user from intent
+        user = (User) getIntent().getSerializableExtra("donor");
 
-        // Retrieve JWT token and user ID from SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
-        String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
-        Long userId = sharedPreferences.getLong(Constants.USER_ID_KEY, -1);
+        // Set basic user info from passed object
+        if (user != null) {
+            TextView donorNameTextView = findViewById(R.id.donor_name);
+            TextView bloodtypeTextView = findViewById(R.id.bloodtype);
+            TextView locationTextView = findViewById(R.id.location);
 
-        if (isSessionValid(jwtToken, userId)) {
-            fetchUserDetails(jwtToken, userId);
+            donorNameTextView.setText(user.getDonorName());
+            bloodtypeTextView.setText(user.getBloodGroup());
+            locationTextView.setText(user.getAddress() + ", " + user.getCity());
+
+            LinearLayout layoutCall = findViewById(R.id.layoutCall);
+            layoutCall.setOnClickListener(v -> {
+                String phoneNumber = user.getMobile();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:+91" + phoneNumber));
+                startActivity(intent);
+            });
+
             fetchDonations();
             fetchSentEmails();
+
         } else {
-            Toast.makeText(this, "Invalid session. Please log in again.", Toast.LENGTH_SHORT).show();
-            redirectToLogin();
+            Toast.makeText(this, "No user data received.", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
+        // Back arrow
         ImageView backArrow = findViewById(R.id.imgBackArrow);
         backArrow.setOnClickListener(v -> {
-            Intent intent = new Intent(DonorProfileActivity.this, DonorHomeActivity1.class);
-            startActivity(intent);
-            finish(); // Optional: removes this activity from the back stack
+            // Use OnBackPressedDispatcher to go back to the previous activity
+            getOnBackPressedDispatcher().onBackPressed();
         });
 
 
-    }
-
-
-    private boolean isSessionValid(String jwtToken, Long userId) {
-        return jwtToken != null && userId != -1;
-    }
-
-    private void fetchUserDetails(String jwtToken, Long userId) {
-        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-
-        Call<User> call = apiService.getUserDetails("Bearer " + jwtToken, userId);
-
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    // Get the user object from the responsel
-                    User user = response.body();
-
-                    if (user != null) {
-                        // Extract the donorName
-                        String donorName = user.getDonorName();
-                        String bloodtype = user.getBloodGroup();
-                        String location = user.getAddress() + ", " + user.getCity();
-
-
-                        // Display donorName in a TextView (assuming you have a TextView with id donor_name)
-                        TextView donorNameTextView = findViewById(R.id.donor_name);
-                        TextView bloodtypeTextView = findViewById(R.id.bloodtype);
-                        TextView locationTextView = findViewById(R.id.location);
-
-                        donorNameTextView.setText(donorName);
-                        bloodtypeTextView.setText(bloodtype);
-                        locationTextView.setText(location);
-
-                        LinearLayout layoutCall = findViewById(R.id.layoutCall);
-                        layoutCall.setOnClickListener(v -> {
-                            String phoneNumber = user.getMobile(); // get the user's phone number
-                            Intent intent = new Intent(Intent.ACTION_DIAL);
-                            intent.setData(Uri.parse("tel:+91" + phoneNumber));
-                            v.getContext().startActivity(intent);
-                        });
-
-                    } else {
-                        Toast.makeText(DonorProfileActivity.this, "User data is null.", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(DonorProfileActivity.this, "Failed to fetch user details.", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(DonorProfileActivity.this, "An error occurred.", Toast.LENGTH_SHORT).show();
-                Log.e("FetchError", t.getMessage(), t);
-            }
-        });
     }
 
     private void fetchDonations() {
-        Log.d(TAG, "fetchDonations: Fetching donations...");
-
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
-        Long userId = sharedPreferences.getLong(Constants.USER_ID_KEY, -1);
 
-        Log.d(TAG, "fetchDonations: Retrieved JWT Token = " + jwtToken);
-        Log.d(TAG, "fetchDonations: Retrieved User ID = " + userId);
-
-        if (jwtToken == null || userId == -1) {
-            Toast.makeText(DonorProfileActivity.this, "User is not logged in", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String authorizationHeader = "Bearer " + jwtToken;
-        Log.d(TAG, "fetchDonations: Authorization Header = " + authorizationHeader);
+        if (jwtToken == null || user == null) return;
 
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<DonationResponse> call = apiService.getDonations(authorizationHeader, userId);
+        Call<DonationResponse> call = apiService.getDonations("Bearer " + jwtToken, user.getId());
 
         call.enqueue(new Callback<DonationResponse>() {
             @Override
@@ -149,80 +91,50 @@ public class DonorProfileActivity extends AppCompatActivity {
                     TextView donatedcountTextView = findViewById(R.id.donatedcount);
 
                     if (donations != null && !donations.isEmpty()) {
-                        donorStatusTextView.setText("Not Eligible to Donate ");
+                        donorStatusTextView.setText("Not Eligible to Donate");
                         donatedcountTextView.setText(String.valueOf(donations.size()));
-
-
-
                     } else {
                         donorStatusTextView.setText("Eligible to Donate");
-                        donatedcountTextView.setText(String.valueOf(donations.size()));
+                        donatedcountTextView.setText("0");
                     }
-
                 } else {
-                    Log.e(TAG, "onResponse: Failed to load donations. Response code: " + response.code());
                     Toast.makeText(DonorProfileActivity.this, "Failed to load donations", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DonationResponse> call, Throwable t) {
-                Log.e(TAG, "onFailure: API call failed", t);
-                Toast.makeText(DonorProfileActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("DonorProfileActivity", "Error fetching donations", t);
+                Toast.makeText(DonorProfileActivity.this, "Error loading donations", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void fetchSentEmails() {
-        // Get JWT token and user ID from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
-        Long userId = sharedPreferences.getLong(Constants.USER_ID_KEY, -1);
 
-        if (jwtToken == null || userId == -1) {
-            Toast.makeText(this, "Invalid session. Please log in again.", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+        if (jwtToken == null || user == null) return;
 
-        // Call the API
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<List<SentEmail>> call = apiService.getSentEmails("Bearer " + jwtToken, userId);
+        Call<List<SentEmail>> call = apiService.getSentEmails("Bearer " + jwtToken, user.getId());
 
         call.enqueue(new Callback<List<SentEmail>>() {
             @Override
             public void onResponse(Call<List<SentEmail>> call, Response<List<SentEmail>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null && !response.body().isEmpty()) {
-                        // There are emails, update the adapter
-                        List<SentEmail> sentEmails = response.body();
-                        TextView RequestedCountTextView = findViewById(R.id.RequestedCount);
-
-                        if (sentEmails != null && !sentEmails.isEmpty()) {
-                            RequestedCountTextView.setText(String.valueOf(sentEmails.size()));
-
-                        } else {
-                            RequestedCountTextView.setText(String.valueOf(sentEmails.size()));
-                        }
-                    } else {
-                        // Handle error or non-successful response
-                        Toast.makeText(DonorProfileActivity.this, "Failed to fetch sent emails. No data available.", Toast.LENGTH_SHORT).show();
-                    }
+                if (response.isSuccessful() && response.body() != null) {
+                    TextView requestedCountTextView = findViewById(R.id.RequestedCount);
+                    requestedCountTextView.setText(String.valueOf(response.body().size()));
+                } else {
+                    Toast.makeText(DonorProfileActivity.this, "Failed to load sent requests", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<SentEmail>> call, Throwable t) {
-                Log.e("ReceivedRequests", "Error fetching data", t);
-                Toast.makeText(DonorProfileActivity.this, "An error occurred while fetching the emails.", Toast.LENGTH_SHORT).show();
+                Log.e("DonorProfileActivity", "Error fetching sent emails", t);
+                Toast.makeText(DonorProfileActivity.this, "Error loading sent emails", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void redirectToLogin() {
-        Intent intent = new Intent(DonorProfileActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
     }
 }

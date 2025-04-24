@@ -11,10 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
-import com.example.ekthacares.ApiService;
-import com.example.ekthacares.RetrofitClient;
 import com.example.ekthacares.model.BloodSearchResponse;
 import com.example.ekthacares.model.User;
 
@@ -28,7 +25,7 @@ import retrofit2.Response;
 
 public class QuickSearchActivity extends AppCompatActivity {
 
-    private EditText editTextBloodGroup, editTextCity, editTextState, editTextHospital;
+    private EditText editTextBloodGroup, editTextCity, editTextState, editTextHospital, editTextRequestedDate;
     private Button buttonSearch;
     private TextView textViewResults;
 
@@ -42,6 +39,7 @@ public class QuickSearchActivity extends AppCompatActivity {
         editTextCity = findViewById(R.id.editTextCity);
         editTextState = findViewById(R.id.editTextState);
         editTextHospital = findViewById(R.id.editTextHospital);
+        editTextRequestedDate = findViewById(R.id.editTextRequestedDate);  // Newly added for requested date input
         buttonSearch = findViewById(R.id.buttonSearch);
         textViewResults = findViewById(R.id.textViewResults);
 
@@ -69,14 +67,15 @@ public class QuickSearchActivity extends AppCompatActivity {
     }
 
     private void performSearchForBlood() {
-        // Retrieve the user input for blood group, city, state, and hospital name
+        // Retrieve the user input for blood group, city, state, hospital name, and requested date
         String bloodGroup = editTextBloodGroup.getText().toString().trim();
         String city = editTextCity.getText().toString().trim();
         String state = editTextState.getText().toString().trim();
         String hospitalName = editTextHospital.getText().toString().trim();
+        String requestedDate = editTextRequestedDate.getText().toString().trim(); // Get requested date input
 
         // Validate inputs
-        if (bloodGroup.isEmpty() || city.isEmpty() || state.isEmpty()) {
+        if (bloodGroup.isEmpty() || city.isEmpty() || state.isEmpty() || requestedDate.isEmpty()) {
             Toast.makeText(this, "Please fill out all required fields.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -99,7 +98,7 @@ public class QuickSearchActivity extends AppCompatActivity {
 
             // Perform the network request
             ApiService apiService = RetrofitClient.getApiService();
-            Call<BloodSearchResponse> call = apiService.searchForBlood(headers, bloodGroup, city, state, hospitalName);
+            Call<BloodSearchResponse> call = apiService.searchForBlood(headers, bloodGroup, city, state, hospitalName, requestedDate);
 
             call.enqueue(new Callback<BloodSearchResponse>() {
                 @Override
@@ -109,7 +108,6 @@ public class QuickSearchActivity extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         BloodSearchResponse bloodSearchResponse = response.body();
                         List<User> users = bloodSearchResponse.getResults();
-
 
                         if (users != null && !users.isEmpty()) {
                             // Display the results

@@ -39,6 +39,16 @@
         android:hint="Enter Hospital/Blood Bank Name"
         android:inputType="text"/>
 
+
+    <!--  Date  -->
+    <EditText
+        android:id="@+id/editTextRequestedDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Date"
+        android:inputType="text"/>
+
+
     <!-- Search Button -->
     <Button
         android:id="@+id/buttonSearch"

@@ -95,7 +95,9 @@ public interface ApiService {
             @Query("bloodgroup") String bloodgroup,
             @Query("city") String city,
             @Query("state") String state,
-            @Query("hospital") String hospitalName
+            @Query("hospital") String hospitalName,
+            @Query("requestedDate") String requestedDate
+
     );
 
     @GET("/api/app/donortracking")

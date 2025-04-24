@@ -1,11 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/textViewDonorName"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:textColor="@color/black"
-    android:textSize="20sp"
-    android:typeface="sans"
-    android:layout_marginBottom="8dp"
-    android:background="@drawable/item_donor_background" />
+    android:orientation="vertical"
+    android:paddingHorizontal="12dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="4dp">
+
+    <!-- Horizontal row: Donor name + icons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewDonorName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Donor Name"
+            android:textSize="20sp"
+            android:fontFamily="@font/ubuntu_bold"
+            android:textColor="@color/black"
+           />
+
+        <!-- Image 1 -->
+        <ImageView
+            android:id="@+id/imageinfo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/donor_info"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Image 2 -->
+        <ImageView
+            android:id="@+id/imagecall"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/donor_call"
+            android:clickable="true"
+            android:focusable="true" />
+
+
+    </LinearLayout>
+
+    <!-- Dotted line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/dotted_line" />
+</LinearLayout>
+
