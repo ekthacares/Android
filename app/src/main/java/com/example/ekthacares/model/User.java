@@ -238,6 +238,17 @@ public class User implements Serializable {
         this.isDeleted = isDeleted;
     }
 
+    @SerializedName("profileImage")
+    private String profileImage;
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
     // Default constructor
     public User() {
     }
@@ -255,5 +266,6 @@ public class User implements Serializable {
         this.bloodGroup = user.bloodGroup;
         this.age = user.age;
         this.gender = user.gender;
+        this.profileImage = user.profileImage;
     }
 }

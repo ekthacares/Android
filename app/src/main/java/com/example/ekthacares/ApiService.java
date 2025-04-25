@@ -24,6 +24,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -139,6 +140,10 @@ public interface ApiService {
 
     @GET("/api/campaigns/latest")
     Call<List<Campaign>> getLatestCampaigns(@Header("Authorization") String token);
+
+    @PUT("/api/users/{id}")
+    Call<User> updateUser(@Path("id") Long userId, @Body User user);
+
 }
 
 

@@ -209,7 +209,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
     }
 
     private void openDonorProfileActivity() {
-        Intent intent = new Intent(DonorHomeActivity1.this, ProfileActivity.class);
+        Intent intent = new Intent(DonorHomeActivity1.this, ProfileActivity1.class);
         startActivity(intent);
     }
 
