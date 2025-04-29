@@ -69,6 +69,12 @@ public class User implements Serializable {
     @SerializedName("isDeleted")
     private boolean isDeleted;
 
+    @SerializedName("jwtToken")
+    private String jwtToken;
+
+    @SerializedName("fcmToken")
+    private String fcmToken;
+
     // Getters and Setters
     public Long getId() {
         return id;
@@ -247,6 +253,22 @@ public class User implements Serializable {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
+    public String getJwtToken() {
+        return jwtToken;
+    }
+
+    public void setJwtToken(String jwtToken) {
+        this.jwtToken = jwtToken;
     }
 
     // Default constructor

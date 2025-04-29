@@ -337,7 +337,7 @@
 
                         <!-- Card 1 -->
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/campaign_card2"
+                            android:id="@+id/my_donation"
                             android:layout_width="111dp"
                             android:layout_height="111dp"
                             android:layout_marginEnd="8dp"
@@ -352,86 +352,38 @@
                                 android:orientation="vertical"
                                 android:gravity="center">
 
-                            <!-- Centered Image -->
-                            <ImageView
-                                android:id="@+id/ivTipsImage"
-                                android:layout_width="42dp"
-                                android:layout_height="42dp"
-                                android:src="@drawable/ic_campaign_n"
-                                android:layout_gravity="center"
-                                android:contentDescription="Campaigns" />
+
+                                <!-- Centered Image -->
+                                <ImageView
+                                    android:id="@+id/ivTipsImage1"
+                                    android:layout_width="42dp"
+                                    android:layout_height="42dp"
+                                    android:src="@drawable/blood_pouch"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="Donations" />
 
                                 <!-- Text under Image -->
                                 <TextView
-                                    android:id="@+id/tvTipsText"
+                                    android:id="@+id/tvTipsText1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Campaigns"
+                                    android:text="My Donations"
+                                    android:fontFamily="@font/ubuntu_bold"
                                     android:textSize="12sp"
                                     android:textStyle="bold"
                                     android:textColor="@android:color/holo_red_light"
                                     android:layout_marginTop="4dp"
                                     android:gravity="center" />
 
-                        </LinearLayout>
+                            </LinearLayout>
 
-                    </com.google.android.material.card.MaterialCardView>
-
+                        </com.google.android.material.card.MaterialCardView>
                         <!-- Empty Space -->
                         <View
                             android:layout_width="16dp"
                             android:layout_height="match_parent"/>
 
                         <!-- Card 2 -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/my_donation"
-                        android:layout_width="111dp"
-                        android:layout_height="111dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="12dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardElevation="4dp"
-                        app:cardCornerRadius="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-
-                        <!-- Centered Image -->
-                        <ImageView
-                            android:id="@+id/ivTipsImage1"
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:src="@drawable/blood_pouch"
-                            android:layout_gravity="center"
-                            android:contentDescription="Donations" />
-
-                        <!-- Text under Image -->
-                        <TextView
-                            android:id="@+id/tvTipsText1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Donations"
-                            android:fontFamily="@font/ubuntu_bold"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/holo_red_light"
-                            android:layout_marginTop="4dp"
-                            android:gravity="center" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                        <!-- Empty Space -->
-                        <View
-                            android:layout_width="16dp"
-                            android:layout_height="match_parent"/>
-
-                        <!-- Card 3 -->
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/quick_search_card"
                             android:layout_width="111dp"
@@ -471,9 +423,102 @@
                             </LinearLayout>
 
                         </com.google.android.material.card.MaterialCardView>
+                        <!-- Empty Space -->
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="match_parent"/>
+
+                        <!-- Card 3 -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/trackingcard"
+                            android:layout_width="111dp"
+                            android:layout_height="111dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardElevation="4dp"
+                            app:cardCornerRadius="8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <!-- Centered Image -->
+                                <ImageView
+                                    android:id="@+id/ivTipsImage"
+                                    android:layout_width="42dp"
+                                    android:layout_height="42dp"
+                                    android:src="@drawable/location_search"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="Tracking" />
+
+                                <!-- Text under Image -->
+                                <TextView
+                                    android:id="@+id/tvTipsText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Tracking"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@android:color/holo_red_light"
+                                    android:layout_marginTop="4dp"
+                                    android:gravity="center" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="match_parent"/>
+
+                        <!-- Card 4 -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/BloodforOtherscard"
+                            android:layout_width="111dp"
+                            android:layout_height="111dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardElevation="4dp"
+                            app:cardCornerRadius="8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <!-- Centered Image -->
+                                <ImageView
+                                    android:id="@+id/ivTipsImage3"
+                                    android:layout_width="42dp"
+                                    android:layout_height="42dp"
+                                    android:src="@drawable/blood_pouch"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="Request for Others" />
+
+                                <!-- Text under Image -->
+                                <TextView
+                                    android:id="@+id/tvTipsText3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Request for others"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@android:color/holo_red_light"
+                                    android:layout_marginTop="4dp"
+                                    android:gravity="center" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
                 </HorizontalScrollView>
+
 
                 <!--- Notication Request-->
             <LinearLayout

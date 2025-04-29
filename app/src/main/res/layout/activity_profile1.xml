@@ -48,8 +48,8 @@
 
     <ImageView
         android:id="@+id/imgProfile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:src="@drawable/profile"
         android:clickable="true"
@@ -145,8 +145,8 @@
             <!-- Edit Icon (Aligned to the right next to the value) -->
             <ImageView
                 android:id="@+id/imgEditDonorName"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="Edit Name"
                 android:layout_alignParentEnd="true"
@@ -224,8 +224,8 @@
             <!-- Edit Icon (Aligned to the right next to the value) -->
             <ImageView
                 android:id="@+id/imgEditEmail"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="Edit Email"
                 android:layout_alignParentEnd="true"
@@ -417,8 +417,8 @@
             <!-- Edit Icon (Aligned to the right next to the value) -->
             <ImageView
                 android:id="@+id/imgEditAddress"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="Edit Address"
                 android:layout_alignParentEnd="true"
@@ -465,8 +465,8 @@
             <!-- Edit Icon (Aligned to the right next to the value) -->
             <ImageView
                 android:id="@+id/imgEditCity"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="Edit City"
                 android:layout_alignParentEnd="true"
@@ -510,8 +510,8 @@
             <!-- Edit Icon (Aligned to the right next to the value) -->
             <ImageView
                 android:id="@+id/imgEditState"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="Edit State"
                 android:layout_alignParentEnd="true"

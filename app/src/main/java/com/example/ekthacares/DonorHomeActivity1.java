@@ -65,7 +65,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
 
     private CardView cardCampaign, cardCampaign1;
 
-    private MaterialCardView campaignCard2, quickSearchCard, mydonationscard ;
+    private MaterialCardView campaignCard2, quickSearchCard, mydonationscard, trackingcard, BloodforOtherscard ;
 
     private TextView tvHospitalName, tvHospitalName1, tvTime, tvTime1, tvName, tvName1, bloodIdText, bloodIdText1;
 
@@ -106,10 +106,11 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         tvCampaignTime1 = findViewById(R.id.tvCampaignTime1);
         cardCampaign = findViewById(R.id.campaign_card);
         cardCampaign1 = findViewById(R.id.campaign_card1);
-        campaignCard2 = findViewById(R.id.campaign_card2);
+        //campaignCard2 = findViewById(R.id.campaign_card2);
         quickSearchCard  = findViewById(R.id.quick_search_card);
         mydonationscard = findViewById(R.id.my_donation);
-
+        trackingcard = findViewById(R.id.trackingcard);
+        BloodforOtherscard = findViewById(R.id.BloodforOtherscard);
         // Bind views
         tvHospitalName = findViewById(R.id.tvHospitalName);
         tvTime = findViewById(R.id.tvTime);
@@ -157,7 +158,9 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         // Set click listeners to open CampaignActivity
         cardCampaign.setOnClickListener(v -> openCampaignActivity());
         cardCampaign1.setOnClickListener(v -> openCampaignActivity());
-        campaignCard2.setOnClickListener(v -> openCampaignActivity());
+       // campaignCard2.setOnClickListener(v -> openCampaignActivity());
+        trackingcard.setOnClickListener(v -> openDonorTrackingActivity());
+        BloodforOtherscard.setOnClickListener(v -> openRequestBloodActivity());
         quickSearchCard.setOnClickListener(v -> openQuickSearchActivity());
         mydonationscard.setOnClickListener(v -> openMyDonationsActivity());
         tvHospitalName.setOnClickListener(v -> openReceivedRequestsActivity());
@@ -217,9 +220,19 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         Intent intent = new Intent(DonorHomeActivity1.this, MyDonationsActivity.class);
         startActivity(intent);
     }
+
+    private void openDonorTrackingActivity() {
+        Intent intent = new Intent(DonorHomeActivity1.this, DonorTrackingActivity1.class);
+        startActivity(intent);
+    }
+
+    private void openRequestBloodActivity() {
+        Intent intent = new Intent(DonorHomeActivity1.this, RequestBloodActivity.class);
+        startActivity(intent);
+    }
     private void openQuickSearchActivity() {
       //  Intent intent = new Intent(DonorHomeActivity1.this, QuickSearchActivity1.class);
-//startActivity(intent);
+        //startActivity(intent);
         QuickSearchDialogFragment dialog = new QuickSearchDialogFragment();
         dialog.show(getSupportFragmentManager(), "QuickSearchDialog");
     }

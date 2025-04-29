@@ -4,12 +4,22 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ekthacares.model.ApiResponse;
 import com.example.ekthacares.model.User;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -137,6 +148,58 @@ public class ProfileActivity1 extends AppCompatActivity {
 
     }
 
+    private void showUserProfile(User user) {
+        if (user.getProfileImage() != null && !user.getProfileImage().isEmpty()) {
+            try {
+                byte[] imageBytes = Base64.decode(user.getProfileImage(), Base64.DEFAULT);
+                Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+
+                // Crop the profile image to a circle
+                Bitmap circularImage = getCircularBitmap(decodedImage);
+
+                imgProfile.setImageBitmap(circularImage);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Bitmap fallbackImage = BitmapFactory.decodeResource(getResources(), R.drawable.profile);
+                Bitmap circularFallbackImage = getCircularBitmap(fallbackImage); // Apply circle cropping to fallback image
+                imgProfile.setImageBitmap(circularFallbackImage); // Fallback image as a circle
+            }
+        } else {
+            Bitmap fallbackImage = BitmapFactory.decodeResource(getResources(), R.drawable.profile);
+            Bitmap circularFallbackImage = getCircularBitmap(fallbackImage); // Apply circle cropping to fallback image
+            imgProfile.setImageBitmap(circularFallbackImage); // Fallback image as a circle
+        }
+    }
+
+
+    private Bitmap getCircularBitmap(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int diameter = Math.min(width, height);
+
+        // Create a square bitmap to make the circle
+        Bitmap squareBitmap = Bitmap.createBitmap(diameter, diameter, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(squareBitmap);
+
+        // Set the paint for drawing
+        final Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setDither(true);
+
+        // Draw a circle on the canvas
+        canvas.drawCircle(diameter / 2, diameter / 2, diameter / 2, paint);
+
+        // Set PorterDuff mode to apply the original bitmap within the circle
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        // Scale the original bitmap to fit within the circle
+        canvas.drawBitmap(bitmap, new Rect(0, 0, width, height), new Rect(0, 0, diameter, diameter), paint);
+
+        return squareBitmap;
+    }
+
+
     private Bitmap convertUriToBitmap(Uri imageUri) {
         try {
             // Open the input stream from the URI
@@ -166,6 +229,7 @@ public class ProfileActivity1 extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     currentUser = response.body();
                     updateUI();
+                    showUserProfile(currentUser);
                 } else {
                     handleErrorResponse(response);
                 }
@@ -209,9 +273,35 @@ public class ProfileActivity1 extends AppCompatActivity {
     private void showEditDialog(String fieldName) {
         EditText editText = new EditText(ProfileActivity1.this);
         editText.setHint("Enter new " + fieldName);
+        editText.setGravity(Gravity.CENTER);
+        // Create a ShapeDrawable for the background with rounded corners and border
+        GradientDrawable drawable = new GradientDrawable();
+
+        // Set the corner radius for rounded corners
+        drawable.setCornerRadius(8f);  // 8dp rounded corners
+
+
+        // Set the background color (white in this case)
+        drawable.setColor(Color.WHITE);  // Set the color of the background
+
+        // Set the border color and width (red border with 4dp width)
+        drawable.setStroke(4, Color.parseColor("#808080")); // 4px border with red color
+
+        // Set the background of the EditText
+        editText.setBackground(drawable);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity1.this);
-        builder.setTitle("Edit " + fieldName)
-                .setView(editText)
+
+        // Set a custom title view to center the title
+        TextView titleView = new TextView(ProfileActivity1.this);
+        titleView.setText("Edit " + fieldName);
+        titleView.setTextSize(20); // Optional: Adjust the text size
+        titleView.setTextColor(Color.BLACK); // Optional: Change text color
+        titleView.setGravity(Gravity.CENTER); // Center the title text
+        titleView.setPadding(0,0,0,75);
+        builder.setCustomTitle(titleView);
+
+        builder.setView(editText)
                 .setPositiveButton("Save", (dialog, which) -> {
                     String updatedValue = editText.getText().toString();
                     if (!updatedValue.isEmpty()) {
@@ -220,10 +310,25 @@ public class ProfileActivity1 extends AppCompatActivity {
                         Toast.makeText(ProfileActivity1.this, "Please enter a valid " + fieldName, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
-                .create()
-                .show();
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+
+        // Apply rounded corners to the dialog window
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.rounded_border1);
+        }
+
+        dialog.show();
+        // Set the color for the positive button (Save)
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(Color.parseColor("#2196F3")); // Change this color as needed
+
+        // Set the color for the negative button (Cancel)
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        negativeButton.setTextColor(Color.parseColor("#F44336")); // Change this color as needed
     }
+
 
     private void updateUserProfile(String updatedValue, String fieldName) {
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
@@ -245,7 +350,12 @@ public class ProfileActivity1 extends AppCompatActivity {
                 case "State": updatedUser.setState(updatedValue); break;
             }
 
-            // Make API call to update profile with the updatedUser object
+            // ✅ Ensure important fields are preserved
+            updatedUser.setJwtToken(currentUser.getJwtToken());
+            updatedUser.setFcmToken(currentUser.getFcmToken());
+
+            // Don't update JWT or FCM token. Ensure these tokens are never sent in the user object update.
+            // Make API call to update profile with the updatedUser object (excluding the tokens)
             Call<ApiResponse> call = apiService.appupdateProfile("Bearer " + jwtToken, updatedUser);
 
             call.enqueue(new Callback<ApiResponse>() {
@@ -253,7 +363,7 @@ public class ProfileActivity1 extends AppCompatActivity {
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         String message = response.body().getMessage();
-                        fetchUserDetails(jwtToken, userId);  // Fetch updated user details
+                        fetchUserDetails(jwtToken, userId);  // Fetch updated user details, ensuring tokens aren't affected
                         Toast.makeText(ProfileActivity1.this, message, Toast.LENGTH_SHORT).show();
                     } else {
                         handleErrorResponse(response);
@@ -273,6 +383,8 @@ public class ProfileActivity1 extends AppCompatActivity {
     }
 
 
+
+
     private void redirectToLogin() {
         Intent intent = new Intent(ProfileActivity1.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -288,17 +400,26 @@ public class ProfileActivity1 extends AppCompatActivity {
     }
 
     private void saveImageToDatabase(String base64Image) {
-        User user = getUser();  // Get user object
-        user.setProfileImage(base64Image);  // Assuming you have a method to set the profile image (base64 string)
-        updateUserInDatabase(user);  // Method to update the user in the database
-        Log.d("ProfileActivity1", "Image saved directly in DB");
+        User user = getUser();  // Get the current user object
+
+        if (user != null) {
+            user.setProfileImage(base64Image);  // Set only the new image
+
+            // ✅ Ensure important fields are preserved
+            user.setJwtToken(currentUser.getJwtToken());
+            user.setFcmToken(currentUser.getFcmToken());
+
+            updateUserInDatabase(user);  // Now update in DB
+            Log.d("ProfileActivity1", "Image saved directly in DB");
+        } else {
+            Log.d("ProfileActivity1", "User object is null. Cannot save image.");
+        }
     }
+
 
     private void updateUserInDatabase(User user) {
         // Assuming you have a Retrofit instance and a service for your API
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-
-
         // Call the update user endpoint
         // Make sure to include the JWT token in the Authorization header
         Call<User> call = apiService.updateUser(user.getId(), user);
@@ -314,18 +435,18 @@ public class ProfileActivity1 extends AppCompatActivity {
                         String responseBody = response.errorBody() != null ? response.errorBody().string() : response.body().toString();
 
                         // Log the response body (if it's a message)
-                        Log.d("ProfileActivity", "Response: " + responseBody);
+                        Log.d("ProfileActivity1", "Response: " + responseBody);
 
                         // Check for successful message
                         if (responseBody.contains("User updated successfully")) {
-                            Log.d("ProfileActivity", "User updated successfully.");
+                            Log.d("ProfileActivity1", "User updated successfully.");
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
                     // Handle failure (e.g., response code not 200)
-                    Log.d("ProfileActivity", "Failed to update user: " + response.code());
+                    Log.d("ProfileActivity1", "Failed to update user: " + response.code());
                 }
             }
 
@@ -333,25 +454,16 @@ public class ProfileActivity1 extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 // Handle network failure or other errors
-                Log.d("ProfileActivity", "Error: " + t.getMessage());
+                Log.d("ProfileActivity1", "Error: " + t.getMessage());
             }
         });
     }
 
 
     private User getUser() {
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
-        Long userId = sharedPreferences.getLong(Constants.USER_ID_KEY, -1);
-        String jwtToken = sharedPreferences.getString(Constants.JWT_TOKEN_KEY, null);
-
-        // Assuming you have a method to fetch user details via an API
-        if (userId != -1 && jwtToken != null) {
-            fetchUserDetails(jwtToken, userId);
-        }
-
-        // You may want to return a User object here if available
-        return currentUser; // currentUser is populated when fetchUserDetails() is successful
+        return currentUser; // Return the already-loaded user object
     }
+
 
 
 

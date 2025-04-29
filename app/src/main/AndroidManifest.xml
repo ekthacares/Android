@@ -70,6 +70,9 @@
         <!-- Declare the DonorTrackingActivity here -->
         <activity android:name=".DonorTrackingActivity" android:exported="true"></activity>
 
+        <!-- Declare the DonorTrackingActivity here -->
+        <activity android:name=".DonorTrackingActivity1" android:exported="true"></activity>
+
         <!-- Declare the RequestBloodActivity here -->
         <activity android:name=".RequestBloodActivity" android:exported="true"></activity>
 
