@@ -50,10 +50,10 @@
         <activity android:name=".DonorHomeActivity1" android:exported="true"></activity>
 
         <!-- Declare the ProfileActivity here -->
-        <activity android:name=".ProfileActivity" android:exported="true"></activity>
+        <activity android:name=".EditProfileActivity" android:exported="true"></activity>
 
         <!-- Declare the ProfileActivity1 here -->
-        <activity android:name=".ProfileActivity1" android:exported="true"></activity>
+        <activity android:name=".EditProfileActivity1" android:exported="true"></activity>
 
         <!-- Declare the MyDonationsActivity here -->
         <activity android:name=".MyDonationsActivity" android:exported="true"></activity>

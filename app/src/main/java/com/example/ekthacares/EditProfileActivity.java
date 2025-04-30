@@ -19,7 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import java.io.IOException;
 
-public class ProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
     private TextView tvUserId, tvDonorName, tvEmail, tvMobile, tvDateOfBirth, tvBloodGroup,
             tvAge, tvGender, tvAddress, tvCity, tvState;
@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_edit_profile);
 
         // Initialize views
         tvUserId = findViewById(R.id.tvUserId);
@@ -91,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(ProfileActivity.this, "An error occurred.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditProfileActivity.this, "An error occurred.", Toast.LENGTH_SHORT).show();
                 Log.e("FetchError", t.getMessage(), t);
             }
         });
@@ -124,9 +124,9 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void showEditDialog(String fieldName) {
-        EditText editText = new EditText(ProfileActivity.this);
+        EditText editText = new EditText(EditProfileActivity.this);
         editText.setHint("Enter new " + fieldName);
-        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
         builder.setTitle("Edit " + fieldName)
                 .setView(editText)
                 .setPositiveButton("Save", (dialog, which) -> {
@@ -134,7 +134,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (!updatedValue.isEmpty()) {
                         updateUserProfile(updatedValue, fieldName);
                     } else {
-                        Toast.makeText(ProfileActivity.this, "Please enter a valid " + fieldName, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, "Please enter a valid " + fieldName, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
@@ -171,7 +171,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         String message = response.body().getMessage();
                         fetchUserDetails(jwtToken, userId);  // Fetch updated user details
-                        Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, message, Toast.LENGTH_SHORT).show();
                     } else {
                         handleErrorResponse(response);
                     }
@@ -179,18 +179,18 @@ public class ProfileActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ApiResponse> call, Throwable t) {
-                    Toast.makeText(ProfileActivity.this, "Update failed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity.this, "Update failed.", Toast.LENGTH_SHORT).show();
                     Log.e("UpdateError", t.getMessage(), t);
                 }
             });
         } else {
-            Toast.makeText(ProfileActivity.this, "Session invalid. Please log in again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditProfileActivity.this, "Session invalid. Please log in again.", Toast.LENGTH_SHORT).show();
             redirectToLogin();
         }
     }
 
     private void redirectToLogin() {
-        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+        Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();

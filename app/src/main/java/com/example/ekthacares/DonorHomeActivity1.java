@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +20,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.gridlayout.widget.GridLayout;
 
 import com.example.ekthacares.model.Campaign;
 import com.example.ekthacares.model.SentEmail;
@@ -30,12 +28,8 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -76,17 +70,17 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         setContentView(R.layout.activity_donor_home1);
 
         // Initialize Views
-        drawerLayout = findViewById(R.id.drawer_layout);
+      drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
-        toolbar = findViewById(R.id.toolbar);
+    //    toolbar = findViewById(R.id.toolbar);
         // Set Toolbar
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // Hide title
+   //     setSupportActionBar(toolbar);
+     //   getSupportActionBar().setDisplayShowTitleEnabled(false); // Hide title
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+     //   toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+    //    drawerLayout.addDrawerListener(toggle);
+    //    toggle.syncState();
+    //    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvWelcome = findViewById(R.id.tvWelcome);
         View headerView = navigationView.getHeaderView(0);
@@ -125,16 +119,16 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         // Initialize Views
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
-        toolbar = findViewById(R.id.toolbar);
+    //    toolbar = findViewById(R.id.toolbar);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+   //     setSupportActionBar(toolbar);
+    //    getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        navigationView.setNavigationItemSelectedListener(this);
+    //    toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+    //    drawerLayout.addDrawerListener(toggle);
+   //     toggle.syncState();
+   //     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+   //     navigationView.setNavigationItemSelectedListener(this);
 
 
         // Retrieve JWT token and user ID from SharedPreferences
@@ -212,7 +206,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
     }
 
     private void openDonorProfileActivity() {
-        Intent intent = new Intent(DonorHomeActivity1.this, ProfileActivity1.class);
+        Intent intent = new Intent(DonorHomeActivity1.this, EditProfileActivity1.class);
         startActivity(intent);
     }
 
@@ -379,7 +373,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         int id = item.getItemId();
 
         if (id == R.id.nav_update_profile) {
-            startActivity(new Intent(this, ProfileActivity.class));
+            startActivity(new Intent(this, EditProfileActivity.class));
         } else if (id == R.id.nav_donations) {
             startActivity(new Intent(this, MyDonationsActivity.class));
         } else if (id == R.id.nav_received_requests) {
@@ -557,8 +551,6 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         });
     }
 
-
-
     private void showLogoutDialog() {
         new AlertDialog.Builder(DonorHomeActivity1.this)
                 .setMessage("Are you sure you want to log out?")
@@ -573,6 +565,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
                 .setNegativeButton("No", null)
                 .show();
     }
+
 
     private void redirectToLogin() {
         Intent intent = new Intent(DonorHomeActivity1.this, MainActivity.class);

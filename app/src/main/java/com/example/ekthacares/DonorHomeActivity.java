@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ekthacares.model.User;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +75,7 @@ public class DonorHomeActivity extends AppCompatActivity {
         ivLogout.setOnClickListener(v -> showLogoutDialog());
 
         // Profile button functionality
-        btnProfile.setOnClickListener(v -> startActivity(new Intent(DonorHomeActivity.this, ProfileActivity.class)));
+        btnProfile.setOnClickListener(v -> startActivity(new Intent(DonorHomeActivity.this, EditProfileActivity.class)));
 
         // My Donations button functionality
         btnMyDonations.setOnClickListener(v -> startActivity(new Intent(DonorHomeActivity.this, MyDonationsActivity.class)));

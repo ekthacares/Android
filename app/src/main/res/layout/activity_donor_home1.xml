@@ -15,12 +15,12 @@
         android:layout_height="match_parent">
 
         <!-- Toolbar Section -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title=""/>
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+<!--            app:title=""/>-->
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -35,13 +35,13 @@
                 android:paddingEnd="8dp">
 
                 <!-- Navigation Icon (Left) -->
-                <ImageView
-                    android:id="@+id/toolbar_nav_icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_menu"
-                    android:background="@drawable/rounded_bg"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/toolbar_nav_icon"-->
+<!--                    android:layout_width="48dp"-->
+<!--                    android:layout_height="48dp"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:src="@drawable/ic_menu"-->
+<!--                    android:background="@drawable/rounded_bg"/>-->
 
                 <!-- Welcome Text (Center) -->
                 <TextView
@@ -49,8 +49,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Welcome, User"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/ubuntu_bold"
                     android:textColor="@color/black"
                     android:paddingStart="8dp"
                     android:layout_weight="1"/>
@@ -64,7 +64,7 @@
                         android:id="@+id/ivCampaigns"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:src="@drawable/ic_campaign"
+                        android:src="@drawable/campaign_icon"
                         android:padding="4dp"
                         android:layout_gravity="center" />
 
@@ -90,7 +90,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:padding="4dp"
-                    android:src="@drawable/ic_notifications"
+                    android:src="@drawable/notification_icon"
                     android:layout_gravity="center" />
                     <!-- Notification Dot -->
                     <View

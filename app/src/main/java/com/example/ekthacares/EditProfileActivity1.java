@@ -10,15 +10,14 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,34 +32,31 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ekthacares.model.ApiResponse;
 import com.example.ekthacares.model.User;
-import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ProfileActivity1 extends AppCompatActivity {
+public class EditProfileActivity1 extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<Intent> galleryLauncher;
 
     private TextView tvUserId, tvDonorName, tvEmail, tvMobile, tvDateOfBirth, tvBloodGroup,
             tvAge, tvGender, tvAddress, tvCity, tvState, Donorname ;
-    private ImageView imgEditDonorName, imgEditEmail, imgEditAddress, imgEditCity, imgEditState, imgProfile;
+    private ImageView imgEditDonorName, imgEditEmail, imgEditAddress, imgEditCity, imgEditState, imgProfile, imgLogout;
 
     private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile1);
+        setContentView(R.layout.activity_edit_profile1);
 
         // Initialize views
         tvUserId = findViewById(R.id.tvUserId);
@@ -80,7 +76,8 @@ public class ProfileActivity1 extends AppCompatActivity {
         imgEditCity = findViewById(R.id.imgEditCity);
         imgEditState = findViewById(R.id.imgEditState);
         Donorname = findViewById(R.id.donor_name);
-        imgProfile= findViewById(R.id.imgProfile);
+      imgProfile= findViewById(R.id.imgProfile);
+        imgLogout = findViewById(R.id.imgLogout);
 
         // Retrieve JWT token and user ID from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
@@ -99,6 +96,14 @@ public class ProfileActivity1 extends AppCompatActivity {
         imgEditAddress.setOnClickListener(v -> showEditDialog("Address"));
         imgEditCity.setOnClickListener(v -> showEditDialog("City"));
         imgEditState.setOnClickListener(v -> showEditDialog("State"));
+
+        imgLogout = findViewById(R.id.imgLogout);
+        imgLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLogoutDialog();
+            }
+        });
 
         imgProfile.setOnClickListener(view -> {
             String[] options = {"Take Photo", "Choose from Gallery"};
@@ -147,6 +152,22 @@ public class ProfileActivity1 extends AppCompatActivity {
 
 
     }
+
+    private void showLogoutDialog() {
+        new AlertDialog.Builder(EditProfileActivity1.this)
+                .setMessage("Are you sure you want to log out?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.apply();
+                    redirectToLogin();
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
 
     private void showUserProfile(User user) {
         if (user.getProfileImage() != null && !user.getProfileImage().isEmpty()) {
@@ -237,7 +258,7 @@ public class ProfileActivity1 extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(ProfileActivity1.this, "An error occurred.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditProfileActivity1.this, "An error occurred.", Toast.LENGTH_SHORT).show();
                 Log.e("FetchError", t.getMessage(), t);
             }
         });
@@ -271,7 +292,7 @@ public class ProfileActivity1 extends AppCompatActivity {
     }
 
     private void showEditDialog(String fieldName) {
-        EditText editText = new EditText(ProfileActivity1.this);
+        EditText editText = new EditText(EditProfileActivity1.this);
         editText.setHint("Enter new " + fieldName);
         editText.setGravity(Gravity.CENTER);
         // Create a ShapeDrawable for the background with rounded corners and border
@@ -290,10 +311,10 @@ public class ProfileActivity1 extends AppCompatActivity {
         // Set the background of the EditText
         editText.setBackground(drawable);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity1.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity1.this);
 
         // Set a custom title view to center the title
-        TextView titleView = new TextView(ProfileActivity1.this);
+        TextView titleView = new TextView(EditProfileActivity1.this);
         titleView.setText("Edit " + fieldName);
         titleView.setTextSize(20); // Optional: Adjust the text size
         titleView.setTextColor(Color.BLACK); // Optional: Change text color
@@ -307,7 +328,7 @@ public class ProfileActivity1 extends AppCompatActivity {
                     if (!updatedValue.isEmpty()) {
                         updateUserProfile(updatedValue, fieldName);
                     } else {
-                        Toast.makeText(ProfileActivity1.this, "Please enter a valid " + fieldName, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity1.this, "Please enter a valid " + fieldName, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
@@ -364,7 +385,7 @@ public class ProfileActivity1 extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         String message = response.body().getMessage();
                         fetchUserDetails(jwtToken, userId);  // Fetch updated user details, ensuring tokens aren't affected
-                        Toast.makeText(ProfileActivity1.this, message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity1.this, message, Toast.LENGTH_SHORT).show();
                     } else {
                         handleErrorResponse(response);
                     }
@@ -372,12 +393,12 @@ public class ProfileActivity1 extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ApiResponse> call, Throwable t) {
-                    Toast.makeText(ProfileActivity1.this, "Update failed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity1.this, "Update failed.", Toast.LENGTH_SHORT).show();
                     Log.e("UpdateError", t.getMessage(), t);
                 }
             });
         } else {
-            Toast.makeText(ProfileActivity1.this, "Session invalid. Please log in again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditProfileActivity1.this, "Session invalid. Please log in again.", Toast.LENGTH_SHORT).show();
             redirectToLogin();
         }
     }
@@ -386,7 +407,7 @@ public class ProfileActivity1 extends AppCompatActivity {
 
 
     private void redirectToLogin() {
-        Intent intent = new Intent(ProfileActivity1.this, MainActivity.class);
+        Intent intent = new Intent(EditProfileActivity1.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
