@@ -4,8 +4,14 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ekthacares.model.Notification;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -38,6 +45,12 @@ public class NotificationsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         fetchNotifications();
+        // Back arrow
+        ImageView backArrow = findViewById(R.id.imgBackArrow);
+        backArrow.setOnClickListener(v -> {
+            // Use OnBackPressedDispatcher to go back to the previous activity
+            getOnBackPressedDispatcher().onBackPressed();
+        });
     }
 
     private void fetchNotifications() {
@@ -67,7 +80,19 @@ public class NotificationsActivity extends AppCompatActivity {
             public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     notificationList.clear();
-                    notificationList.addAll(response.body());
+
+                    // Add all and reverse the order
+                    List<Notification> reversedList = new ArrayList<>(response.body());
+                    Collections.reverse(reversedList);
+                    notificationList.addAll(reversedList);
+
+                    TextView totalNotificationCountTextView = findViewById(R.id.notificationCount);
+                    String totalNotificationText = "Total Notifications: " + notificationList.size();
+                    SpannableString spannableString = new SpannableString(totalNotificationText);
+                    int start = totalNotificationText.indexOf(String.valueOf(notificationList.size()));
+                    int end = start + String.valueOf(notificationList.size()).length();
+                    spannableString.setSpan(new ForegroundColorSpan(Color.RED), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    totalNotificationCountTextView.setText(spannableString);
                     adapter.notifyDataSetChanged();
                 } else {
                     Log.w("USER_ID", "No notifications found for User ID: " + userId);

@@ -206,7 +206,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
     }
 
     private void openDonorProfileActivity() {
-        Intent intent = new Intent(DonorHomeActivity1.this, EditProfileActivity1.class);
+        Intent intent = new Intent(DonorHomeActivity1.this, ViewProfileActivity.class);
         startActivity(intent);
     }
 
@@ -373,7 +373,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         int id = item.getItemId();
 
         if (id == R.id.nav_update_profile) {
-            startActivity(new Intent(this, EditProfileActivity.class));
+            startActivity(new Intent(this, ViewProfileActivity.class));
         } else if (id == R.id.nav_donations) {
             startActivity(new Intent(this, MyDonationsActivity.class));
         } else if (id == R.id.nav_received_requests) {

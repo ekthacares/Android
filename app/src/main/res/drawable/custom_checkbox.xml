@@ -1,0 +1,6 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/transparent"/> <!-- Unchecked background -->
+    <size android:width="30dp" android:height="30dp"/>
+    <corners android:radius="20dp"/> <!-- Makes it circular -->
+    <stroke android:color="@color/gray1" android:width="2dp"/> <!-- Subtle border -->
+</shape>

@@ -1,9 +1,15 @@
 package com.example.ekthacares;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +39,13 @@ public class CampaignActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fetchCampaigns();
+
+        // Back arrow
+        ImageView backArrow = findViewById(R.id.imgBackArrow);
+        backArrow.setOnClickListener(v -> {
+            // Use OnBackPressedDispatcher to go back to the previous activity
+            getOnBackPressedDispatcher().onBackPressed();
+        });
     }
 
     private void fetchCampaigns() {
@@ -46,8 +59,17 @@ public class CampaignActivity extends AppCompatActivity {
             public void onResponse(Call<List<Campaign>> call, Response<List<Campaign>> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
+                    // Set the adapter for RecyclerView
                     campaignAdapter = new CampaignAdapter(response.body());
                     recyclerView.setAdapter(campaignAdapter);
+                    TextView totalCampaignCountTextView = findViewById(R.id.campaignCount);
+                    String totalCampaignText = "Total Campaigns: " + campaignAdapter.getItemCount();
+                    SpannableString spannableString = new SpannableString(totalCampaignText);
+                    int start = totalCampaignText.indexOf(String.valueOf(campaignAdapter.getItemCount()));
+                    int end = start + String.valueOf(campaignAdapter.getItemCount()).length();
+                    spannableString.setSpan(new ForegroundColorSpan(Color.RED), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    totalCampaignCountTextView.setText(spannableString);
+
                 } else {
                     Toast.makeText(CampaignActivity.this, "Failed to load campaigns", Toast.LENGTH_SHORT).show();
                 }

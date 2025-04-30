@@ -5,6 +5,56 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/imgBackArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="Back"
+            android:clickable="true"
+            />
+
+
+        <!-- Profile Heading -->
+        <TextView
+            android:id="@+id/tvProfileHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Campaigns"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imgBackArrow"
+            android:layout_marginStart="16dp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/campaignCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Campaigns"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/imgBackArrow"
+        android:layout_marginStart="16dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -17,4 +67,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"/>
+
 </LinearLayout>

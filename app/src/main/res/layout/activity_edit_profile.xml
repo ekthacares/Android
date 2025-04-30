@@ -1,64 +1,121 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/white">
 
-
-    <!-- Profile Heading -->
-    <TextView
-        android:id="@+id/tvProfileHeading"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Profile"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
         android:layout_marginBottom="16dp"
-        android:textColor="@color/black" />
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/imgBackArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="Back"
+            android:clickable="true"
+            />
+
+
+        <!-- Profile Heading -->
+        <TextView
+            android:id="@+id/tvProfileHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Profile"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imgBackArrow"
+            android:layout_marginStart="16dp"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
 
     <ImageView
         android:id="@+id/imgProfile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_profile_picture1" /> <!-- Replace with your image resource -->
+        android:src="@drawable/profile"
+        android:clickable="true"
+        android:focusable="true" />
+
+
+    <!-- Remove marginTop here to close gap -->
+    <TextView
+        android:id="@+id/donor_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Donor Name"
+        android:textSize="20sp"
+        android:fontFamily="@font/ubuntu_bold"
+        android:textColor="@color/red"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
+
 
     <!-- User ID -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="14dp">
 
-        <TextView
-            android:id="@+id/tvUserIdLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User ID: "
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"/>
-
-        <!-- RelativeLayout to align value and edit icon to the right -->
+        <!-- RelativeLayout to align value (TextView) and icon (ImageView) -->
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <!-- UserId Value TextView (Aligned to the right) -->
+            <!-- UserId Value TextView (Aligned to the left) -->
             <TextView
                 android:id="@+id/tvUserId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="18sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="24dp" />
+                android:text="User ID"
+                android:textSize="24sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:textColor="@color/red"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
+
+
         </RelativeLayout>
     </LinearLayout>
+
+
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
 
     <!-- Donor Name -->
     <LinearLayout
@@ -68,46 +125,42 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <!-- Label for Donor Name -->
-        <TextView
-            android:id="@+id/tvDonorNameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name: "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"/>
-
         <!-- RelativeLayout to align value and edit icon to the right -->
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <!-- Email Value TextView (Aligned to the right) -->
+            <!-- Donor Value TextView (Aligned to the right) -->
             <TextView
                 android:id="@+id/tvDonorName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="18sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp" />
+                android:text="Donor Name"
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
 
             <!-- Edit Icon (Aligned to the right next to the value) -->
             <ImageView
                 android:id="@+id/imgEditDonorName"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="Edit Name"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="8dp" />
+                android:layout_marginEnd="24dp" />
 
         </RelativeLayout>
-
-
     </LinearLayout>
+
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
 
     <!-- Mobile -->
     <LinearLayout
@@ -117,35 +170,31 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <!-- Label for Mobile -->
-        <TextView
-            android:id="@+id/tvMobileLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mobile No.: "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"/>
-
         <!-- RelativeLayout to align value and edit icon to the right -->
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-
             <!-- Mobile Value TextView (Aligned to the right) -->
             <TextView
                 android:id="@+id/tvMobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="18sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="24dp" />
+                android:text="Mobile "
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
         </RelativeLayout>
 
     </LinearLayout>
 
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
 
     <!-- Email -->
     <LinearLayout
@@ -155,15 +204,6 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <!-- Label for Email -->
-        <TextView
-            android:id="@+id/tvEmaillabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email: "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"/>
 
         <!-- RelativeLayout to align value and edit icon to the right -->
         <RelativeLayout
@@ -171,29 +211,36 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <!-- Email Value TextView (Aligned to the right) -->
             <TextView
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="18sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp" />
+                android:text="Email"
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
 
             <!-- Edit Icon (Aligned to the right next to the value) -->
             <ImageView
                 android:id="@+id/imgEditEmail"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="Edit Email"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="8dp" />
+                android:layout_marginEnd="24dp" />
 
         </RelativeLayout>
     </LinearLayout>
 
+
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
 
 
     <!-- DateOfBirth -->
@@ -204,15 +251,6 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <!-- Label for DateOfBirth -->
-        <TextView
-            android:id="@+id/tvDateOfBirthlabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DateOfBirth: "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"/>/>
 
         <!-- RelativeLayout to align value and edit icon to the right -->
         <RelativeLayout
@@ -225,13 +263,22 @@
                 android:id="@+id/tvDateOfBirth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="18sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="24dp" />
+                android:text="Date of Birth"
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
+
         </RelativeLayout>
 
     </LinearLayout>
+
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
 
     <!-- BloodGroup -->
     <LinearLayout
@@ -240,16 +287,6 @@
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
-
-        <!-- Label for BloodGroup -->
-        <TextView
-            android:id="@+id/tvBloodGrouplabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BloodGroup: "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"/>/>
 
         <!-- RelativeLayout to align value and edit icon to the right -->
         <RelativeLayout
@@ -262,13 +299,23 @@
                 android:id="@+id/tvBloodGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="18sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="24dp" />
+                android:text="Blood Group"
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
+
         </RelativeLayout>
 
     </LinearLayout>
+
+
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
 
     <!-- Age -->
     <LinearLayout
@@ -278,15 +325,6 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <!-- Label for Age -->
-        <TextView
-            android:id="@+id/tvAgelabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Age: "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"/>/>
 
         <!-- RelativeLayout to align value and edit icon to the right -->
         <RelativeLayout
@@ -299,12 +337,21 @@
                 android:id="@+id/tvAge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="18sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="24dp" />
+                android:text="Age"
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
         </RelativeLayout>
     </LinearLayout>
+
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
+
 
     <!-- Gender -->
     <LinearLayout
@@ -314,15 +361,41 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <!-- Label for Gender -->
-        <TextView
-            android:id="@+id/tvGenderlabel"
-            android:layout_width="wrap_content"
+        <!-- RelativeLayout to align value and edit icon to the right -->
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Gender: "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"/>/>
+            android:layout_weight="1">
+
+            <!-- Gender Value TextView (Aligned to the right) -->
+            <TextView
+                android:id="@+id/tvGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
+
+
+    <!-- Address -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:gravity="start|center_vertical">
 
         <!-- RelativeLayout to align value and edit icon to the right -->
         <RelativeLayout
@@ -330,64 +403,39 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-        <!-- Gender Value TextView (Aligned to the right) -->
-        <TextView
-            android:id="@+id/tvGender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" "
-            android:textSize="18sp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="24dp" />
-        </RelativeLayout>
-    </LinearLayout>
-
-        <!-- Address -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            android:gravity="start|center_vertical">
-
-            <!-- Label for Address -->
+            <!-- Address Value TextView (Aligned to the right) -->
             <TextView
-                android:id="@+id/tvAddresslabel"
+                android:id="@+id/tvAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address: "
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_gravity="start"/>
+                android:text="Address"
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
 
-            <!-- RelativeLayout to align value and edit icon to the right -->
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+            <!-- Edit Icon (Aligned to the right next to the value) -->
+            <ImageView
+                android:id="@+id/imgEditAddress"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="Edit Address"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="24dp" />
+        </RelativeLayout>
 
-                <!-- Address Value TextView (Aligned to the right) -->
-                <TextView
-                    android:id="@+id/tvAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" "
-                    android:textSize="18sp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="24dp" />
+    </LinearLayout>
 
-                <!-- Edit Icon (Aligned to the right next to the value) -->
-                <ImageView
-                    android:id="@+id/imgEditAddress"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_edit"
-                    android:contentDescription="Edit Address"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="8dp" />
-            </RelativeLayout>
 
-        </LinearLayout>
+
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
+
 
     <!-- City -->
     <LinearLayout
@@ -397,44 +445,42 @@
         android:orientation="horizontal"
         android:gravity="start|center_vertical">
 
-        <!-- Label for City -->
-        <TextView
-            android:id="@+id/tvCitylabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="City: "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"/>
-
         <!-- RelativeLayout to align value and edit icon to the right -->
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-        <!-- City Value TextView (Aligned to the right) -->
-        <TextView
-            android:id="@+id/tvCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" "
-            android:textSize="18sp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="24dp" />
+            <!-- City Value TextView (Aligned to the right) -->
+            <TextView
+                android:id="@+id/tvCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City"
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
 
             <!-- Edit Icon (Aligned to the right next to the value) -->
             <ImageView
                 android:id="@+id/imgEditCity"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="Edit City"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="8dp" />
-
+                android:layout_marginEnd="24dp" />
         </RelativeLayout>
     </LinearLayout>
+
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
+
 
     <!-- State -->
     <LinearLayout
@@ -443,16 +489,6 @@
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         android:gravity="start|center_vertical">
-
-        <!-- Label for State -->
-        <TextView
-            android:id="@+id/tvStatelabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="State: "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_gravity="start"/>
 
         <!-- RelativeLayout to align value and edit icon to the right -->
         <RelativeLayout
@@ -465,21 +501,21 @@
                 android:id="@+id/tvState"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="18sp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp" />
+                android:text="State"
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
 
             <!-- Edit Icon (Aligned to the right next to the value) -->
             <ImageView
                 android:id="@+id/imgEditState"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:src="@drawable/ic_edit"
                 android:contentDescription="Edit State"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="8dp" />
-
+                android:layout_marginEnd="24dp" />
         </RelativeLayout>
     </LinearLayout>
 

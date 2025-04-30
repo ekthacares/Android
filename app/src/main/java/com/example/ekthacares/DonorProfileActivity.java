@@ -2,8 +2,16 @@ package com.example.ekthacares;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,10 +36,14 @@ public class DonorProfileActivity extends AppCompatActivity {
 
     private User user; // User passed from SearchResultsActivity
 
+    private ImageView imgProfile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor_profile);
+
+        imgProfile = findViewById(R.id.imgProfile);
 
         // Receive user from intent
         user = (User) getIntent().getSerializableExtra("donor");
@@ -56,7 +68,7 @@ public class DonorProfileActivity extends AppCompatActivity {
 
             fetchDonations();
             fetchSentEmails();
-
+            showUserProfile(user);
         } else {
             Toast.makeText(this, "No user data received.", Toast.LENGTH_SHORT).show();
             finish();
@@ -71,6 +83,57 @@ public class DonorProfileActivity extends AppCompatActivity {
 
 
     }
+
+    private void showUserProfile(User user) {
+        if (user.getProfileImage() != null && !user.getProfileImage().isEmpty()) {
+            try {
+                byte[] imageBytes = Base64.decode(user.getProfileImage(), Base64.DEFAULT);
+                Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+
+                // Crop the profile image to a circle
+                Bitmap circularImage = getCircularBitmap(decodedImage);
+
+                imgProfile.setImageBitmap(circularImage);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Bitmap fallbackImage = BitmapFactory.decodeResource(getResources(), R.drawable.profile);
+                Bitmap circularFallbackImage = getCircularBitmap(fallbackImage); // Apply circle cropping to fallback image
+                imgProfile.setImageBitmap(circularFallbackImage); // Fallback image as a circle
+            }
+        } else {
+            Bitmap fallbackImage = BitmapFactory.decodeResource(getResources(), R.drawable.profile);
+            imgProfile.setImageBitmap(fallbackImage); // Fallback image as a circle
+        }
+    }
+
+
+    private Bitmap getCircularBitmap(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int diameter = Math.min(width, height);
+
+        // Create a square bitmap to make the circle
+        Bitmap squareBitmap = Bitmap.createBitmap(diameter, diameter, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(squareBitmap);
+
+        // Set the paint for drawing
+        final Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setDither(true);
+
+        // Draw a circle on the canvas
+        canvas.drawCircle(diameter / 2, diameter / 2, diameter / 2, paint);
+
+        // Set PorterDuff mode to apply the original bitmap within the circle
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        // Scale the original bitmap to fit within the circle
+        canvas.drawBitmap(bitmap, new Rect(0, 0, width, height), new Rect(0, 0, diameter, diameter), paint);
+
+        return squareBitmap;
+    }
+
 
     private void fetchDonations() {
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
