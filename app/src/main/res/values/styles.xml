@@ -42,6 +42,16 @@
         <item name="android:breakStrategy">simple</item> <!-- Helps with proper line wrapping -->
     </style>
 
+    <style name="RadioButtonGrayTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorControlActivated">@color/gray1</item>
+        <item name="android:textColor">@color/gray1</item>
+    </style>
+
+    <style name="RedDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/red</item>
+        <item name="colorOnPrimary">@color/red</item>
+    </style>
+
 
 
 </resources>

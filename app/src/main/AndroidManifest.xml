@@ -85,6 +85,9 @@
         <!-- Declare the DonorProfileActivity here -->
         <activity android:name=".DonorProfileActivity" android:exported="true"></activity>
 
+        <!-- Declare the InviteActivity here -->
+        <activity android:name=".InviteActivity" android:exported="true"></activity>
+
         <!-- Firebase Messaging Service -->
         <service
             android:name=".MyFirebaseMessagingService"

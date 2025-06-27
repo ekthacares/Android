@@ -16,15 +16,15 @@
             android:textColor="@color/red"
             android:textSize="22sp" />
 
+<!--    <TextView-->
+<!--        android:id="@+id/textMessage"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="20sp"-->
+<!--        android:fontFamily="@font/ubuntu"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:layout_marginTop="5dp"/>-->
 
-        <TextView
-            android:id="@+id/textMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:fontFamily="@font/ubuntu"
-            android:textColor="@color/black"
-            android:layout_marginTop="5dp"/>
 
 
     <!-- Status and Location row -->
@@ -45,6 +45,8 @@
             android:fontFamily="@font/ubuntu"
             android:text="\u00A0\u00A0I AM IN"
             android:textColor="@color/black"
+            android:clickable="true"
+            android:focusable="true"
             android:button="@drawable/custom_checkbox" /> <!-- Optional: Custom circular checkbox -->
 
         <!-- 📍 Location on the right -->
@@ -69,7 +71,11 @@
                 android:textSize="20sp"
                 android:fontFamily="@font/ubuntu"
                 android:textColor="@color/black"
-               />
+                android:clickable="true"
+                android:focusable="true"
+                />
+
+
         </LinearLayout>
     </LinearLayout>
 

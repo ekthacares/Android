@@ -57,9 +57,9 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
 
     private TextView tvCampaignDate, tvCampaignTime, tvCampaignDate1, tvCampaignTime1;
 
-    private CardView cardCampaign, cardCampaign1;
+    private CardView cardCampaign, cardCampaign1, cardNofication, cardNofication1;
 
-    private MaterialCardView campaignCard2, quickSearchCard, mydonationscard, trackingcard, BloodforOtherscard ;
+    private MaterialCardView campaignCard2, quickSearchCard, mydonationscard, trackingcard, BloodforOtherscard, InviteCard ;
 
     private TextView tvHospitalName, tvHospitalName1, tvTime, tvTime1, tvName, tvName1, bloodIdText, bloodIdText1;
 
@@ -100,11 +100,14 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         tvCampaignTime1 = findViewById(R.id.tvCampaignTime1);
         cardCampaign = findViewById(R.id.campaign_card);
         cardCampaign1 = findViewById(R.id.campaign_card1);
+        cardNofication = findViewById(R.id.nofication_card);
+        cardNofication1 = findViewById(R.id.nofication_card1);
         //campaignCard2 = findViewById(R.id.campaign_card2);
         quickSearchCard  = findViewById(R.id.quick_search_card);
         mydonationscard = findViewById(R.id.my_donation);
         trackingcard = findViewById(R.id.trackingcard);
         BloodforOtherscard = findViewById(R.id.BloodforOtherscard);
+        InviteCard = findViewById(R.id.Invite);
         // Bind views
         tvHospitalName = findViewById(R.id.tvHospitalName);
         tvTime = findViewById(R.id.tvTime);
@@ -149,22 +152,25 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         // Retrieve and store FCM Token
         fetchFcmToken();
 
-        // Set click listeners to open CampaignActivity
+        // Set click listeners to openActivities for Campaign cards
         cardCampaign.setOnClickListener(v -> openCampaignActivity());
         cardCampaign1.setOnClickListener(v -> openCampaignActivity());
-       // campaignCard2.setOnClickListener(v -> openCampaignActivity());
+        // campaignCard2.setOnClickListener(v -> openCampaignActivity());
+
+        // Set click listeners to openActivities for Quick Acess cards
+        mydonationscard.setOnClickListener(v -> openMyDonationsActivity());
+        quickSearchCard.setOnClickListener(v -> openQuickSearchActivity());
         trackingcard.setOnClickListener(v -> openDonorTrackingActivity());
         BloodforOtherscard.setOnClickListener(v -> openRequestBloodActivity());
-        quickSearchCard.setOnClickListener(v -> openQuickSearchActivity());
-        mydonationscard.setOnClickListener(v -> openMyDonationsActivity());
-        tvHospitalName.setOnClickListener(v -> openReceivedRequestsActivity());
-        tvTime.setOnClickListener(v -> openReceivedRequestsActivity());
-        tvHospitalName1.setOnClickListener(v -> openReceivedRequestsActivity());
-        tvTime1.setOnClickListener(v -> openReceivedRequestsActivity());
-        tvName.setOnClickListener(v -> openReceivedRequestsActivity());
-        tvName1.setOnClickListener(v -> openReceivedRequestsActivity());
-        bloodIdText.setOnClickListener(v -> openReceivedRequestsActivity());
-        bloodIdText.setOnClickListener(v -> openReceivedRequestsActivity());
+
+
+
+        // Set click listeners to openActivities for Request Recieved cards
+        cardNofication.setOnClickListener(v -> openReceivedRequestsActivity());
+        cardNofication1.setOnClickListener(v -> openReceivedRequestsActivity());
+
+        InviteCard.setOnClickListener(v -> openInviteActivity());
+        // Set click listeners to openActivities for Nav_Menu cards
         UserIcon.setOnClickListener(v -> openDonorProfileActivity());
 
         // Notification icon click
@@ -229,6 +235,11 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         //startActivity(intent);
         QuickSearchDialogFragment dialog = new QuickSearchDialogFragment();
         dialog.show(getSupportFragmentManager(), "QuickSearchDialog");
+    }
+
+    private void openInviteActivity() {
+        Intent intent = new Intent(DonorHomeActivity1.this, InviteActivity.class);
+        startActivity(intent);
     }
 
     private void openReceivedRequestsActivity() {

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +36,14 @@ public class RequestBloodActivity extends AppCompatActivity {
         etState = findViewById(R.id.etState);
         btnSubmitRequest = findViewById(R.id.btnSubmitRequest);
 
+
+        // Back arrow
+        ImageView backArrow = findViewById(R.id.imgBackArrow);
+        backArrow.setOnClickListener(v -> {
+            // Use OnBackPressedDispatcher to go back to the previous activity
+            getOnBackPressedDispatcher().onBackPressed();
+        });
+
         // Initialize Retrofit service
         apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
@@ -63,7 +72,7 @@ public class RequestBloodActivity extends AppCompatActivity {
             public void onResponse(Call<BloodRequestResponse> call, Response<BloodRequestResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(RequestBloodActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RequestBloodActivity.this, DonorHomeActivity.class));
+                    startActivity(new Intent(RequestBloodActivity.this, DonorHomeActivity1.class));
                     finish();
                 } else {
                     Toast.makeText(RequestBloodActivity.this, "Failed to submit request!", Toast.LENGTH_SHORT).show();

@@ -5,46 +5,127 @@
     android:padding="16dp"
     android:background="@color/white">
 
-    <EditText
-        android:id="@+id/etDonorName"
+
+    <!-- Top Bar -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/imgBackArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back_arrow"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="Back"
+            android:clickable="true" />
+
+        <TextView
+            android:id="@+id/tvProfileHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Donor Registration"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imgBackArrow"
+            android:layout_marginStart="16dp" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/etDonorName"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:hint="Donor Name"
-        android:inputType="textPersonName" />
+        android:paddingStart="16dp"
+        android:background="@drawable/rounded_edittext2"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+        />
 
     <EditText
         android:id="@+id/etMobile"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:hint="Mobile Number"
-        android:inputType="phone" />
+        android:paddingStart="16dp"
+        android:background="@drawable/rounded_edittext2"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+        />
 
     <EditText
         android:id="@+id/etEmailId"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:hint="Email ID"
-        android:inputType="textEmailAddress" />
+        android:paddingStart="16dp"
+        android:background="@drawable/rounded_edittext2"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+
+       />
 
     <EditText
         android:id="@+id/etDateOfBirth"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Date of Birth (YYYY-MM-DD)"
-        android:inputType="date" />
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="12dp"
+        android:hint="Date of Birth"
+        android:paddingStart="16dp"
+        android:background="@drawable/rounded_edittext2"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:drawableEnd="@drawable/ic_calendar"
+        android:drawablePadding="12dp"
+        android:paddingEnd="16dp"
+        android:inputType="none"
+        android:focusable="false" />  <!-- Optional: prevent keyboard -->
+
 
     <EditText
         android:id="@+id/etBloodGroup"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Blood Group" />
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Blood Group"
+        android:paddingStart="16dp"
+        android:background="@drawable/rounded_edittext2"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+        />
 
     <EditText
         android:id="@+id/etAge"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:hint="Age"
-        android:inputType="number" />
+        android:paddingStart="16dp"
+        android:background="@drawable/rounded_edittext2"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+        />
 
     <RadioGroup
         android:id="@+id/rgGender"
@@ -56,45 +137,97 @@
             android:id="@+id/rbMale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Male" />
+            android:text="Male"
+            android:textStyle="bold"
+            android:textColor="@color/dark_gray"
+            android:textSize="16sp"
+            android:buttonTint="@color/dark_gray"
+            android:theme="@style/RadioButtonGrayTheme" />
 
         <RadioButton
             android:id="@+id/rbFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Female" />
+            android:text="Female"
+            android:textStyle="bold"
+            android:textColor="@color/dark_gray"
+            android:textSize="16sp"
+            android:buttonTint="@color/dark_gray"
+            android:theme="@style/RadioButtonGrayTheme" />
 
         <RadioButton
             android:id="@+id/rbOther"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Other" />
+            android:text="Other"
+            android:textStyle="bold"
+            android:textColor="@color/dark_gray"
+            android:textSize="16sp"
+            android:buttonTint="@color/dark_gray"
+            android:theme="@style/RadioButtonGrayTheme" />
     </RadioGroup>
+
+
+
 
     <EditText
         android:id="@+id/etAddress"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:hint="Address"
-        android:inputType="text" />
+        android:paddingStart="16dp"
+        android:background="@drawable/rounded_edittext2"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+
+        />
 
     <EditText
         android:id="@+id/etCity"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:hint="City"
-        android:inputType="text" />
+        android:paddingStart="16dp"
+        android:background="@drawable/rounded_edittext2"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+
+        />
 
     <EditText
         android:id="@+id/etState"
+        android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:hint="State"
-        android:inputType="text" />
+        android:paddingStart="16dp"
+        android:background="@drawable/rounded_edittext2"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+
+       />
 
     <Button
         android:id="@+id/btnSubmit"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit" />
+        android:layout_width="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="16dp"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="16dp"
+        android:text="Submit"
+        android:src="@drawable/callnow"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:fontFamily="@font/ubuntu"
+        android:backgroundTint="@color/red"/>
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,14 +38,13 @@ public class MyDonationsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private DonationAdapter donationAdapter;
-    private TextView noDonationsMessage;
-    private TextView totalDonationsCount;
+    private TextView noDonationsMessage,totalDonationsCount;
     private Button btnAddDonation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_donations);
+        setContentView(R.layout.activity_my_donations1);
 
         recyclerView = findViewById(R.id.recyclerViewDonations);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -53,6 +53,13 @@ public class MyDonationsActivity extends AppCompatActivity {
         totalDonationsCount = findViewById(R.id.totalDonationsCount);
         btnAddDonation = findViewById(R.id.btnAddDonation);
         Log.d(TAG, "onCreate: Activity started");
+
+        // Back arrow
+        ImageView backArrow = findViewById(R.id.imgBackArrow);
+        backArrow.setOnClickListener(v -> {
+            // Use OnBackPressedDispatcher to go back to the previous activity
+            getOnBackPressedDispatcher().onBackPressed();
+        });
 
         btnAddDonation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,11 +109,11 @@ public class MyDonationsActivity extends AppCompatActivity {
                         btnAddDonation.setVisibility(View.GONE);
                     } else {
                         Log.e(TAG, "onResponse: No donations found.");
-                        Toast.makeText(MyDonationsActivity.this, "No donations available", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MyDonationsActivity.this, "No donations available", Toast.LENGTH_SHORT).show();
 
                         noDonationsMessage.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                        totalDonationsCount.setText("Total Donations: 0");
+                        totalDonationsCount.setVisibility(View.GONE);
                         btnAddDonation.setVisibility(View.VISIBLE);
                     }
                 } else {

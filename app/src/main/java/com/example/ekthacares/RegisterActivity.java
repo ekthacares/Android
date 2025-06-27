@@ -1,5 +1,6 @@
 package com.example.ekthacares;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +66,59 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.setMessage("Registering... Please wait");
         progressDialog.setCancelable(false);
 
+
+        // Back arrow
+        ImageView backArrow = findViewById(R.id.imgBackArrow);
+        backArrow.setOnClickListener(v -> {
+            // Use OnBackPressedDispatcher to go back to the previous activity
+            getOnBackPressedDispatcher().onBackPressed();
+        });
+
+        //calender
+        etDateOfBirth.setFocusable(false);  // Prevent keyboard popup
+        etDateOfBirth.setOnClickListener(v -> {
+            final Calendar today = Calendar.getInstance();
+            int year = today.get(Calendar.YEAR);
+            int month = today.get(Calendar.MONTH);
+            int day = today.get(Calendar.DAY_OF_MONTH);
+
+            // Set maxDate = today - 18 years
+            Calendar maxDate = Calendar.getInstance();
+            maxDate.set(year - 18, month, day);  // 18 years before today
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    RegisterActivity.this,
+                    R.style.RedDatePickerDialogTheme, // 👈 Add this theme ID
+                    (view, selectedYear, selectedMonth, selectedDay) -> {
+                        // Format DOB as yyyy-MM-dd
+                        String dob = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay);
+                        etDateOfBirth.setText(dob);
+
+                        // Calculate age
+                        int age = year - selectedYear;
+                        if (month < selectedMonth || (month == selectedMonth && day < selectedDay)) {
+                            age--;
+                        }
+
+                        etAge.setText(String.valueOf(age));
+                    },
+                    maxDate.get(Calendar.YEAR), maxDate.get(Calendar.MONTH), maxDate.get(Calendar.DAY_OF_MONTH)
+            );
+
+            // ⛔ Disallow dates after today - 18 years
+            datePickerDialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
+
+            // (Optional) Set a reasonable minDate like 100 years ago
+            Calendar minDate = Calendar.getInstance();
+            minDate.set(year - 100, 0, 1);  // 100 years ago
+            datePickerDialog.getDatePicker().setMinDate(minDate.getTimeInMillis());
+
+            datePickerDialog.show();
+        });
+
+
+
+
         // Submit button click listener
         btnSubmit.setOnClickListener(v -> {
             if (isSubmitting) return; // Prevent multiple submissions
@@ -88,12 +144,13 @@ public class RegisterActivity extends AppCompatActivity {
                     city.isEmpty() || state.isEmpty()) {
                 Toast.makeText(RegisterActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
                 isSubmitting = false; // Reset flag on validation failure
+                btnSubmit.setEnabled(true); // Re-enable button on validation failure
             } else {
                 registerUser(donorname, mobileNum, emailid, dateofbirth, bloodgroup, Integer.parseInt(age), gender, address, city, state);
             }
 
             // Reset flag with a small delay (optional, for UI responsiveness)
-            new Handler().postDelayed(() -> isSubmitting = false, 500); // Adjust the delay if necessary
+            //new Handler().postDelayed(() -> isSubmitting = false, 500); // Adjust the delay if necessary
         });
     }
 

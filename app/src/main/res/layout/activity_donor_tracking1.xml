@@ -7,6 +7,7 @@
     android:padding="16dp"
     android:background="@color/white">
 
+    <!-- Top Bar -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,11 +23,8 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:contentDescription="Back"
-            android:clickable="true"
-            />
+            android:clickable="true" />
 
-
-        <!-- Profile Heading -->
         <TextView
             android:id="@+id/tvProfileHeading"
             android:layout_width="wrap_content"
@@ -37,33 +35,12 @@
             android:textColor="@color/black"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/imgBackArrow"
-            android:layout_marginStart="16dp"/>
-
+            android:layout_marginStart="16dp" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="24dp" />
-
-    <!-- Remove marginTop here to close gap -->
-    <!-- No Tracking Info Message -->
-    <TextView
-        android:id="@+id/noTrackingInfoMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No donation tracking information available."
-        android:textColor="@color/error"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:visibility="gone"
-        android:layout_centerInParent="true" /> <!-- Center the message in the parent -->
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="24dp" />
-
-
+    <!-- Donor Info Row -->
     <LinearLayout
+        android:id="@+id/donorInfoRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -78,10 +55,8 @@
             android:text="Donor Name"
             android:textSize="20sp"
             android:fontFamily="@font/ubuntu_bold"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
 
-        <!-- Image 1 -->
         <ImageView
             android:id="@+id/imageinfo"
             android:layout_width="48dp"
@@ -91,7 +66,6 @@
             android:clickable="true"
             android:focusable="true" />
 
-        <!-- Image 2 -->
         <ImageView
             android:id="@+id/imagecall"
             android:layout_width="48dp"
@@ -100,14 +74,33 @@
             android:src="@drawable/donor_call"
             android:clickable="true"
             android:focusable="true" />
-
-
     </LinearLayout>
 
-    <!-- Dotted line -->
+    <!-- Dotted Line -->
     <View
+        android:id="@+id/dottedLine"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="6dp"
         android:background="@drawable/dotted_line" />
+
+    <!-- Centered No Tracking Message -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/noTrackingInfoMessage"
+            android:layout_width="280dp"
+            android:layout_height="150dp"
+            android:text="No donation tracking information available."
+            android:textColor="@color/red"
+            android:background="@drawable/bg_card_gray"
+            android:gravity="center"
+            android:fontFamily="@font/ubuntu_bold"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
 </LinearLayout>

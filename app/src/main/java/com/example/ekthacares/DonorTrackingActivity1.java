@@ -34,6 +34,8 @@ public class DonorTrackingActivity1 extends AppCompatActivity {
     private ImageView imgBackArrow, imageInfo, imageCall;
     private TextView tvProfileHeading, textViewDonorName, noTrackingInfoMessage;
 
+    private View dottedLine;
+
     private User user; // Declare class-level User object
 
     private List<Confirmation> confirmations = new ArrayList<>(); // Define the confirmations list here
@@ -50,6 +52,7 @@ public class DonorTrackingActivity1 extends AppCompatActivity {
         tvProfileHeading = findViewById(R.id.tvProfileHeading);
         textViewDonorName = findViewById(R.id.textViewDonorName);
         noTrackingInfoMessage = findViewById(R.id.noTrackingInfoMessage);
+        dottedLine = findViewById(R.id.dottedLine);
 
         // Back arrow
         ImageView backArrow = findViewById(R.id.imgBackArrow);
@@ -135,6 +138,10 @@ public class DonorTrackingActivity1 extends AppCompatActivity {
                     // Only show the message if the list is empty
                     if (confirmations.isEmpty()) {
                         noTrackingInfoMessage.setVisibility(View.VISIBLE);
+                        textViewDonorName.setVisibility(View.GONE);
+                        imageInfo.setVisibility(View.GONE);
+                        imageCall.setVisibility(View.GONE);
+                        dottedLine.setVisibility(View.GONE);
                     } else {
                         noTrackingInfoMessage.setVisibility(View.GONE);
                         // Get the recipientId from the first confirmation and fetch user info

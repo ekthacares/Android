@@ -17,7 +17,8 @@
         android:orientation="vertical"
         android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card_gray">
 
         <!-- Label for Last Donation Date -->
         <TextView
@@ -25,7 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Last Donation Date:"
-            android:textStyle="bold"
+            android:textColor="@color/red"
+            android:fontFamily="@font/ubuntu_bold"
             android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
 
@@ -35,6 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date Not Available"
+            android:textColor="@color/black"
+            android:fontFamily="@font/ubuntu"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"/>
 
@@ -44,7 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hospital Name:"
-            android:textStyle="bold"
+            android:textColor="@color/red"
+            android:fontFamily="@font/ubuntu_bold"
             android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
 
@@ -54,6 +59,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hospital Not Available"
+            android:textColor="@color/black"
+            android:fontFamily="@font/ubuntu"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"/>
 
@@ -63,7 +70,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Donated To:"
-            android:textStyle="bold"
+            android:textColor="@color/red"
+            android:fontFamily="@font/ubuntu_bold"
             android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
 
@@ -73,6 +81,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ID Not Available"
+            android:textColor="@color/black"
+            android:fontFamily="@font/ubuntu"
             android:textSize="16sp"/>
     </LinearLayout>
 
