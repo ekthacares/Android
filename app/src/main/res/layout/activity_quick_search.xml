@@ -15,6 +15,15 @@
         android:hint="Enter Blood Group (e.g., O+)"
         android:inputType="text"/>
 
+    <!-- Area -->
+    <EditText
+        android:id="@+id/editTextArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter City"
+        android:inputType="text"/>
+
+
     <!-- City -->
     <EditText
         android:id="@+id/editTextCity"

@@ -1,9 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.Ekthacares" parent="Base.Theme.Ekthacares">
-        <!-- Transparent system bars for edge-to-edge. -->
+
+        <!-- your existing items -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
-    </style>
+        <item name="android:checkboxStyle">@style/AppCompatCheckBoxStyle</item>
+        <item name="checkboxStyle">@style/AppCompatCheckBoxStyle</item>
+
+        </style>
+
+
 </resources>

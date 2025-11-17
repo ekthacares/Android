@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
     <!-- Checked state -->
     <item android:state_checked="true">
-        <shape android:shape="rectangle">
-            <solid android:color="#ED2224"/> <!-- This uses your #ED2224 -->
-            <corners android:radius="20dp"/>
+        <shape android:shape="oval">
+            <solid android:color="@color/maroon_red"/> <!-- fill red -->
             <size android:width="30dp" android:height="30dp"/>
             <stroke android:color="@color/gray1" android:width="2dp"/>
         </shape>
@@ -11,11 +12,11 @@
 
     <!-- Unchecked state -->
     <item>
-        <shape android:shape="rectangle">
+        <shape android:shape="oval">
             <solid android:color="@android:color/transparent"/>
-            <corners android:radius="20dp"/>
             <size android:width="30dp" android:height="30dp"/>
             <stroke android:color="@color/gray1" android:width="2dp"/>
         </shape>
     </item>
+
 </selector>

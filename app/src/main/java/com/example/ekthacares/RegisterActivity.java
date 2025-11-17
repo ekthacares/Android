@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etDonorName, etMobile, etEmailId, etDateOfBirth, etBloodGroup, etAge, etAddress, etCity, etState;
+    private EditText etDonorName, etMobile, etEmailId, etDateOfBirth, etBloodGroup, etAge, etArea, etAddress, etCity, etState;
     private RadioGroup rgGender;
     private Button btnSubmit;
     private ProgressDialog progressDialog;
@@ -49,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         etAge = findViewById(R.id.etAge);
         rgGender = findViewById(R.id.rgGender);
         etAddress = findViewById(R.id.etAddress);
+        etArea = findViewById(R.id.etArea);
         etCity = findViewById(R.id.etCity);
         etState = findViewById(R.id.etState);
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -131,6 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
             String bloodgroup = etBloodGroup.getText().toString().trim();
             String age = etAge.getText().toString().trim();
             String address = etAddress.getText().toString().trim();
+            String area = etArea.getText().toString().trim();
             String city = etCity.getText().toString().trim();
             String state = etState.getText().toString().trim();
 
@@ -140,13 +142,13 @@ public class RegisterActivity extends AppCompatActivity {
 
             // Validate fields
             if (donorname.isEmpty() || mobileNum.isEmpty() || emailid.isEmpty() || dateofbirth.isEmpty() ||
-                    bloodgroup.isEmpty() || age.isEmpty() || gender.isEmpty() || address.isEmpty() ||
+                    bloodgroup.isEmpty() || age.isEmpty() || gender.isEmpty() || address.isEmpty() || area.isEmpty() ||
                     city.isEmpty() || state.isEmpty()) {
                 Toast.makeText(RegisterActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
                 isSubmitting = false; // Reset flag on validation failure
                 btnSubmit.setEnabled(true); // Re-enable button on validation failure
             } else {
-                registerUser(donorname, mobileNum, emailid, dateofbirth, bloodgroup, Integer.parseInt(age), gender, address, city, state);
+                registerUser(donorname, mobileNum, emailid, dateofbirth, bloodgroup, Integer.parseInt(age), gender, address, area, city, state);
             }
 
             // Reset flag with a small delay (optional, for UI responsiveness)
@@ -155,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(String donorname, String mobile, String emailid, String dateofbirth, String bloodgroup,
-                              int age, String gender, String address, String city, String state) {
+                              int age, String gender, String address, String area, String city, String state) {
         String url = Constants.BASE_URL + "/api/app/register"; // Ensure the endpoint is correct
 
         // Log mobile number before sending
@@ -172,6 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
             jsonBody.put("age", age);
             jsonBody.put("gender", gender);
             jsonBody.put("address", address);
+            jsonBody.put("area", area);
             jsonBody.put("city", city);
             jsonBody.put("state", state);
         } catch (Exception e) {

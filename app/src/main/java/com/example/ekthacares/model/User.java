@@ -33,6 +33,9 @@ public class User implements Serializable {
     @SerializedName("address")
     private String address;
 
+    @SerializedName("area")
+    private String area;
+
     @SerializedName("city")
     private String city;
 
@@ -143,7 +146,13 @@ public class User implements Serializable {
     public String getAddress() {
         return address;
     }
+    public String getArea() {
+        return area;
+    }
 
+    public void setArea(String area) {
+        this.area = area;
+    }
     public void setAddress(String address) {
         this.address = address;
     }

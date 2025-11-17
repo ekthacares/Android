@@ -6,6 +6,7 @@ import com.example.ekthacares.model.BloodRequest;
 import com.example.ekthacares.model.BloodRequestResponse;
 import com.example.ekthacares.model.BloodSearchResponse;
 import com.example.ekthacares.model.Campaign;
+import com.example.ekthacares.model.CampaignAttendanceRequest;
 import com.example.ekthacares.model.ConfirmationResponse;
 import com.example.ekthacares.model.DonationResponse;
 import com.example.ekthacares.model.Notification;
@@ -18,6 +19,7 @@ import java.util.Map;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -94,6 +96,7 @@ public interface ApiService {
     Call<BloodSearchResponse> searchForBlood(
             @HeaderMap Map<String, String> headers,
             @Query("bloodgroup") String bloodgroup,
+            @Query("area") String area,
             @Query("city") String city,
             @Query("state") String state,
             @Query("hospital") String hospitalName,
@@ -144,9 +147,26 @@ public interface ApiService {
     @PUT("/api/users/{id}")
     Call<User> updateUser(@Path("id") Long userId, @Body User user);
 
+    @POST("/api/attendance/save")
+    Call<CampaignAttendanceRequest> saveCampaignAttendance(@Body CampaignAttendanceRequest request);
+
+    @DELETE("/api/attendance/delete")
+    Call<Void> deleteCampaignAttendance(
+            @Query("userId") long userId,
+            @Query("campaignId") long campaignId
+    );
+
+    @GET("/api/attendance/check")
+    Call<Boolean> checkAttendance(
+            @Query("userId") long userId,
+            @Query("campaignId") long campaignId
+    );
+
 
 
 }
+
+
 
 
 

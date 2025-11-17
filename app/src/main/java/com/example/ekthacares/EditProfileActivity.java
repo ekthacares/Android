@@ -48,8 +48,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> galleryLauncher;
 
     private TextView tvUserId, tvDonorName, tvEmail, tvMobile, tvDateOfBirth, tvBloodGroup,
-            tvAge, tvGender, tvAddress, tvCity, tvState, Donorname ;
-    private ImageView imgEditDonorName, imgEditEmail, imgEditAddress, imgEditCity, imgEditState, imgProfile;
+            tvAge, tvGender, tvAddress, tvArea, tvCity, tvState, Donorname ;
+    private ImageView imgEditDonorName, imgEditEmail, imgEditAddress, imgEditArea, imgEditCity, imgEditState, imgProfile;
 
     private User currentUser;
 
@@ -67,12 +67,14 @@ public class EditProfileActivity extends AppCompatActivity {
         tvBloodGroup = findViewById(R.id.tvBloodGroup);
         tvAge = findViewById(R.id.tvAge);
         tvGender = findViewById(R.id.tvGender);
+        tvArea = findViewById(R.id.tvArea);
         tvAddress = findViewById(R.id.tvAddress);
         tvCity = findViewById(R.id.tvCity);
         tvState = findViewById(R.id.tvState);
         imgEditDonorName = findViewById(R.id.imgEditDonorName);
         imgEditEmail = findViewById(R.id.imgEditEmail);
         imgEditAddress = findViewById(R.id.imgEditAddress);
+        imgEditArea = findViewById(R.id.imgEditArea);
         imgEditCity = findViewById(R.id.imgEditCity);
         imgEditState = findViewById(R.id.imgEditState);
         Donorname = findViewById(R.id.donor_name);
@@ -93,6 +95,7 @@ public class EditProfileActivity extends AppCompatActivity {
         imgEditDonorName.setOnClickListener(v -> showEditDialog("Donor Name"));
         imgEditEmail.setOnClickListener(v -> showEditDialog("Email"));
         imgEditAddress.setOnClickListener(v -> showEditDialog("Address"));
+        imgEditArea.setOnClickListener(v -> showEditDialog("Area"));
         imgEditCity.setOnClickListener(v -> showEditDialog("City"));
         imgEditState.setOnClickListener(v -> showEditDialog("State"));
 
@@ -268,6 +271,7 @@ public class EditProfileActivity extends AppCompatActivity {
         tvBloodGroup.setText(currentUser.getBloodGroup());
         tvAge.setText(String.valueOf(currentUser.getAge()));
         tvGender.setText(currentUser.getGender());
+        tvArea.setText(currentUser.getArea());
         tvAddress.setText(currentUser.getAddress());
         tvCity.setText(currentUser.getCity());
         tvState.setText(currentUser.getState());
@@ -350,6 +354,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 case "Donor Name": updatedUser.setDonorName(updatedValue); break;
                 case "Email": updatedUser.setEmailId(updatedValue); break;
                 case "Address": updatedUser.setAddress(updatedValue); break;
+                case "Area": updatedUser.setArea(updatedValue); break;
                 case "City": updatedUser.setCity(updatedValue); break;
                 case "State": updatedUser.setState(updatedValue); break;
             }
@@ -396,6 +401,7 @@ public class EditProfileActivity extends AppCompatActivity {
         finish();
     }
 
+    
     private String convertBitmapToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);  // Adjust the quality if needed

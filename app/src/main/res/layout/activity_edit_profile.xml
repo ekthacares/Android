@@ -427,6 +427,51 @@
 
     </LinearLayout>
 
+    <!-- Straight line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="#CCCCCC" />
+
+    <!-- Area -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:gravity="start|center_vertical">
+
+        <!-- RelativeLayout to align value and edit icon to the right -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <!-- Address Value TextView (Aligned to the right) -->
+            <TextView
+                android:id="@+id/tvArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Area"
+                android:textSize="20sp"
+                android:fontFamily="@font/ubuntu_bold"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp" />
+
+            <!-- Edit Icon (Aligned to the right next to the value) -->
+            <ImageView
+                android:id="@+id/imgEditArea"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="Edit Area"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="24dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
 
     <!-- Straight line -->

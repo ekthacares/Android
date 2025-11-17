@@ -41,13 +41,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text=" I Will Donate"
             android:textSize="20sp"
-            android:fontFamily="@font/ubuntu"
-            android:text="\u00A0\u00A0I AM IN"
-            android:textColor="@color/black"
-            android:clickable="true"
-            android:focusable="true"
-            android:button="@drawable/custom_checkbox" /> <!-- Optional: Custom circular checkbox -->
+            android:textColor="@color/black"/>
+
+
+
 
         <!-- 📍 Location on the right -->
         <LinearLayout

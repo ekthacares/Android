@@ -181,9 +181,20 @@
         android:background="@drawable/rounded_edittext2"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="12dp"/>
 
-        />
+    <EditText
+        android:id="@+id/etArea"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="Area"
+        android:paddingStart="16dp"
+        android:background="@drawable/rounded_edittext2"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"/>
 
     <EditText
         android:id="@+id/etCity"

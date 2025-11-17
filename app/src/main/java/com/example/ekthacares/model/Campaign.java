@@ -7,26 +7,33 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Campaign {
+
+    @SerializedName("id")
+    private Long id;   // ⭐ REQUIRED to save I AM IN
+
     private String title;
     private String message;
 
     @SerializedName("campaignDate")
-    private String date;  // Original date from API (assumed format: yyyy-MM-dd)
+    private String date;
 
     @SerializedName("campaignTime")
-    private String time;  // Original time from API (assumed format: HH:mm:ss)
+    private String time;
 
-    public Campaign(String title, String message, String date, String time) {
+    public Campaign(Long id, String title, String message, String date, String time) {
+        this.id = id;
         this.title = title;
         this.message = message;
         this.date = date;
         this.time = time;
     }
 
+    public Long getId() { return id; }
+
     public String getTitle() { return title; }
     public String getMessage() { return message; }
 
-    // Convert date format to "dd MMMM yyyy" (e.g., "25 March 2025")
+    // ⭐ Proper formatted date
     public String getFormattedDate() {
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH);
@@ -36,11 +43,11 @@ public class Campaign {
             return outputFormat.format(parsedDate);
         } catch (ParseException e) {
             e.printStackTrace();
-            return date; // Return original if parsing fails
+            return date;
         }
     }
 
-    // Convert time format to "hh:mm a" (e.g., "10:30 AM")
+    // ⭐ Proper formatted time
     public String getFormattedTime() {
         SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
         SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm a", Locale.ENGLISH);
@@ -50,7 +57,7 @@ public class Campaign {
             return outputFormat.format(parsedTime);
         } catch (ParseException e) {
             e.printStackTrace();
-            return time; // Return original if parsing fails
+            return time;
         }
     }
 }

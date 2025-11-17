@@ -60,7 +60,8 @@ public class CampaignActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     // Set the adapter for RecyclerView
-                    campaignAdapter = new CampaignAdapter(response.body());
+//                    campaignAdapter = new CampaignAdapter(response.body());
+                    campaignAdapter = new CampaignAdapter(CampaignActivity.this, response.body());
                     recyclerView.setAdapter(campaignAdapter);
                     TextView totalCampaignCountTextView = findViewById(R.id.campaignCount);
                     String totalCampaignText = "Total Campaigns: " + campaignAdapter.getItemCount();

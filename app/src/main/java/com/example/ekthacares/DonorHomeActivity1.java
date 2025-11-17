@@ -578,12 +578,18 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
     }
 
 
-    private void redirectToLogin() {
+    private void redirectToLogin(){
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS_NAME, MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
+
+        Toast.makeText(this, "Session expired. Please log in again.", Toast.LENGTH_SHORT).show();
+
         Intent intent = new Intent(DonorHomeActivity1.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
+
 
     @Override
     public void onBackPressed() {

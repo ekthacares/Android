@@ -52,6 +52,9 @@
         <item name="colorOnPrimary">@color/red</item>
     </style>
 
+    <style name="AppCompatCheckBoxStyle" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/custom_checkbox</item>
+    </style>
 
 
 </resources>

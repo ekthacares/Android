@@ -60,6 +60,7 @@ public class QuickSearchDialogFragment extends DialogFragment {
         Button buttonSearch = dialogView.findViewById(R.id.buttonSearch);
         ProgressBar progressBar = dialogView.findViewById(R.id.progressBar);
 
+        EditText editTextArea = dialogView.findViewById(R.id.editTextArea);
         EditText editTextCity = dialogView.findViewById(R.id.editTextCity);
         EditText editTextState = dialogView.findViewById(R.id.editTextState);
         EditText editTextHospital = dialogView.findViewById(R.id.editTextHospital);
@@ -147,10 +148,11 @@ public class QuickSearchDialogFragment extends DialogFragment {
 
         // Move to search screen
         buttonToResults.setOnClickListener(v -> {
+            String area = editTextArea.getText().toString().trim();
             String city = editTextCity.getText().toString().trim();
             String state = editTextState.getText().toString().trim();
 
-            if (city.isEmpty() || state.isEmpty()) {
+            if (area.isEmpty() || city.isEmpty() || state.isEmpty()) {
                 Toast.makeText(requireContext(), "Please enter both city and state", Toast.LENGTH_SHORT).show();
             } else {
                 viewFlipper.showNext();
@@ -161,6 +163,7 @@ public class QuickSearchDialogFragment extends DialogFragment {
 
         // Search and API call
         buttonSearch.setOnClickListener(v -> {
+            String area = editTextArea.getText().toString().trim();
             String city = editTextCity.getText().toString().trim();
             String state = editTextState.getText().toString().trim();
             String hospital = editTextHospital.getText().toString().trim();
@@ -186,6 +189,7 @@ public class QuickSearchDialogFragment extends DialogFragment {
                 Call<BloodSearchResponse> call = apiService.searchForBlood(
                         headers,
                         selectedBloodGroup[0],
+                        area,
                         city,
                         state,
                         hospital,
