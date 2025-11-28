@@ -33,7 +33,7 @@ import retrofit2.http.Query;
 public interface ApiService {
 
     // Send OTP to mobile number
-    @POST("/api/app login")
+    @POST("/api/applogin")
     Call<ResponseBody> login(@Query("mobile") String mobile);
 
     // Validate OTP
@@ -162,7 +162,12 @@ public interface ApiService {
             @Query("campaignId") long campaignId
     );
 
-
+    @PUT("api/attendance/update")
+    Call<Void> updateAttendanceActiveStatus(
+            @Query("userId") Long userId,
+            @Query("campaignId") Long campaignId,
+            @Query("active") boolean active
+    );
 
 }
 

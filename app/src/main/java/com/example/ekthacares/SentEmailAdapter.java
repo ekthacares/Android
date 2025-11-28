@@ -87,7 +87,7 @@ public class SentEmailAdapter extends RecyclerView.Adapter<SentEmailAdapter.View
 
         String url = sentEmail.getConfirmationUrl();
         if (url != null && !url.isEmpty()) {
-            String fullText = "Confirm URL: Please Click here to start Donation";
+            String fullText = "Confirm URL: Please Click here to Accept Donation";
 
             SpannableString spannableString = new SpannableString(fullText);
             int urlStartIndex = "Confirm URL: ".length();

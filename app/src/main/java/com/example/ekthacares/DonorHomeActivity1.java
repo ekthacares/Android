@@ -106,7 +106,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         quickSearchCard  = findViewById(R.id.quick_search_card);
         mydonationscard = findViewById(R.id.my_donation);
         trackingcard = findViewById(R.id.trackingcard);
-        BloodforOtherscard = findViewById(R.id.BloodforOtherscard);
+        //BloodforOtherscard = findViewById(R.id.BloodforOtherscard);
         InviteCard = findViewById(R.id.Invite);
         // Bind views
         tvHospitalName = findViewById(R.id.tvHospitalName);
@@ -161,7 +161,7 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         mydonationscard.setOnClickListener(v -> openMyDonationsActivity());
         quickSearchCard.setOnClickListener(v -> openQuickSearchActivity());
         trackingcard.setOnClickListener(v -> openDonorTrackingActivity());
-        BloodforOtherscard.setOnClickListener(v -> openRequestBloodActivity());
+       // BloodforOtherscard.setOnClickListener(v -> openRequestBloodActivity());
 
 
 
@@ -226,10 +226,10 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
         startActivity(intent);
     }
 
-    private void openRequestBloodActivity() {
-        Intent intent = new Intent(DonorHomeActivity1.this, RequestBloodActivity.class);
-        startActivity(intent);
-    }
+//    private void openRequestBloodActivity() {
+//        Intent intent = new Intent(DonorHomeActivity1.this, RequestBloodActivity.class);
+//        startActivity(intent);
+//    }
     private void openQuickSearchActivity() {
       //  Intent intent = new Intent(DonorHomeActivity1.this, QuickSearchActivity1.class);
         //startActivity(intent);
@@ -391,8 +391,8 @@ public class DonorHomeActivity1 extends AppCompatActivity implements NavigationV
             startActivity(new Intent(this, ReceivedRequestsActivity.class));
         } else if (id == R.id.nav_donor_tracking) {
             startActivity(new Intent(this, DonorTrackingActivity.class));
-        } else if (id == R.id.nav_request_blood) {
-            startActivity(new Intent(this, RequestBloodActivity.class));
+//        } else if (id == R.id.nav_request_blood) {
+//            startActivity(new Intent(this, RequestBloodActivity.class));
         } else if (id == R.id.nav_logout) {
             showLogoutDialog();
         }

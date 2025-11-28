@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             isOtpSent = true;
             btnSendOtp.setEnabled(false);
 
-            String url = Constants.BASE_URL + "/api/app login";
+            String url = Constants.BASE_URL + "/api/applogin";
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                     response -> handleOtpSuccess(response, mobile),
                     this::handleOtpError) {

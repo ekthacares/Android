@@ -140,24 +140,24 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
 
     // ---------- REMOVE CONSENT ----------
     private void removeConsentFromServer(Long campaignId) {
-
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
-        apiService.deleteCampaignAttendance(userId, campaignId).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(context, "Response Removed!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Delete Error: " + response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
+        apiService.updateAttendanceActiveStatus(userId, campaignId, false)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(context, "Marked as Not Active", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Update Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(context, "Failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(context, "Failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     // ---------- VIEW HOLDER ----------
